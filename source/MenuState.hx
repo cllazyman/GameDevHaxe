@@ -19,6 +19,6 @@ class MenuState extends FlxState {
 	}
 
 	function clickPlay():Void {
-		FlxG.switchState(new MorningState1());
+		FlxG.switchState(new PlayState());
 	}
 }
