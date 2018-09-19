@@ -4,7 +4,7 @@ import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.tile.FlxTilemap;
 
-class MorningState extends FlxState {
+class MorningState2 extends FlxState {
 	var morningMap:FlxOgmoLoader;
 	var morningTiles:FlxTilemap;
 	
