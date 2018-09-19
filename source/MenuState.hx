@@ -12,6 +12,7 @@ class MenuState extends FlxState {
 		_btnPlay.screenCenter();
 		add(_btnPlay);
 		super.create();
+		FlxG.sound.play(AssetPaths.jazz2__ogg);
 	}
 
 	override public function update(elapsed:Float):Void {
