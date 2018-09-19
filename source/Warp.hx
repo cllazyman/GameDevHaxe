@@ -1,7 +1,6 @@
 package;
 
 import flixel.FlxSprite;
-import flixel.system.FlxAssets.FlxGraphicAsset;
 
 /**
  * ...
@@ -10,9 +9,9 @@ import flixel.system.FlxAssets.FlxGraphicAsset;
 class Warp extends FlxSprite 
 {
 
-	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
+	public function new(?X:Float=0, ?Y:Float=0, nType:Int) 
 	{
-		super(X, Y, SimpleGraphic);
+		super(X, Y);
 		
 	}
 	

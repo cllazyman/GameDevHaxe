@@ -1,5 +1,7 @@
 package;
 
+import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.tile.FlxTilemap;
@@ -8,14 +10,16 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 class MorningState1 extends FlxState {
 	var player:Player;
 	var npcList:FlxTypedGroup<NPC>;
-	var npcList:FlxTypedGroup<Warp>;
+	var warpList:FlxTypedGroup<Warp>;
 	var morningMap:FlxOgmoLoader;
 	var morningTiles:FlxTilemap;
 	
 	override public function create():Void {
 		// Load the "morning1" file from the Ogmo Editor
 		morningMap = new FlxOgmoLoader(AssetPaths.morning1__oel);
-		morningTiles = map.loadTilemap(AssetPaths.morning__png, 16, 16, "walls");
+
+		// Initialize Tileset
+		morningTiles = morningMap.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
 		morningTiles.follow();
 		morningTiles.setTileProperties(1, FlxObject.NONE);
 		morningTiles.setTileProperties(2, FlxObject.ANY);
@@ -23,7 +27,11 @@ class MorningState1 extends FlxState {
 		
 		// Initialize player
 		player = new Player();
-		morningTiles.loadEntities(placeEntities, "entities");
+		
+		// Initialize all entities
+		morningMap.loadEntities(placeEntities, "entities");
+		add(player);
+		
 		super.create();
 	}
 
@@ -32,6 +40,7 @@ class MorningState1 extends FlxState {
 		super.update(elapsed);
 	}
 	
+	// Initialize Objects onto map
 	function placeEntities(entityName:String, entityData:Xml):Void {
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
@@ -39,12 +48,9 @@ class MorningState1 extends FlxState {
 			player.x = x;
 			player.y = y;
 		} else if (entityName == "npc") {
-			npc.x = x;
-			npc.y = y;
+			npcList.add(new NPC(x, y, Std.parseInt(entityData.get("ntype"))));
 		} else if (entityName == "warp") {
-			warp.x = x;
-			warp.y = y;
+			warpList.add(new Warp(x, y, Std.parseInt(entityData.get("wtype"))));
 		}
 	}
-	
 }
