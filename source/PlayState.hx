@@ -1,46 +1,50 @@
 package;
 
 import flixel.FlxG;
-import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.tile.FlxTilemap;
-import flixel.group.FlxGroup.FlxTypedGroup;
 
 class PlayState extends FlxState {
-	var morningMap:FlxOgmoLoader;
-	var morningTiles:FlxTilemap;
-	var player:Player;
-	var npcList:FlxTypedGroup<NPC>;
-	var warpList:FlxTypedGroup<Warp>;
-	
+	var _characterUI:CharacterUI;
+	var _money:Int = 0;
+	var _health:Int = 3;
+	var _player:Player;
+	var _map:FlxOgmoLoader;
+	var _mWalls:FlxTilemap;
+	var _mfloors:FlxTilemap;
+	var _mstuff1:FlxTilemap;
 	override public function create():Void {
-		// Load the "morning1" file from the Ogmo Editor
-		morningMap = new FlxOgmoLoader(AssetPaths.morning1__oel);
-
-		// Initialize Tileset
-		morningTiles = morningMap.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
-		morningTiles.follow();
-		morningTiles.setTileProperties(1, FlxObject.NONE);
-		morningTiles.setTileProperties(2, FlxObject.ANY);
-		add(morningTiles);
+		 _map = new FlxOgmoLoader(AssetPaths.Test_level__oel);
+		_mWalls = _map.loadTilemap(AssetPaths.tileset__png, 32, 32, "wall");
+		_mWalls.follow();
+		add(_mWalls);
+		_mfloors = _map.loadTilemap(AssetPaths.tileset__png, 32, 32, "floor");
+		_mfloors.follow();
+		add(_mfloors);
+		_mstuff1 = _map.loadTilemap(AssetPaths.tileset__png, 32, 32, "stuff-1");
+		_mstuff1.follow();
+		add(_mstuff1);
 		
-		// Initialize player
-		player = new Player();
-		
-		// Initialize all entities
-		morningMap.loadEntities(placeEntities, "entities");
-		add(player);
-		FlxG.camera.follow(player, TOPDOWN, 1);
-		openSub();
+		_player = new Player();
+		_map.loadEntities(placeEntities, "entity");
+		add(_player);
+		_characterUI = new CharacterUI();
+		add(_characterUI);
+		FlxG.camera.follow(_player, TOPDOWN, 1);
 		super.create();
 		
 	}
-
-	public function openSub() {
-		openSubState(new Aba());
+	 function placeEntities(entityName:String, entityData:Xml):Void
+	{
+     var x:Int = Std.parseInt(entityData.get("x"));
+     var y:Int = Std.parseInt(entityData.get("y"));
+     if (entityName == "player")
+     {
+         _player.x = x;
+         _player.y = y;
+     }
 	}
-	
 	override public function update(elapsed:Float):Void {
 		FlxG.collide(player, morningTiles);
 		super.update(elapsed);
