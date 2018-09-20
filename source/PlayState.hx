@@ -33,6 +33,7 @@ class PlayState extends FlxState {
 		add(_characterUI);
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		super.create();
+		
 	}
 	 function placeEntities(entityName:String, entityData:Xml):Void
 	{
@@ -45,6 +46,21 @@ class PlayState extends FlxState {
      }
 	}
 	override public function update(elapsed:Float):Void {
+		FlxG.collide(player, morningTiles);
 		super.update(elapsed);
+	}
+	
+	// Initialize Objects onto map
+	public function placeEntities(entityName:String, entityData:Xml):Void {
+		var x:Int = Std.parseInt(entityData.get("x"));
+		var y:Int = Std.parseInt(entityData.get("y"));
+		if (entityName == "player") {
+			player.x = x;
+			player.y = y;
+		} else if (entityName == "npc") {
+			npcList.add(new NPC(x, y, Std.parseInt(entityData.get("ntype"))));
+		} else if (entityName == "warp") {
+			warpList.add(new Warp(x, y, Std.parseInt(entityData.get("wtype"))));
+		}
 	}
 }
