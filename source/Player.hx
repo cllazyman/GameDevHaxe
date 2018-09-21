@@ -11,10 +11,19 @@ import flixel.math.FlxPoint;
  * @author Christian
  */
 class Player extends FlxSprite {
-	public var speed:Float = 200;
+	// Initialize variables
+	private var pType:Int;
+	private var speed:Float = 200;
+	public var actionBox:FlxObject;
+	public var selected:Bool = false;
 
-	public function new(?X:Float=0, ?Y:Float=0) {
+	public function new(X:Float=0, Y:Float=0, PType:Int) {
+		//Set variables
 		super(X, Y);
+		pType = PType;
+		immovable = true;
+		
+		// Set graphics
 		loadGraphic(AssetPaths.player__png, true, 16, 16);
 		setSize(8, 14);
 		offset.set(4, 2);
@@ -46,45 +55,52 @@ class Player extends FlxSprite {
 		var left:Bool = false;
 		var right:Bool = false;
 		
-		_up = FlxG.keys.anyPressed([UP, W]);
-		_down = FlxG.keys.anyPressed([DOWN, S]);
-		_left = FlxG.keys.anyPressed([LEFT, A]);
-		_right = FlxG.keys.anyPressed([RIGHT, D]);
+		// Get key inputs
+		up = FlxG.keys.anyPressed([UP, W]);
+		down = FlxG.keys.anyPressed([DOWN, S]);
+		left = FlxG.keys.anyPressed([LEFT, A]);
+		right = FlxG.keys.anyPressed([RIGHT, D]);
 		
-		if (_up && _down)
-			_up = _down = false;
-		if (_left && _right)
-			_left = _right = false;
+		// Cancel input if two opposite keys pressed
+		if (up && down)
+			up = down = false;
+		if (left && right)
+			left = right = false;
 		
-		if (_up || _down || _left || _right) {
-			var mA:Float = 0; // our temporary angle
-			if (_up) { // the player is pressing UP
-				mA = -90; // set our angle to -90 (12 o'clock)
-				if (_left)
-					mA -= 45; // if the player is also pressing LEFT, subtract 45 degrees from our angle - we're moving up and left
-				else if (_right)
-					mA += 45; // similarly, if the player is pressing RIGHT, add 45 degrees (up and right)
-				facing = FlxObject.UP; // the sprite should be facing UP
-			} else if (_down) { // the player is pressing DOWN
-				mA = 90; // set our angle to 90 (6 o'clock)
-				if (_left)
-					mA += 45; // add 45 degrees if the player is also pressing LEFT
-				else if (_right)
-					mA -= 45; // or subtract 45 if they are pressing RIGHT
-				facing = FlxObject.DOWN; // the sprite is facing DOWN
-			} else if (_left) { // if the player is not pressing UP or DOWN, but they are pressing LEFT
-				mA = 180; // set our angle to 180 (9 o'clock)
-				facing = FlxObject.LEFT; // the sprite should be facing LEFT
-			} else if (_right) { // the player is not pressing UP, DOWN, or LEFT, and they ARE pressing RIGHT
-				mA = 0; // set our angle to 0 (3 o'clock)
-				facing = FlxObject.RIGHT; // set the sprite's facing to RIGHT
+		// Calculate angle and velocity
+		if (up || down || left || right) {
+			var mA:Float = 0;
+			if (up) {
+				mA = -90;
+				if (left) {
+					mA -= 45;
+				} else if (right) {
+					mA += 45;
+				}
+				facing = FlxObject.UP;
+			} else if (down) {
+				mA = 90;
+				if (left) {
+					mA += 45;
+				} else if (right) {
+					mA -= 45;
+				}
+				facing = FlxObject.DOWN;
+			} else if (left) {
+				mA = 180;
+				facing = FlxObject.LEFT;
+			} else if (right) {
+				mA = 0;
+				facing = FlxObject.RIGHT;
 			}
-			// determine our velocity based on angle and speed
+			
+			// Determine the velocity based on angle and speed
 			velocity.set(speed, 0);
 			velocity.rotate(FlxPoint.weak(0, 0), mA);
-
+			
+			/*
+			// Change the face
 			if ((velocity.x != 0 || velocity.y != 0) && touching == FlxObject.NONE) {
-				// if the player is moving (velocity is not 0 for either axis), we need to change the animation to match their facing
 				switch (facing) {
 					case FlxObject.LEFT, FlxObject.RIGHT:
 						animation.play("lr");
@@ -93,8 +109,9 @@ class Player extends FlxSprite {
 					case FlxObject.DOWN:
 						animation.play("d");
 				}
-			}
+			}*/
 		}
+		actionBox.setPosition(x, y);
 	}
 	
 	// Set player to values when selected

@@ -27,7 +27,7 @@ class PlayState extends FlxState {
 		_mstuff1.follow();
 		add(_mstuff1);
 
-		_player = new Player();
+		_player = new Player(0,0,0);
 		_map.loadEntities(placeEntities, "entity");
 		add(_player);
 
