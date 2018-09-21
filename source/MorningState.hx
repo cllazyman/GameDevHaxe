@@ -23,7 +23,7 @@ class MorningState extends FlxState {
 		morningMap = new FlxOgmoLoader(AssetPaths.morning1__oel);
 		
 		// Initialize Tileset
-		morningTiles = morningMap.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
+		morningTiles = morningMap.loadTilemap(AssetPaths.tileset__png, 16, 16, "walls");
 		morningTiles.follow();
 		morningTiles.setTileProperties(1, FlxObject.NONE);
 		morningTiles.setTileProperties(2, FlxObject.ANY);
