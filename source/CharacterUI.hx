@@ -4,6 +4,7 @@
  import flixel.FlxG;
  import flixel.FlxSprite;
  import flixel.group.FlxGroup.FlxTypedGroup;
+ import flixel.group.FlxSpriteGroup;
  import flixel.text.FlxText;
  import flixel.util.FlxColor;
  using flixel.util.FlxSpriteUtil;
@@ -15,23 +16,29 @@
      var _txtMoney:FlxText;
      var _sprHealth:FlxSprite;
      var _sprMoney:FlxSprite;
+	 var _w :Int;
+	 var _h : Int;
+	 var group:FlxSpriteGroup;
 
      public function new()
      {
          super();
-         _sprBack = new FlxSprite().makeGraphic(FlxG.width, 100, FlxColor.BLUE);
-         _sprBack.drawRect(0, 190, FlxG.width, 100, FlxColor.WHITE);
-         _txtHealth = new FlxText(160, 20, 0, "3 / 3", 38);
-         _txtHealth.setBorderStyle(SHADOW, FlxColor.GRAY, 1, 1);
-         _txtMoney = new FlxText(0, 20, 0, "0", 38);
-         _txtMoney.setBorderStyle(SHADOW, FlxColor.GRAY, 1, 1);
+		//group = new FlxSpriteGroup(0, 0);
+		// group.origin.set(0, 0);
+         _sprBack = new FlxSprite(0, 0).makeGraphic(155, FlxG.height, FlxColor.BLACK);
+		 _sprBack.drawRect(150, 0, 5, FlxG.height, FlxColor.WHITE);
+	
+		// _sprBack.drawRect(10, 10, 130, 340, FlxColor.BLACK);
+		// _txtHealth.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
+         //_txtMoney = new FlxText(0, 20, 0, "0", 38);
+         //_txtMoney.setBorderStyle(SHADOW, FlxColor.GRAY, 1, 1);
         
          add(_sprBack);
-         add(_txtHealth);
-         add(_txtMoney);
+         //add(_txtHealth);
+         //add(_txtMoney);
          forEach(function(spr:FlxSprite)
          {
-             spr.scrollFactor.set(0, 0);
+             spr.scrollFactor.set(0,0);
          });
      }
 

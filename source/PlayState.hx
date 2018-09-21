@@ -7,6 +7,7 @@ import flixel.tile.FlxTilemap;
 
 class PlayState extends FlxState {
 	var _characterUI:CharacterUI;
+	var _beginning:Beginning;
 	var _money:Int = 0;
 	var _health:Int = 3;
 	var _player:Player;
@@ -25,13 +26,16 @@ class PlayState extends FlxState {
 		_mstuff1 = _map.loadTilemap(AssetPaths.tileset__png, 32, 32, "stuff-1");
 		_mstuff1.follow();
 		add(_mstuff1);
-		
+
 		_player = new Player();
 		_map.loadEntities(placeEntities, "entity");
 		add(_player);
+
+		FlxG.camera.follow(_player, TOPDOWN, 1);
 		_characterUI = new CharacterUI();
 		add(_characterUI);
-		FlxG.camera.follow(_player, TOPDOWN, 1);
+		_beginning = new Beginning();
+		add(_beginning);
 		super.create();
 	}
 	 function placeEntities(entityName:String, entityData:Xml):Void
