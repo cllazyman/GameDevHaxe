@@ -30,21 +30,18 @@ class Beginning extends FlxTypedGroup<FlxSprite>
 	{
 		super();
 		// first, create our background. Make a black square, then draw borders onto it in white. Add it to our group.
-		_sprText = new FlxSprite().makeGraphic(490, 100, FlxColor.WHITE);
-		_sprText.drawRect(_sprText.x+5, _sprText.y+5, 480, 90, FlxColor.BLACK);
-		_sprText.setPosition(150, 260);
-		_sprName = new FlxSprite().makeGraphic(100, 40, FlxColor.WHITE);
-		_sprName.drawRect(_sprName.x+5, _sprName.y+5, 90, 30, FlxColor.BLACK);
-		_sprName.setPosition(150, 225);
+		_sprText = new FlxSprite(150,260);
+		//_sprText.drawRect(_sprText.x + 5, _sprText.y + 5, 480, 90, FlxColor.BLACK);
+		_sprText.loadGraphic("assets/images/ui_dialogue.png");
+		_sprName = new FlxSprite(150, 225);
+		_sprName.loadGraphic("assets/images/ui_name.png");
 		add(_sprText);
 		add(_sprName);
 		
-		_text = new FlxText(_sprText.x + 7, _sprText.y + 7, 470, "Dark and frigid night");
-		_text.color = FlxColor.WHITE;
+		_text = new FlxText(_sprText.x + 15, _sprText.y + 10, 470, "Dark and frigid night");
 		_text.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(_text);
-		_name = new FlxText(_sprName.x + 7, _sprName.y + 5, 100, "Nizaemon");
-		_name.color = FlxColor.WHITE;
+		_name = new FlxText(_sprName.x + 15, _sprName.y + 5, 100, "Nizaemon");
 		_name.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(_name);
 		

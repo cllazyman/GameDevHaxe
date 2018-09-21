@@ -12,35 +12,77 @@
  class CharacterUI extends FlxTypedGroup<FlxSprite>
  {
      var _sprBack:FlxSprite;
-     var _txtHealth:FlxText;
-     var _txtMoney:FlxText;
-     var _sprHealth:FlxSprite;
-     var _sprMoney:FlxSprite;
-	 var _w :Int;
-	 var _h : Int;
-	 var group:FlxSpriteGroup;
-
+     var _textDay:FlxText;
+	 var _textTime:FlxText;
+	 var _sprDivideTime:FlxSprite;
+	 var _textPlayer:FlxText;
+	 var _sprPlayer:FlxSprite;
+	 var _textMoney:FlxText;
      public function new()
      {
          super();
-		//group = new FlxSpriteGroup(0, 0);
-		// group.origin.set(0, 0);
-         _sprBack = new FlxSprite(0, 0).makeGraphic(155, FlxG.height, FlxColor.BLACK);
-		 _sprBack.drawRect(150, 0, 5, FlxG.height, FlxColor.WHITE);
-	
-		// _sprBack.drawRect(10, 10, 130, 340, FlxColor.BLACK);
-		// _txtHealth.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
-         //_txtMoney = new FlxText(0, 20, 0, "0", 38);
-         //_txtMoney.setBorderStyle(SHADOW, FlxColor.GRAY, 1, 1);
-        
+         _sprBack = new FlxSprite(0, 0);
+		 _sprBack.loadGraphic("assets/images/ui_stats.png");
+		 
+		 _textDay = new FlxText(_sprBack.x + 15, _sprBack.y + 20, 135, "Day 1");
+		 _textDay.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		 _textTime = new FlxText(_sprBack.x + 85, _sprBack.y + 20, 80, "Morning");
+		 _textTime.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		 _sprDivideTime = new FlxSprite(_sprBack.x, _sprBack.y + 45);
+		 _sprDivideTime.loadGraphic("assets/images/ui_divide.png");
+		 
+		 _textPlayer = new FlxText(_sprBack.x + 15, _sprBack.y + 50, 80, "Shimotsuki");
+		 _textPlayer.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		 _sprPlayer = new FlxSprite(_sprBack.x + 100, _sprBack.y + 50);
+		 _sprPlayer.loadGraphic("assets/images/unknown.png");
+		 
+		 _textMoney = new FlxText(_sprBack.x + 15, _sprBack.y + 200, 80, "Money: 0");
+		 _textMoney.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		
          add(_sprBack);
-         //add(_txtHealth);
-         //add(_txtMoney);
+		 add(_textDay);
+         add(_textTime);
+         add(_sprDivideTime);
+		 add(_textPlayer);
+		 add(_sprPlayer);
+		 add(_textMoney);
          forEach(function(spr:FlxSprite)
          {
              spr.scrollFactor.set(0,0);
          });
      }
-
+	 //Change days
+	 public function updateDay(Day:Int = 1):Void
+     {
+         _textDay.text = "Day "+Std.string(Day);
+         
+     }
+	 //Change time. True is morining, False is night
+	 public function updateTime(IsMorning:Bool = true):Void
+	 {
+		 if (IsMorning == true){
+			 _textTime.text = "Morining";
+		 }
+		 else{
+			 _textTime.text = "Night";
+		 }
+	 }
+	 public function updatePlayerName(Name:String):Void
+     {
+         _textDay.text = Name;
+         
+     }
+	public function updateMoney(Money:Int = 0):Void
+     {
+         _textMoney.text = "Money: "+Money;
+         
+     }
+	 public function updatePlayerPicture(PlayerIndex:Int = 0):Void
+     {
+         if (PlayerIndex == 1){
+			  _sprPlayer.loadGraphic("assets/images/ui_divide.png");
+		 }
+         
+     }
 
  }
