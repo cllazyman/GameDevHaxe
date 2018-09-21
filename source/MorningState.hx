@@ -34,9 +34,7 @@ class MorningState extends FlxState {
 		morningMap.loadEntities(placeEntities, "entities");
 		
 		// Select the player
-		selectedPlayer = playerList.getFirstExisting();
-		selectedPlayer.selected = true;
-		selectedPlayer.immovable = false;
+		Select();
 		
 		// Add values to view
 		add(morningTiles);
@@ -53,6 +51,7 @@ class MorningState extends FlxState {
 		if (FlxG.mouse.justReleased) {
 			selectPlayer();
 		}
+		// Update Collisions
 		FlxG.collide(selectedPlayer, morningTiles);
 		FlxG.collide(selectedPlayer, npcList);
 		FlxG.collide(selectedPlayer, playerList);
@@ -71,20 +70,29 @@ class MorningState extends FlxState {
 		}
 	}
 	
+	// Selects the first alive player
+	private function Select(): Void {
+		selectedPlayer = playerList.getFirstAlive();
+		if (selectedPlayer != null) {
+			selectedPlayer.setSelected(true, false);
+		} else {
+			FlxG.switchState(new NightState());
+		}
+	}
+	
 	// Selects a player that is clicked
 	private function selectPlayer():Void {
 		var tempPosition:FlxPoint = FlxG.mouse.getWorldPosition();
 		var tempPlayer:Player = selectedPlayer;
 		for (player in playerList) {
-			if (player.overlapsPoint(tempPosition)) {
+			if (player.overlapsPoint(tempPosition) && player.alive) {
 				tempPlayer = player;
 			} else {
-				player.selected = false;
+				player.setSelected(false, true);
 			}
 		}
 		selectedPlayer = tempPlayer;
-		selectedPlayer.selected = true;
-		selectedPlayer.immovable = false;
+		selectedPlayer.setSelected(true, false);
 		FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 	}
 	
@@ -92,6 +100,8 @@ class MorningState extends FlxState {
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
 		if (FlxG.keys.justPressed.E) {
 			// DO SOME ACTION
+			selectedPlayer.setInactive();
+			Select();
 		}
 	}
 }

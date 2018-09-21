@@ -41,7 +41,7 @@ class Player extends FlxSprite {
 	}
 	
 	override public function update(elapsed:Float):Void {
-		if (selected) {
+		if (selected && alive) {
 			movement();
 		}
 		super.update(elapsed);
@@ -112,5 +112,18 @@ class Player extends FlxSprite {
 			}*/
 		}
 		actionBox.setPosition(x, y);
+	}
+	
+	// Set player to values when selected
+	public function setSelected(select:Bool, immov:Bool): Void {
+		selected = select;
+		immovable = immov;
+	}
+	
+	// Set player to values when inactive
+	public function setInactive(): Void {
+		selected = false;
+		alive = false;
+		immovable = true;
 	}
 }
