@@ -25,7 +25,8 @@ class Player extends FlxSprite {
 		
 		// Set graphics
 		loadGraphic(AssetPaths.mc__png, true, 27, 33);
-		setSize(27, 33);
+		setSize(27, 10);
+		offset.set(0, 23);
 		
 		animation.add("d", [0, 1], 6, false);
 		animation.add("l", [2, 3], 6, false);
@@ -36,7 +37,7 @@ class Player extends FlxSprite {
 		drag.x = drag.y = 1600;
 		
 		// Set actions
-		actionBox = new FlxObject(x, y, 12, 18);
+		actionBox = new FlxObject(x, y, 30, 40);
 	}
 	
 	override public function update(elapsed:Float):Void {

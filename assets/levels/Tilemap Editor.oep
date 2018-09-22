@@ -16,7 +16,7 @@
     <Width>800</Width>
     <Height>600</Height>
   </LevelMaximumSize>
-  <Filename>F:\homework\gd1\project 1\GameDevHaxe\assets\levels\Tilemap Editor.oep</Filename>
+  <Filename>C:\Users\Christian\Documents\GitHub\GameDevHaxe\assets\levels\Tilemap Editor.oep</Filename>
   <AngleMode>Degrees</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -133,7 +133,7 @@
     </Tileset>
     <Tileset>
       <Name>Main Room</Name>
-      <FilePath>..\images\tileset_real.png</FilePath>
+      <FilePath>..\images\tileset.png</FilePath>
       <TileSize>
         <Width>32</Width>
         <Height>32</Height>
@@ -144,8 +144,8 @@
   <EntityDefinitions>
     <EntityDefinition Name="player" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
-        <Width>16</Width>
-        <Height>16</Height>
+        <Width>27</Width>
+        <Height>33</Height>
       </Size>
       <Origin>
         <X>0</X>
@@ -161,8 +161,8 @@
     </EntityDefinition>
     <EntityDefinition Name="npc" Limit="-1" ResizableX="false" ResizableY="false" Rotatable="false" RotateIncrement="15">
       <Size>
-        <Width>16</Width>
-        <Height>16</Height>
+        <Width>27</Width>
+        <Height>33</Height>
       </Size>
       <Origin>
         <X>0</X>
