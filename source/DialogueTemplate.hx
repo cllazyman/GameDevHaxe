@@ -15,7 +15,7 @@ using flixel.util.FlxSpriteUtil;
  * @author Tony
  */
 
-class Beginning extends FlxTypedGroup<FlxSprite>
+class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 {
 	
 	// ** These are the sprites that we will use to show the combat hud interface
@@ -31,13 +31,12 @@ class Beginning extends FlxTypedGroup<FlxSprite>
 	public function new() 
 	{
 		super();
-		_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister"];
-		_nameContent = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
+		
 		// first, create our background. Make a black square, then draw borders onto it in white. Add it to our group.
 		_sprText = new FlxSprite(150,260);
 		//_sprText.drawRect(_sprText.x + 5, _sprText.y + 5, 480, 90, FlxColor.BLACK);
 		_sprText.loadGraphic("assets/images/ui_dialogue.png");
-		_sprName = new FlxSprite(150, 225);
+		_sprName = new FlxSprite(150, 220);
 		_sprName.loadGraphic("assets/images/ui_name.png");
 		add(_sprText);
 		add(_sprName);
