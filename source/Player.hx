@@ -24,7 +24,7 @@ class Player extends FlxSprite {
 		immovable = true;
 		
 		// Set graphics
-		loadGraphic(AssetPaths.character_mc1__png, true, 27, 33);
+		loadGraphic(AssetPaths.mc__png, true, 27, 33);
 		setSize(27, 33);
 		
 		animation.add("d", [0, 1], 6, false);

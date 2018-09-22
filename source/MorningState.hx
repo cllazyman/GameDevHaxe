@@ -20,7 +20,7 @@ class MorningState extends FlxState {
 	
 	override public function create():Void {
 		// Load the "morning1" file from the Ogmo Editor
-		morningMap = new FlxOgmoLoader(AssetPaths.morning1__oel);
+		morningMap = new FlxOgmoLoader(AssetPaths.tiles1__oel);
 		
 		// Initialize Tileset
 		morningTiles = morningMap.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");

@@ -21,7 +21,7 @@ class NightState extends FlxState {
 	override public function create():Void {
 		// Load the "morning1" file from the Ogmo Editor
 		// CHANGE TO NIGHT LEVEL
-		nightMap = new FlxOgmoLoader(AssetPaths.morning1__oel);
+		nightMap = new FlxOgmoLoader(AssetPaths.tiles1__oel);
 		
 		// Initialize Tileset
 		nightTiles = nightMap.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
