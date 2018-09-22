@@ -11,9 +11,11 @@ class MenuState extends FlxState {
 	override public function create():Void {
 		_btnPlay = new FlxButton(0, 0, "Play", clickPlay);
 		_btnPlay.screenCenter();
+		_btnPlay.onDown.sound = FlxG.sound.load(AssetPaths.ButtonClickSFX__ogg);
+		_btnPlay.onUp.sound = FlxG.sound.load(AssetPaths.ButtonClickSFX2__ogg);
 		add(_btnPlay);
 		super.create();
-		FlxG.sound.play(AssetPaths.jazz2__ogg);
+		FlxG.sound.play(AssetPaths.i_ahte_jaz__ogg);
 		add(new FlxText(14, 14, 100, "Hello World!"));
 	}
 
