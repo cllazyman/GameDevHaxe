@@ -1,6 +1,5 @@
 package;
 
-
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -8,7 +7,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-using flixel.util.FlxSpriteUtil;
 
 /**
  * The beginning of the story
@@ -27,14 +25,24 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 	var _alpha:Float = 0;	// we will use this to fade in and out our combat hud
 	var _textContent:Array<String>; 
 	var _nameContent:Array<String>; 
+	var _sprChoice1:FlxSprite;
+	var _textChoice1:FlxText;
+	var _sprChoice2:FlxSprite;
+	var _textChoice2:FlxText;
+	var _sprChoice3:FlxSprite;
+	var _textChoice3:FlxText;
+	var _textChoice1Content:Array<String>;
+	var _textChoice2Content:Array<String>;
+	var _textChoice3Content:Array<String>;
 	
+	var _isMakingChoice:Bool = false;
+	var _choiceMake:Int = 0;
+	var _afterMakingChoice:Bool = false;
 	public function new() 
 	{
 		super();
-		
 		// first, create our background. Make a black square, then draw borders onto it in white. Add it to our group.
 		_sprText = new FlxSprite(150,260);
-		//_sprText.drawRect(_sprText.x + 5, _sprText.y + 5, 480, 90, FlxColor.BLACK);
 		_sprText.loadGraphic("assets/images/ui_dialogue.png");
 		_sprName = new FlxSprite(150, 220);
 		_sprName.loadGraphic("assets/images/ui_name.png");
@@ -48,31 +56,69 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		_name.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(_name);
 		
+		_sprChoice1 = new FlxSprite(280,80);
+		_sprChoice1.loadGraphic("assets/images/ui_choice.png");
+		_textChoice1 = new FlxText(_sprChoice1.x + 15, _sprChoice1.y + 8, 100, _textChoice1Content[0]);
+		_textChoice1.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
+	
+		_sprChoice2 = new FlxSprite(280, 120);
+		_sprChoice2.loadGraphic("assets/images/ui_choice.png");
+		_textChoice2 = new FlxText(_sprChoice2.x + 15, _sprChoice2.y + 8, 100, _textChoice2Content[0]);
+		_textChoice2.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
+		
+		_sprChoice3 = new FlxSprite(280, 160);
+		_sprChoice3.loadGraphic("assets/images/ui_choice.png");
+		_textChoice3 = new FlxText(_sprChoice3.x + 15, _sprChoice3.y + 8, 100, _textChoice3Content[0]);
+		_textChoice3.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
+		
+		add(_sprChoice1);
+		add(_sprChoice2);
+		add(_sprChoice3);
+		add(_textChoice1);
+		add(_textChoice2);
+		add(_textChoice3);
+		_sprChoice1.visible = false;
+		_textChoice1.visible = false;
+		_sprChoice2.visible = false;
+		_textChoice2.visible = false;
+		_sprChoice3.visible = false;
+		_textChoice3.visible = false;
 		// like we did in our HUD class, we need to set the scrollFactor on each of our children objects to 0,0. We also set alpha to 0 (so we can fade this in)
 		forEach(function(spr:FlxSprite)
 		{
 			spr.scrollFactor.set();
 		});
-		
-
 	}
 
 	
 	override public function update(elapsed:Float):Void 
-	{	
-			// check to see any keys are pressed and set the cooresponding flags.
-			if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
+	{
+		if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
 			{
-				_textIndex = _textIndex + 1;
-				_text.text = _textContent[_textIndex];
-				_name.text = _nameContent[_textIndex];
-				
+				if (_isMakingChoice == false){
+					_textIndex = _textIndex + 1;
+					_text.text = _textContent[_textIndex];
+					_name.text = _nameContent[_textIndex];
+				}
 			}
 			
-			
+		if (_isMakingChoice == true){
+			if (FlxG.mouse.justReleased){	
+				if (FlxG.mouse.x >= 615 && FlxG.mouse.y <= 795){
+					if (FlxG.mouse.y >= 185 && FlxG.mouse.y <= 205){
+						_choiceMake = 1;
+					}
+					else if (FlxG.mouse.y >= 230 && FlxG.mouse.y <= 245){
+						_choiceMake = 2;
+					}
+					else if (FlxG.mouse.y >= 270 && FlxG.mouse.y <= 285){
+						_choiceMake = 3;
+					}
+				}
+			}
+		}
 		super.update(elapsed);
-		
-	
+
 	}
 	/**
 	 * This function is triggered when our results text has finished fading in. If we're not defeated, we will fade out the entire hud after a short delay
@@ -101,4 +147,14 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 			spr.alpha = _alpha;
 		});
 	}
+	
+	function setChoiceVisible(Visible:Bool):Void{
+		_sprChoice1.visible = Visible;
+		_textChoice1.visible = Visible;
+		_sprChoice2.visible = Visible;
+		_textChoice2.visible = Visible;
+		_sprChoice3.visible = Visible;
+		_textChoice3.visible = Visible;
+	
+	 }
 }

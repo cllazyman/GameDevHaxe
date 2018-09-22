@@ -15,23 +15,21 @@ using flixel.util.FlxSpriteUtil;
  * @author Tony
  */
 
-class Beginning2 extends DialogueTemplate
+class Beginning2 extends DialogueTemplate 
 {
 	
 	// ** These are the sprites that we will use to show the combat hud interface
 	
-	var _sprChoice1:FlxSprite;
-	var _textChoice1:FlxText;
-	var _sprChoice2:FlxSprite;
-	var _textChoice2:FlxText;
-	var _sprChoice3:FlxSprite;
-	var _textChoice3:FlxSprite;
+
 	
 	override public function new() 
 	{
 		
 		_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister"];
 		_nameContent = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
+		_textChoice1Content = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
+		_textChoice2Content = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
+		_textChoice3Content = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
 		super();
 		
 
@@ -39,22 +37,33 @@ class Beginning2 extends DialogueTemplate
 	override public function update(elapsed:Float):Void 
 	{	
 			// check to see any keys are pressed and set the cooresponding flags.
-			if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
-			{
-				_textIndex = _textIndex + 1;
-				_text.text = _textContent[_textIndex];
-				_name.text = _nameContent[_textIndex];
-				if (_textIndex == 3){
-					doneResultsIn(_sprText);
-					doneResultsIn(_sprName);
-				}
+			if (_textIndex == 2){
+				_isMakingChoice = true;
+				setChoiceVisible(true);
+				if (_choiceMake != 0 ){
+					_textIndex = 3;
+					_text.text = _textContent[_textIndex];
+					_name.text = _nameContent[_textIndex];
+					setChoiceVisible(false);
+					_choiceMake = 0;
+					_isMakingChoice = false;
+				}			
 			}
+			if (_textIndex == 4){
+				doneResultsIn(_sprText);
+				doneResultsIn(_sprName);
+			}	
+			
+			
+			
 			
 			
 		super.update(elapsed);
 		
 	
 	}
+	override public function setChoiceVisible(Visible:Bool):Void{
 
-
+		super.setChoiceVisible(Visible);
+	}
 }

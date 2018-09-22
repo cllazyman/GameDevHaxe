@@ -46,6 +46,9 @@
 		 add(_textPlayer);
 		 add(_sprPlayer);
 		 add(_textMoney);
+		 
+
+		
          forEach(function(spr:FlxSprite)
          {
              spr.scrollFactor.set(0,0);
@@ -74,7 +77,7 @@
      }
 	public function updateMoney(Money:Int = 0):Void
      {
-         _textMoney.text = "Money: "+Money;
+         _textMoney.text = "Money: "+Std.string(Money);
          
      }
 	 public function updatePlayerPicture(PlayerIndex:Int = 0):Void
