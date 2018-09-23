@@ -22,7 +22,7 @@ class NPC extends FlxSprite {
 		immovable = true;
 		
 		// Set graphics
-		loadGraphic("assets/images/player" + nType + ".png", true, 27, 34);
+		loadGraphic("assets/images/player" + nType + ".png", true, 27, 33);
 		animation.add("d", [0, 1], 6, false);
 		animation.add("l", [2, 3], 6, false);
 		animation.add("r", [4, 5], 6, false);
@@ -47,11 +47,44 @@ class NPC extends FlxSprite {
 		var posx:Float = target.x;
 		var posy:Float = target.y;
 		var point:FlxPoint = new FlxPoint(posx, posy);	
-		var xDiff:Float = Math.abs(Math.abs(x) - Math.abs(posx));
-		var yDiff:Float = Math.abs(Math.abs(y) - Math.abs(posy));
+		var xDiff:Float = Math.abs(x) - Math.abs(posx);
+		var yDiff:Float = Math.abs(y) - Math.abs(posy);
 		// Stop before touching the player
-		if(xDiff > target.width + 2 || yDiff > target.height + 2){
+		if(Math.abs(xDiff) > target.width + 2 || Math.abs(yDiff) > target.height + 2){
 			FlxVelocity.moveTowardsPoint(this, point, 200, 500);
+			// Change directions based off velocity
+			if (Math.abs(xDiff) > Math.abs(yDiff))
+			{
+				if (xDiff < 0)
+				{
+					facing = FlxObject.RIGHT;
+				}
+				else if (xDiff > 0)
+				{
+					facing = FlxObject.LEFT;
+				}
+			}
+			else if (Math.abs(xDiff) < Math.abs(yDiff))
+			{
+				if (target.y > y)
+				{
+					facing = FlxObject.DOWN;
+				}
+				else 
+				{
+					facing = FlxObject.UP;
+				}
+			}
+			switch (facing) {
+				case FlxObject.LEFT:
+					animation.play("l");
+				case FlxObject.RIGHT:
+					animation.play("r");
+				case FlxObject.UP:
+					animation.play("u");
+				case FlxObject.DOWN:
+					animation.play("d");
+			}
 		}
 		/*// Get key inputs
 		var up:Bool = FlxG.keys.anyPressed([UP, W]);
