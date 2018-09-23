@@ -75,61 +75,61 @@ class Shop extends FlxTypedGroup<FlxSprite>
 		_sprShop.loadGraphic("assets/images/ui_shop_revised.png");
 		add(_sprShop);
 		
-		_Item1 = new FlxText(_sprShop.x + 15,_sprShop.y + 10, 80, "Osake:");
+		_Item1 = new FlxText(_sprShop.x + 15,_sprShop.y + 10, 150, "Sake:");
 		_Item1.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item1Price = new FlxText(_sprShop.x + 90, _sprShop.y + 30, 80, "0G");
 		_Item1Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item1);
 		add(_Item1Price);
-		_Item2 = new FlxText(_sprShop.x + 15, _sprShop.y + 55, 80, "Tea:");
+		_Item2 = new FlxText(_sprShop.x + 15, _sprShop.y + 55, 150, "Tea:");
 		_Item2.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item2Price = new FlxText(_sprShop.x + 90, _sprShop.y + 75, 80, "0G");
 		_Item2Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item2);
 		add(_Item2Price);
-		_Item3 = new FlxText(_sprShop.x + 15,_sprShop.y + 100, 80, "Ink:");
+		_Item3 = new FlxText(_sprShop.x + 15,_sprShop.y + 100, 150, "Ink:");
 		_Item3.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item3Price = new FlxText(_sprShop.x + 90, _sprShop.y + 115, 80, "0G");
 		_Item3Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item3);
 		add(_Item3Price);
-		_Item4 = new FlxText(_sprShop.x + 15, _sprShop.y + 145, 80, "Ikebana:");
+		_Item4 = new FlxText(_sprShop.x + 15, _sprShop.y + 145, 150, "Arranged Flowers:");
 		_Item4.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item4Price = new FlxText(_sprShop.x + 90, _sprShop.y + 160, 80, "0G");
 		_Item4Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item4);
 		add(_Item4Price);
-		_Item5 = new FlxText(_sprShop.x + 15, _sprShop.y + 190, 145, "Item4:");
+		_Item5 = new FlxText(_sprShop.x + 15, _sprShop.y + 190, 150, "German Pen:");
 		_Item5.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item5Price = new FlxText(_sprShop.x + 90, _sprShop.y + 205, 160, "0G");
 		_Item5Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item5);
 		add(_Item5Price);
-		_Item6 = new FlxText(_sprShop.x + 170,_sprShop.y + 10, 80, "Item1:");
+		_Item6 = new FlxText(_sprShop.x + 170,_sprShop.y + 10, 150, "Famous Katana:");
 		_Item6.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item6Price = new FlxText(_sprShop.x + 245, _sprShop.y + 30, 80, "0G");
 		_Item6Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item6);
 		add(_Item6Price);
-		_Item7 = new FlxText(_sprShop.x + 170, _sprShop.y + 55, 80, "Item2:");
+		_Item7 = new FlxText(_sprShop.x + 170, _sprShop.y + 55, 150, "Chinese Tea Pot:");
 		_Item7.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item7Price = new FlxText(_sprShop.x + 245, _sprShop.y + 75, 80, "0G");
 		_Item7Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item7);
 		add(_Item7Price);
-		_Item8 = new FlxText(_sprShop.x + 170,_sprShop.y + 100, 80, "Item3:");
+		_Item8 = new FlxText(_sprShop.x + 170,_sprShop.y + 100, 150, "Kimono:");
 		_Item8.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item8Price = new FlxText(_sprShop.x + 245, _sprShop.y + 115, 80, "0G");
 		_Item8Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item8);
 		add(_Item8Price);
-		_Item9 = new FlxText(_sprShop.x + 170, _sprShop.y + 145, 80, "Item4:");
+		_Item9 = new FlxText(_sprShop.x + 170, _sprShop.y + 145, 150, "Japanese Fan:");
 		_Item9.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item9Price = new FlxText(_sprShop.x + 245, _sprShop.y + 160, 80, "0G");
 		_Item9Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		add(_Item9);
 		add(_Item9Price);
-		_Item10 = new FlxText(_sprShop.x + 170, _sprShop.y + 190, 145, "Item4:");
+		_Item10 = new FlxText(_sprShop.x + 170, _sprShop.y + 190, 150, "Mythic Shamisen:");
 		_Item10.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		_Item10Price = new FlxText(_sprShop.x + 245, _sprShop.y + 205, 160, "0G");
 		_Item10Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
@@ -155,7 +155,42 @@ class Shop extends FlxTypedGroup<FlxSprite>
 			}
 			
 		if (FlxG.mouse.justReleased){	
+
+				if (FlxG.mouse.x >= 610 && FlxG.mouse.x <= 760 && FlxG.mouse.y>= 140 && FlxG.mouse.y <= 175){
+					_shopItem = 1;
+				}
+				else if (FlxG.mouse.x >= 610 && FlxG.mouse.x <= 760 && FlxG.mouse.y>= 185 && FlxG.mouse.y <= 215){
+					_shopItem = 2;
+				}
+				else if (FlxG.mouse.x >= 610 && FlxG.mouse.x <= 760 && FlxG.mouse.y>= 230 && FlxG.mouse.y <= 265){
+					_shopItem = 3;
+				}
+				else if (FlxG.mouse.x >= 610 && FlxG.mouse.x <= 760 && FlxG.mouse.y>= 275 && FlxG.mouse.y <= 310){
+					_shopItem = 4;
+				}
+				else if (FlxG.mouse.x >= 610 && FlxG.mouse.x <= 760 && FlxG.mouse.y>= 320 && FlxG.mouse.y <= 350){
+					_shopItem = 5;
+				}
+				else if (FlxG.mouse.x >= 775 && FlxG.mouse.x <= 920 && FlxG.mouse.y>= 140 && FlxG.mouse.y <= 175){
+					_shopItem = 6;
+				}
+				else if (FlxG.mouse.x >= 775 && FlxG.mouse.x <= 920 && FlxG.mouse.y>= 185 && FlxG.mouse.y <= 215){
+					_shopItem = 7;
+				}
+				else if (FlxG.mouse.x >= 775 && FlxG.mouse.x <= 920 && FlxG.mouse.y>= 230 && FlxG.mouse.y <= 265){
+					_shopItem = 8;
+				}
+				else if (FlxG.mouse.x >= 775 && FlxG.mouse.x <= 920 && FlxG.mouse.y>= 275 && FlxG.mouse.y <= 310){
+					_shopItem = 9;
+				}
+				else if (FlxG.mouse.x >= 775 && FlxG.mouse.x <= 920 && FlxG.mouse.y>= 320 && FlxG.mouse.y <= 350){
+					_shopItem = 10;
+				}
+				else{
+					_shopItem = 0;
+				}
 				_text.text = Std.string(_shopItem) +"  " + Std.string(FlxG.mouse.x) +"   " + Std.string(FlxG.mouse.y);
+				
 		}
 			super.update(elapsed);
 	}
