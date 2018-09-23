@@ -9,6 +9,8 @@ import flixel.math.FlxRect;
 
 /**
  *  [shimotsuki, tsuruko, setsuko, kawako]
+ * Sake, Tea, Ink, Arranged Flowers
+ * German Pen,Famous Katana, Chinese Tea Pot, Kimono, Japanese Fan, Mythic Shamisen
  * @author Christian
  */
 class Player extends FlxSprite {
