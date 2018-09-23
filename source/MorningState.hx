@@ -49,7 +49,7 @@ class MorningState extends FlxState {
 		add(visualLayers);
 		add(playerList);
 		add(npcList);
-		add(_characterUI);
+		add(characterUI);
 		
 		// Extra
 		

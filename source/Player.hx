@@ -8,7 +8,7 @@ import flixel.math.FlxRect;
 
 
 /**
- *  [mc, character_tsuruko, character_setsuko, character_kawako]
+ *  [shimotsuki, tsuruko, setsuko, kawako]
  * @author Christian
  */
 class Player extends FlxSprite {
