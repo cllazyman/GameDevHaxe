@@ -2,6 +2,8 @@ package;
 
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
+import flixel.math.FlxVelocity;
 
 /**
  * ...
@@ -39,6 +41,17 @@ class NPC extends FlxSprite {
 	
 	// Moves the npc to follow the target
 	private function follow():Void {
+		// NPC can be moved through
+		solid = false;
+		var posx:Float = target.x;
+		var posy:Float = target.y;
+		var point:FlxPoint = new FlxPoint(posx, posy);	
+		var xDiff:Float = Math.abs(x) - Math.abs(posx);
+		var yDiff:Float = Math.abs(y) - Math.abs(posy);
+		// Stop before touching the player
+		if(xDiff > target.width + 2 || yDiff > target.height + 2){
+			FlxVelocity.moveTowardsPoint(this, point, 150, 2);
+		}
 		/*// Get key inputs
 		var up:Bool = FlxG.keys.anyPressed([UP, W]);
 		var down:Bool = FlxG.keys.anyPressed([DOWN, S]);

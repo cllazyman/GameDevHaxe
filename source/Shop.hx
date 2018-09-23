@@ -53,6 +53,7 @@ class Shop extends FlxTypedGroup<FlxSprite>
 	
 	public function new() 
 	{
+		FlxG.sound.play(AssetPaths.menu__ogg);
 		_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister"];
 		_nameContent = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
 		super();
