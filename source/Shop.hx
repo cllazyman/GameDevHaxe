@@ -13,7 +13,7 @@ import flixel.util.FlxColor;
  * @author Tony
  */
 
-class DialogueTemplate extends FlxTypedGroup<FlxSprite>
+class Shop extends FlxTypedGroup<FlxSprite>
 {
 	
 	// ** These are the sprites that we will use to show the combat hud interface
@@ -23,22 +23,18 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 	var _name:FlxText; //Name
 	var _textIndex = 0; // Count the index of text
 	var _alpha:Float = 0;	// we will use this to fade in and out our combat hud
-	var _textContent:Array<String>;   // Contain all the texts
-	var _nameContent:Array<String>;   //Contain all the names
-	var _sprChoice1:FlxSprite;       //Choice 1
-	var _textChoice1:FlxText;
-	var _sprChoice2:FlxSprite;      //choice 2
-	var _textChoice2:FlxText;
-	var _sprChoice3:FlxSprite;     //Choice 3
-	var _textChoice3:FlxText;
-	var _textChoice1Content:Array<String>; //Contain all the texts of Choice 1
-	var _textChoice2Content:Array<String>; //Contain all the texts of Choice 2
-	var _textChoice3Content:Array<String>; //Contain all the texts of Choice 3
+	var _textContent:Array<String>; 
+	var _nameContent:Array<String>; 
 	
-	var _isMakingChoice:Bool = false;  //When making a choice, SPACE is banned
-	var _choiceMake:Int = 0;   //Which choice the player chooses
+	var _sprShop:FlxSprite;
+	
+	var _isMakingChoice:Bool = false;
+	var _choiceMake:Int = 0;
+	var _afterMakingChoice:Bool = false;
 	public function new() 
 	{
+		_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister"];
+		_nameContent = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
 		super();
 		// first, create our background. Make a black square, then draw borders onto it in white. Add it to our group.
 		_sprText = new FlxSprite(150,260);
@@ -48,7 +44,6 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		add(_sprText);
 		add(_sprName);
 		
-		//Text
 		_text = new FlxText(_sprText.x + 15, _sprText.y + 10, 470, _textContent[0]);
 		_text.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(_text);
@@ -56,37 +51,12 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		_name.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(_name);
 		
-		//Choices
-		_sprChoice1 = new FlxSprite(280,80);
-		_sprChoice1.loadGraphic("assets/images/ui_choice.png");
-		_textChoice1 = new FlxText(_sprChoice1.x + 15, _sprChoice1.y + 8, 100, _textChoice1Content[0]);
-		_textChoice1.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
+		_sprShop = new FlxSprite(280,20);
+		_sprShop.loadGraphic("assets/images/ui_shop.png");
+		add(_sprShop);
 	
-		_sprChoice2 = new FlxSprite(280, 120);
-		_sprChoice2.loadGraphic("assets/images/ui_choice.png");
-		_textChoice2 = new FlxText(_sprChoice2.x + 15, _sprChoice2.y + 8, 100, _textChoice2Content[0]);
-		_textChoice2.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
-		
-		_sprChoice3 = new FlxSprite(280, 160);
-		_sprChoice3.loadGraphic("assets/images/ui_choice.png");
-		_textChoice3 = new FlxText(_sprChoice3.x + 15, _sprChoice3.y + 8, 100, _textChoice3Content[0]);
-		_textChoice3.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
-		
-		add(_sprChoice1);
-		add(_sprChoice2);
-		add(_sprChoice3);
-		add(_textChoice1);
-		add(_textChoice2);
-		add(_textChoice3);
-		
-		//Initialize choices invisible
-		_sprChoice1.visible = false;
-		_textChoice1.visible = false;
-		_sprChoice2.visible = false;
-		_textChoice2.visible = false;
-		_sprChoice3.visible = false;
-		_textChoice3.visible = false;
-		
+
+		// like we did in our HUD class, we need to set the scrollFactor on each of our children objects to 0,0. We also set alpha to 0 (so we can fade this in)
 		forEach(function(spr:FlxSprite)
 		{
 			spr.scrollFactor.set();
@@ -165,13 +135,5 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		});
 	}
 	
-	function setChoiceVisible(Visible:Bool):Void{
-		_sprChoice1.visible = Visible;
-		_textChoice1.visible = Visible;
-		_sprChoice2.visible = Visible;
-		_textChoice2.visible = Visible;
-		_sprChoice3.visible = Visible;
-		_textChoice3.visible = Visible;
-	
-	 }
+
 }

@@ -8,6 +8,7 @@ import flixel.tile.FlxTilemap;
 class PlayState extends FlxState {
 	var _characterUI:CharacterUI;
 	var _beginning2:Beginning2;
+	var _shop:Shop;
 	var _money:Int = 0;
 	var _health:Int = 3;
 	var _player:Player;
@@ -36,6 +37,8 @@ class PlayState extends FlxState {
 		add(_characterUI);
 		_beginning2 = new Beginning2();
 		add(_beginning2);
+		//_shop = new Shop();
+		//add(_shop);
 		super.create();
 	}
 	 function placeEntities(entityName:String, entityData:Xml):Void

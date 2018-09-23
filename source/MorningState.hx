@@ -15,6 +15,7 @@ class MorningState extends FlxState {
 	var collisionLayers:FlxTypedGroup<FlxTilemap>;
 	var playerList:FlxTypedGroup<Player>;
 	var npcList:FlxTypedGroup<NPC>;
+	var _characterUI:CharacterUI;
 	
 	// For Player actions
 	var selectedPlayer:Player;
@@ -47,7 +48,8 @@ class MorningState extends FlxState {
 		add(npcList);
 		
 		// Extra
-		
+		_characterUI = new CharacterUI();
+		add(_characterUI);
 		super.create();
 	}
 
