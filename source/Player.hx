@@ -19,6 +19,7 @@ class Player extends FlxSprite {
 	public var collisionBox:FlxRect;
 	public var actionBox:FlxObject;
 	public var selected:Bool = false;
+	public var limitedItems:Map<String, Int>;
 
 	public function new(X:Float, Y:Float, PType:Int) {
 		//Set variables
@@ -42,6 +43,8 @@ class Player extends FlxSprite {
 		// Set actions
 		collisionBox = new FlxRect(x, y, 27, 33);
 		actionBox = new FlxObject(x, y, 30, 40);
+		
+		limitedItems = ["Sake" => 0, "Tea" => 1, "Ink" => 2, "Arranged Flowers" => 3];
 	}
 	
 	override public function update(elapsed:Float):Void {

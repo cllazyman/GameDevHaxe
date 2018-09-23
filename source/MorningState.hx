@@ -54,8 +54,8 @@ class MorningState extends FlxState {
 		add(characterUI);
 		
 		// Extra
-
-
+		npcList.getFirstAlive().target = selectedPlayer;
+		
 		super.create();
 	}
 
