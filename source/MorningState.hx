@@ -7,6 +7,7 @@ import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.math.FlxPoint;
 import flixel.tile.FlxTilemap;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.util.FlxSort;
 
 class MorningState extends FlxState {
 	// Initialization
@@ -15,7 +16,7 @@ class MorningState extends FlxState {
 	var collisionLayers:FlxTypedGroup<FlxTilemap>;
 	var playerList:FlxTypedGroup<Player>;
 	var npcList:FlxTypedGroup<NPC>;
-	var _characterUI:CharacterUI;
+	var characterUI:CharacterUI;
 	
 	// For Player actions
 	var selectedPlayer:Player;
@@ -32,12 +33,14 @@ class MorningState extends FlxState {
 		placeLayers("stuff1", false);
 		placeLayers("stuff2", false);
 		placeLayers("unwalkable", true);
-		placeLayers("overlay", false);
 		
 		// Initialize all entities
 		playerList = new FlxTypedGroup<Player>();
 		npcList = new FlxTypedGroup<NPC>();
 		morningMap.loadEntities(placeEntities, "entities");
+		
+		// Initialize UI
+		characterUI = new CharacterUI();
 		
 		// Select the player
 		Select();
@@ -46,10 +49,11 @@ class MorningState extends FlxState {
 		add(visualLayers);
 		add(playerList);
 		add(npcList);
+		add(_characterUI);
 		
 		// Extra
-		_characterUI = new CharacterUI();
-		add(_characterUI);
+		
+
 		super.create();
 	}
 
@@ -59,10 +63,13 @@ class MorningState extends FlxState {
 			selectPlayer();
 		}
 		
+		// Update depth changes
+		playerList.sort(FlxSort.byY);
+		
 		// Update Collisions
 		FlxG.collide(selectedPlayer, collisionLayers);
-		FlxG.collide(selectedPlayer, npcList);
 		FlxG.collide(selectedPlayer, playerList);
+		FlxG.collide(selectedPlayer, npcList);
 		FlxG.overlap(selectedPlayer.actionBox, npcList, playerActions);
 		super.update(elapsed);
 	}
@@ -92,7 +99,7 @@ class MorningState extends FlxState {
 	private function Select(): Void {
 		selectedPlayer = playerList.getFirstAlive();
 		if (selectedPlayer != null) {
-			selectedPlayer.setSelected(true, false);
+			selectedPlayer.isSelected(true);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 		} else {
 			FlxG.switchState(new NightState());
@@ -107,11 +114,11 @@ class MorningState extends FlxState {
 			if (player.overlapsPoint(tempPosition) && player.alive) {
 				tempPlayer = player;
 			} else {
-				player.setSelected(false, true);
+				player.isSelected(false);
 			}
 		}
 		selectedPlayer = tempPlayer;
-		selectedPlayer.setSelected(true, false);
+		selectedPlayer.isSelected(true);
 		FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 	}
 	

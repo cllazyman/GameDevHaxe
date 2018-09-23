@@ -4,16 +4,17 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
 
 
 /**
- * ...
+ *  [mc, character_tsuruko, character_setsuko, character_kawako]
  * @author Christian
  */
 class Player extends FlxSprite {
 	// Initialize variables
 	private var pType:Int;
-	private var speed:Float = 200;
+	public var collisionBox:FlxRect;
 	public var actionBox:FlxObject;
 	public var selected:Bool = false;
 
@@ -22,21 +23,22 @@ class Player extends FlxSprite {
 		super(X, Y);
 		pType = PType;
 		immovable = true;
+		alpha = 0.75;
 		
 		// Set graphics
-		loadGraphic(AssetPaths.mc__png, true, 27, 33);
-		setSize(27, 10);
-		offset.set(0, 23);
-		
+		loadGraphic("assets/images/player" + pType + ".png", true, 27, 33);
 		animation.add("d", [0, 1], 6, false);
 		animation.add("l", [2, 3], 6, false);
 		animation.add("r", [4, 5], 6, false);
 		animation.add("u", [6, 7], 6, false);
+		setSize(21, 23);
+		offset.set(3, 5);
 		
 		// Set movement
 		drag.x = drag.y = 1600;
 		
 		// Set actions
+		collisionBox = new FlxRect(x, y, 27, 33);
 		actionBox = new FlxObject(x, y, 30, 40);
 	}
 	
@@ -49,23 +51,19 @@ class Player extends FlxSprite {
 	
 	// Moves the player on keyboard input
 	private function movement():Void {
-		// Set movement bools
-		var up:Bool = false;
-		var down:Bool = false;
-		var left:Bool = false;
-		var right:Bool = false;
-		
 		// Get key inputs
-		up = FlxG.keys.anyPressed([UP, W]);
-		down = FlxG.keys.anyPressed([DOWN, S]);
-		left = FlxG.keys.anyPressed([LEFT, A]);
-		right = FlxG.keys.anyPressed([RIGHT, D]);
+		var up:Bool = FlxG.keys.anyPressed([UP, W]);
+		var down:Bool = FlxG.keys.anyPressed([DOWN, S]);
+		var left:Bool = FlxG.keys.anyPressed([LEFT, A]);
+		var right:Bool = FlxG.keys.anyPressed([RIGHT, D]);
 		
 		// Cancel input if two opposite keys pressed
-		if (up && down)
+		if (up && down) {
 			up = down = false;
-		if (left && right)
+		}
+		if (left && right) {
 			left = right = false;
+		}
 		
 		// Calculate angle and velocity
 		if (up || down || left || right) {
@@ -90,12 +88,11 @@ class Player extends FlxSprite {
 				mA = 180;
 				facing = FlxObject.LEFT;
 			} else if (right) {
-				mA = 0;
 				facing = FlxObject.RIGHT;
 			}
 			
 			// Determine the velocity based on angle and speed
-			velocity.set(speed, 0);
+			velocity.set(200, 0);
 			velocity.rotate(FlxPoint.weak(0, 0), mA);
 			
 			// Change the face
@@ -112,19 +109,26 @@ class Player extends FlxSprite {
 				}
 			}
 		}
+		//collisionBox.setPosition(x, y+23);
 		actionBox.setPosition(x, y);
 	}
 	
-	// Set player to values when selected
-	public function setSelected(select:Bool, immov:Bool): Void {
+	// Set player to selected or not
+	public function isSelected(select:Bool): Void {
 		selected = select;
-		immovable = immov;
+		immovable = !select;
+		if (select) {
+			alpha = 1;
+		} else {
+			alpha = 0.75;
+		}
 	}
 	
 	// Set player to values when inactive
 	public function setInactive(): Void {
 		selected = false;
 		alive = false;
-		immovable = true;
+		alpha = 0.5;
+		solid = false;
 	}
 }
