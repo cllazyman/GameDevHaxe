@@ -99,18 +99,6 @@
       </ScrollFactor>
       <ExportMode>CSV</ExportMode>
     </LayerDefinition>
-    <LayerDefinition xsi:type="TileLayerDefinition">
-      <Name>overlay</Name>
-      <Grid>
-        <Width>32</Width>
-        <Height>32</Height>
-      </Grid>
-      <ScrollFactor>
-        <X>1</X>
-        <Y>1</Y>
-      </ScrollFactor>
-      <ExportMode>CSV</ExportMode>
-    </LayerDefinition>
   </LayerDefinitions>
   <Tilesets>
     <Tileset>
@@ -123,7 +111,7 @@
       <TileSep>0</TileSep>
     </Tileset>
     <Tileset>
-      <Name>morning tiles</Name>
+      <Name>tileset16</Name>
       <FilePath>..\images\tileset.png</FilePath>
       <TileSize>
         <Width>16</Width>
@@ -132,7 +120,7 @@
       <TileSep>0</TileSep>
     </Tileset>
     <Tileset>
-      <Name>Main Room</Name>
+      <Name>tileset32</Name>
       <FilePath>..\images\tileset.png</FilePath>
       <TileSize>
         <Width>32</Width>
@@ -155,7 +143,7 @@
         <RectColor A="255" R="0" G="255" B="255" />
       </ImageDefinition>
       <ValueDefinitions>
-        <ValueDefinition xsi:type="IntValueDefinition" Name="pType" Default="0" Min="0" Max="100" ShowSlider="false" />
+        <ValueDefinition xsi:type="IntValueDefinition" Name="pType" Default="0" Min="0" Max="5" ShowSlider="true" />
       </ValueDefinitions>
       <NodesDefinition Enabled="false" Limit="-1" DrawMode="None" Ghost="false" />
     </EntityDefinition>

@@ -21,7 +21,7 @@ class NightState extends FlxState {
 	
 	override public function create():Void {
 		// Load the "night" file from the Ogmo Editor
-		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
+		/*morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
 		
 		// Initialize Layers
 		visualLayers = new FlxTypedGroup<FlxTilemap>();
@@ -44,14 +44,14 @@ class NightState extends FlxState {
 		// Add values to view
 		add(visualLayers);
 		add(playerList);
-		add(npcList);
+		add(npcList);*/
 		
 		// Extra
 		
 		super.create();
 	}
 
-	override public function update(elapsed:Float):Void {
+	/*override public function update(elapsed:Float):Void {
 		// For selecting players
 		if (FlxG.mouse.justReleased) {
 			selectPlayer();
@@ -120,5 +120,5 @@ class NightState extends FlxState {
 			selectedPlayer.setInactive();
 			Select();
 		}
-	}
+	}*/
 }
