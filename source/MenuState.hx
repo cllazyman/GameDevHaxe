@@ -15,7 +15,7 @@ class MenuState extends FlxState {
 		_btnPlay.onUp.sound = FlxG.sound.load(AssetPaths.ButtonClickSFX2__ogg);
 		add(_btnPlay);
 		super.create();
-		FlxG.sound.play(AssetPaths.i_ahte_jaz__ogg);
+		FlxG.sound.play(AssetPaths.menu__ogg);
 		add(new FlxText(14, 14, 100, "Hello World!"));
 	}
 

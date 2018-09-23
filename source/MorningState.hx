@@ -23,9 +23,9 @@ class MorningState extends FlxState {
 	
 	override public function create():Void {
 		// Load the "morning1" file from the Ogmo Editor
-		morningMap = new FlxOgmoLoader(AssetPaths.morning1__oel);
+		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
 		// Play the music
-		FlxG.sound.play(AssetPaths.jazz_2__ogg);
+		FlxG.sound.play(AssetPaths.morning__ogg);
 		
 		// Initialize Layers
 		visualLayers = new FlxTypedGroup<FlxTilemap>();

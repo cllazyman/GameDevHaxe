@@ -33,7 +33,7 @@ class NightState extends FlxState {
 		placeLayers("unwalkable", true);
 		placeLayers("overlay", false);
 		//Play music
-		FlxG.sound.play(AssetPaths.jazz_3__ogg);
+		FlxG.sound.play(AssetPaths.night__ogg);
 		
 		// Initialize all entities
 		playerList = new FlxTypedGroup<Player>();
