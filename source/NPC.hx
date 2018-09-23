@@ -37,6 +37,7 @@ class NPC extends FlxSprite {
 	override public function update(elapsed:Float):Void {
 		//follow();
 		super.update(elapsed);
+		follow();
 	}
 	
 	// Moves the npc to follow the target
@@ -46,11 +47,11 @@ class NPC extends FlxSprite {
 		var posx:Float = target.x;
 		var posy:Float = target.y;
 		var point:FlxPoint = new FlxPoint(posx, posy);	
-		var xDiff:Float = Math.abs(x) - Math.abs(posx);
-		var yDiff:Float = Math.abs(y) - Math.abs(posy);
+		var xDiff:Float = Math.abs(Math.abs(x) - Math.abs(posx));
+		var yDiff:Float = Math.abs(Math.abs(y) - Math.abs(posy));
 		// Stop before touching the player
 		if(xDiff > target.width + 2 || yDiff > target.height + 2){
-			FlxVelocity.moveTowardsPoint(this, point, 150, 2);
+			FlxVelocity.moveTowardsPoint(this, point, 200, 500);
 		}
 		/*// Get key inputs
 		var up:Bool = FlxG.keys.anyPressed([UP, W]);
