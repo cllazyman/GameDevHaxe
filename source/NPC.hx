@@ -14,6 +14,7 @@ class NPC extends FlxSprite {
 	private var nType:Int;
 	private var speed:Float = 200;
 	public var target:Player;
+	private var following:Bool = false;
 
 	public function new(X:Float = 0, Y:Float = 0, NType:Int) {
 		//Set values
@@ -35,15 +36,21 @@ class NPC extends FlxSprite {
 	}
 	
 	override public function update(elapsed:Float):Void {
-		//follow();
 		super.update(elapsed);
-		follow();
+		if (following) {
+			follow();
+		}
+	}
+	
+	public function setFollow(tar:Player):Void {
+		target = tar;
+		immovable = false;
+		following = true;
 	}
 	
 	// Moves the npc to follow the target
 	private function follow():Void {
 		// NPC can be moved through
-		solid = false;
 		var posx:Float = target.x;
 		var posy:Float = target.y;
 		var point:FlxPoint = new FlxPoint(posx, posy);	

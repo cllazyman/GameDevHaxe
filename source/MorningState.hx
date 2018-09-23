@@ -17,14 +17,17 @@ class MorningState extends FlxState {
 	var playerList:FlxTypedGroup<Player>;
 	var npcList:FlxTypedGroup<NPC>;
 	var characterUI:CharacterUI;
+	var test:Bool = false;
+
 	// For Player actions
 	var selectedPlayer:Player;
 	
 	override public function create():Void {
-		// Load the "morning1" file from the Ogmo Editor
-		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
 		// Play the music
 		FlxG.sound.play(AssetPaths.morning__ogg);
+
+		// Load the "morning" file from the Ogmo Editor
+		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
 		
 		// Initialize Layers
 		visualLayers = new FlxTypedGroup<FlxTilemap>();
@@ -50,16 +53,23 @@ class MorningState extends FlxState {
 		add(visualLayers);
 		add(playerList);
 		add(npcList);
-		
 		add(characterUI);
 		
 		// Extra
-		npcList.getFirstAlive().target = selectedPlayer;
+		FlxG.watch.add(selectedPlayer, "x");
+		FlxG.watch.add(selectedPlayer, "y");
+		FlxG.watch.add(selectedPlayer.actionBox, "x");
+		FlxG.watch.add(selectedPlayer.actionBox, "y");
+		FlxG.watch.add(npcList.getFirstAlive(), "x");
+		FlxG.watch.add(npcList.getFirstAlive(), "y");
+		FlxG.watch.add(this,"test");
+		FlxG.debugger.drawDebug = true;
 		
 		super.create();
 	}
 
 	override public function update(elapsed:Float):Void {
+		test = false;
 		// For selecting players
 		if (FlxG.mouse.justReleased) {
 			selectPlayer();
@@ -72,7 +82,8 @@ class MorningState extends FlxState {
 		FlxG.collide(selectedPlayer, collisionLayers);
 		FlxG.collide(selectedPlayer, playerList);
 		FlxG.collide(selectedPlayer, npcList);
-		FlxG.overlap(selectedPlayer.actionBox, npcList, playerActions);
+		FlxG.overlap(selectedPlayer.actionBox, npcList.getFirstAlive(), playerActions);
+		FlxG.collide(npcList, collisionLayers);
 		super.update(elapsed);
 	}
 	
@@ -91,7 +102,9 @@ class MorningState extends FlxState {
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
 		if (entityName == "player") {
-			playerList.add(new Player(x, y, Std.parseInt(entityData.get("pType"))));
+			var temp:Player = new Player(x, y, Std.parseInt(entityData.get("pType")));
+			playerList.add(temp);
+			add(temp.actionBox);
 		} else if (entityName == "npc") {
 			npcList.add(new NPC(x, y, Std.parseInt(entityData.get("nType"))));
 		}
@@ -127,9 +140,11 @@ class MorningState extends FlxState {
 	// Performs an action
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
 		if (FlxG.keys.justPressed.E) {
+			npc.setFollow(selectedPlayer);
 			// DO SOME ACTION
-			selectedPlayer.setInactive();
-			Select();
+			//selectedPlayer.setInactive();
+			//Select();
 		}
+		test = true;
 	}
 }
