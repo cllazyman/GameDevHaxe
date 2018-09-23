@@ -17,7 +17,6 @@ class MorningState extends FlxState {
 	var playerList:FlxTypedGroup<Player>;
 	var npcList:FlxTypedGroup<NPC>;
 	var characterUI:CharacterUI;
-	
 	// For Player actions
 	var selectedPlayer:Player;
 	
@@ -49,10 +48,11 @@ class MorningState extends FlxState {
 		add(visualLayers);
 		add(playerList);
 		add(npcList);
+		
 		add(characterUI);
 		
 		// Extra
-		
+
 
 		super.create();
 	}

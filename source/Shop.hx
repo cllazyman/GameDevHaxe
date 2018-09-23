@@ -28,9 +28,29 @@ class Shop extends FlxTypedGroup<FlxSprite>
 	
 	var _sprShop:FlxSprite;
 	
-	var _isMakingChoice:Bool = false;
-	var _choiceMake:Int = 0;
-	var _afterMakingChoice:Bool = false;
+	var _Item1:FlxText;
+	var _Item2:FlxText;
+	var _Item3:FlxText;
+	var _Item4:FlxText;
+	var _Item5:FlxText;
+	var _Item6:FlxText;
+	var _Item7:FlxText;
+	var _Item8:FlxText;
+	var _Item9:FlxText;
+	var _Item10:FlxText;
+	var _Item1Price:FlxText;
+	var _Item2Price:FlxText;
+	var _Item3Price:FlxText;
+	var _Item4Price:FlxText;
+	var _Item5Price:FlxText;
+	var _Item6Price:FlxText;
+	var _Item7Price:FlxText;
+	var _Item8Price:FlxText;
+	var _Item9Price:FlxText;
+	var _Item10Price:FlxText;
+	
+	var _shopItem:Int = 0;
+	
 	public function new() 
 	{
 		_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister"];
@@ -52,8 +72,69 @@ class Shop extends FlxTypedGroup<FlxSprite>
 		add(_name);
 		
 		_sprShop = new FlxSprite(280,20);
-		_sprShop.loadGraphic("assets/images/ui_shop.png");
+		_sprShop.loadGraphic("assets/images/ui_shop_revised.png");
 		add(_sprShop);
+		
+		_Item1 = new FlxText(_sprShop.x + 15,_sprShop.y + 10, 80, "Osake:");
+		_Item1.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item1Price = new FlxText(_sprShop.x + 90, _sprShop.y + 30, 80, "0G");
+		_Item1Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item1);
+		add(_Item1Price);
+		_Item2 = new FlxText(_sprShop.x + 15, _sprShop.y + 55, 80, "Tea:");
+		_Item2.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item2Price = new FlxText(_sprShop.x + 90, _sprShop.y + 75, 80, "0G");
+		_Item2Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item2);
+		add(_Item2Price);
+		_Item3 = new FlxText(_sprShop.x + 15,_sprShop.y + 100, 80, "Ink:");
+		_Item3.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item3Price = new FlxText(_sprShop.x + 90, _sprShop.y + 115, 80, "0G");
+		_Item3Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item3);
+		add(_Item3Price);
+		_Item4 = new FlxText(_sprShop.x + 15, _sprShop.y + 145, 80, "Ikebana:");
+		_Item4.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item4Price = new FlxText(_sprShop.x + 90, _sprShop.y + 160, 80, "0G");
+		_Item4Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item4);
+		add(_Item4Price);
+		_Item5 = new FlxText(_sprShop.x + 15, _sprShop.y + 190, 145, "Item4:");
+		_Item5.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item5Price = new FlxText(_sprShop.x + 90, _sprShop.y + 205, 160, "0G");
+		_Item5Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item5);
+		add(_Item5Price);
+		_Item6 = new FlxText(_sprShop.x + 170,_sprShop.y + 10, 80, "Item1:");
+		_Item6.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item6Price = new FlxText(_sprShop.x + 245, _sprShop.y + 30, 80, "0G");
+		_Item6Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item6);
+		add(_Item6Price);
+		_Item7 = new FlxText(_sprShop.x + 170, _sprShop.y + 55, 80, "Item2:");
+		_Item7.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item7Price = new FlxText(_sprShop.x + 245, _sprShop.y + 75, 80, "0G");
+		_Item7Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item7);
+		add(_Item7Price);
+		_Item8 = new FlxText(_sprShop.x + 170,_sprShop.y + 100, 80, "Item3:");
+		_Item8.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item8Price = new FlxText(_sprShop.x + 245, _sprShop.y + 115, 80, "0G");
+		_Item8Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item8);
+		add(_Item8Price);
+		_Item9 = new FlxText(_sprShop.x + 170, _sprShop.y + 145, 80, "Item4:");
+		_Item9.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item9Price = new FlxText(_sprShop.x + 245, _sprShop.y + 160, 80, "0G");
+		_Item9Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item9);
+		add(_Item9Price);
+		_Item10 = new FlxText(_sprShop.x + 170, _sprShop.y + 190, 145, "Item4:");
+		_Item10.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		_Item10Price = new FlxText(_sprShop.x + 245, _sprShop.y + 205, 160, "0G");
+		_Item10Price.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		add(_Item10);
+		add(_Item10Price);
 	
 
 		// like we did in our HUD class, we need to set the scrollFactor on each of our children objects to 0,0. We also set alpha to 0 (so we can fade this in)
@@ -68,45 +149,17 @@ class Shop extends FlxTypedGroup<FlxSprite>
 	{
 		if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
 			{
-				if (_isMakingChoice == false){
-					_textIndex = _textIndex + 1;
-					_text.text = _textContent[_textIndex];
-					_name.text = _nameContent[_textIndex];
-				}
+				_textIndex = _textIndex + 1;
+				_text.text = _textContent[_textIndex];
+				_name.text = _nameContent[_textIndex];
 			}
 			
-		if (_isMakingChoice == true){
-			if (FlxG.mouse.justReleased){	
-				if (FlxG.mouse.x >= 615 && FlxG.mouse.y <= 795){
-					if (FlxG.mouse.y >= 185 && FlxG.mouse.y <= 205){
-						_choiceMake = 1;
-					}
-					else if (FlxG.mouse.y >= 230 && FlxG.mouse.y <= 245){
-						_choiceMake = 2;
-					}
-					else if (FlxG.mouse.y >= 270 && FlxG.mouse.y <= 285){
-						_choiceMake = 3;
-					}
-				}
-			}
+		if (FlxG.mouse.justReleased){	
+				_text.text = Std.string(_shopItem) +"  " + Std.string(FlxG.mouse.x) +"   " + Std.string(FlxG.mouse.y);
 		}
-	/**
-		if (_textIndex == 2){
-				_isMakingChoice = true;
-				setChoiceVisible(true);
-				if (_choiceMake != 0 ){
-					_textIndex = 3;
-					_text.text = _textContent[_textIndex];
-					_name.text = _nameContent[_textIndex];
-					setChoiceVisible(false);
-					_choiceMake = 0;
-					_isMakingChoice = false;
-				}			
-			}
-			**/
-		super.update(elapsed);
-
+			super.update(elapsed);
 	}
+
 	/**
 	 * This function is triggered when our results text has finished fading in. If we're not defeated, we will fade out the entire hud after a short delay
 	 */

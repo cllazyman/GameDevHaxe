@@ -37,8 +37,8 @@ class PlayState extends FlxState {
 		add(_characterUI);
 		_beginning2 = new Beginning2();
 		add(_beginning2);
-		//_shop = new Shop();
-		//add(_shop);
+		_shop = new Shop();
+		add(_shop);
 		super.create();
 	}
 	 function placeEntities(entityName:String, entityData:Xml):Void
