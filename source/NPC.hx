@@ -11,7 +11,7 @@ class NPC extends FlxSprite {
 	// Initialize variables
 	private var nType:Int;
 	private var speed:Float = 200;
-	private var target:Player;
+	public var target:Player;
 
 	public function new(X:Float = 0, Y:Float = 0, NType:Int) {
 		//Set values
@@ -20,7 +20,7 @@ class NPC extends FlxSprite {
 		immovable = true;
 		
 		// Set graphics
-		loadGraphic("assets/images/player" + nType + ".png", true, 27, 33);
+		loadGraphic("assets/images/player" + nType + ".png", true, 27, 34);
 		animation.add("d", [0, 1], 6, false);
 		animation.add("l", [2, 3], 6, false);
 		animation.add("r", [4, 5], 6, false);
@@ -35,10 +35,6 @@ class NPC extends FlxSprite {
 	override public function update(elapsed:Float):Void {
 		//follow();
 		super.update(elapsed);
-	}
-	
-	public function setTarget() {
-		
 	}
 	
 	// Moves the npc to follow the target
