@@ -12,39 +12,47 @@ import flixel.math.FlxPoint;
  * @author Christian
  */
 class Player extends FlxSprite {
-	// Initialize variables
+	// Differentiating players
 	private var pType:Int;
+
+	// Selection
+	private var selected:Bool = false;
+	
+	// Actions
 	public var actionBox:FlxObject;
-	public var selected:Bool = false;
+	
+	// Inventory
 	public var limitedItems:Map<String, Int>;
 	public var unlimitedItems = ["German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese", "Mythic Shamisen"];
 
 	public function new(X:Float, Y:Float, PType:Int) {
-		//Set variables
+		// Variables
 		super(X, Y);
 		pType = PType;
 		immovable = true;
 		alpha = 0.75;
 		
-		// Set graphics
+		// Graphics and size
 		loadGraphic("assets/images/player" + pType + ".png", true, 27, 33);
 		animation.add("d", [0, 1], 6, false);
 		animation.add("l", [2, 3], 6, false);
 		animation.add("r", [4, 5], 6, false);
 		animation.add("u", [6, 7], 6, false);
-		
-		// Set movement
-		drag.x = drag.y = 1600;
-		
-		// Set collisions and actions
 		setSize(21, 23);
 		offset.set(3, 5);
+		
+		// Movement
+		drag.x = drag.y = 1600;
+		
+		// Actions
 		actionBox = new FlxObject(x-13, y-15, 47, 53);
 		
+		// Inventory
 		limitedItems = ["Sake" => 0, "Tea" => 1, "Ink" => 2, "Arranged Flowers" => 3];
 	}
 	
 	override public function update(elapsed:Float):Void {
+		// Move if selected and alive
 		if (selected && alive) {
 			movement();
 		}
@@ -116,7 +124,7 @@ class Player extends FlxSprite {
 	}
 	
 	// Set player to selected or not
-	public function isSelected(select:Bool): Void {
+	public function isSelected(select:Bool): Int {
 		selected = select;
 		immovable = !select;
 		if (select) {
@@ -124,9 +132,10 @@ class Player extends FlxSprite {
 		} else {
 			alpha = 0.75;
 		}
+		return pType;
 	}
 	
-	// Set player to values when inactive
+	// Set player to inactive
 	public function setInactive(): Void {
 		selected = false;
 		alive = false;

@@ -1,8 +1,10 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
 
 /**
@@ -10,17 +12,21 @@ import flixel.math.FlxVelocity;
  * @author Christian
  */
 class NPC extends FlxSprite {
-	// Initialize variables
-	private var nType:Int;
-	private var speed:Float = 200;
-	public var target:Player;
+	// Differentiating npcs
+	public var nType:Int;
+	
+	// Follow AI
 	private var following:Bool = false;
+	private var target:Player;
+	
+	// Idle AI
+	private var idleTimer:Float = 0;
+	private var direction:Float = 0;
 
-	public function new(X:Float = 0, Y:Float = 0, NType:Int) {
+	public function new(X:Float, Y:Float, NType:Int) {
 		//Set values
 		super(X, Y);
 		nType = NType;
-		immovable = true;
 		
 		// Set graphics
 		loadGraphic("assets/images/npc" + nType + ".png", true, 27, 34);
@@ -28,7 +34,7 @@ class NPC extends FlxSprite {
 		animation.add("l", [2, 3], 6, false);
 		animation.add("r", [4, 5], 6, false);
 		animation.add("u", [6, 7], 6, false);
-		setSize(21, 23);
+		setSize(21, 24);
 		offset.set(3, 5);
 		
 		// Set movement
@@ -36,6 +42,9 @@ class NPC extends FlxSprite {
 	}
 	
 	override public function update(elapsed:Float):Void {
+		if (nType == 1 || nType == 2) {
+			idle();
+		}
 		if (following) {
 			follow();
 		}
@@ -76,6 +85,23 @@ class NPC extends FlxSprite {
 				case FlxObject.DOWN:
 					animation.play("d");
 			}
+		}
+	}
+	
+	// Performs Idle action
+	private function idle():Void {
+		if (idleTimer <= 0) {
+			if (FlxG.random.bool(1)) {
+				direction = -1;
+				velocity.x = velocity.y = 0;
+			} else {
+				direction = FlxG.random.int(0, 8) * 45;
+				velocity.set(200, 0);
+				velocity.rotate(FlxPoint.weak(), direction);
+			}
+			idleTimer = FlxG.random.int(1, 4);            
+		} else {
+			idleTimer -= FlxG.elapsed;
 		}
 	}
 }
