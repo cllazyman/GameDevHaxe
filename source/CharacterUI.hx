@@ -7,17 +7,31 @@ import flixel.util.FlxColor;
 
 
 class CharacterUI extends FlxTypedGroup<FlxSprite> {
-	var _sprBack:FlxSprite;
-	var _textDay:FlxText;
-	var _textTime:FlxText;
-	var _sprDivideTime:FlxSprite;
-	var _textPlayer:FlxText;
-	var _sprPlayer:FlxSprite;
-	var _textMoney:FlxText;
-	var _textMoneyAmount:FlxText;
-	var _sprDividePlayer:FlxSprite;
+	// For UI stuff
+	var playerNames:Array<String> = ["Shimotsuki", "Tsuruko", "Setsuko", "Kawako"];
+	var npcNames:Array<String> = ["shop", "intel", "brother", "mA", "mB", "mC"];
+	
+	// Background
+	var stats:FlxSprite;
+	
+	// Day section
+	var day:FlxText;
+	var time:FlxText;
+	var divider1:FlxSprite;
+	
+	// Player section
+	var namePlayer:FlxText;
+	var avaPlayer:FlxSprite;
+	var divider2:FlxSprite;
+	
+	// Money section
+	var money:FlxText;
+	var moneyCount:FlxText;
 
-	var _textItem1:FlxText;
+	var limitedItems:Map<String, Int> = ["Sake" => 0, "Tea" => 0, "Ink" => 0, "Arranged Flowers" => 0];
+	var itemName:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
+	var itemCount:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
+	/*var _textItem1:FlxText;
 	var _textItem2:FlxText;
 	var _textItem3:FlxText;
 	var _textItem4:FlxText;
@@ -36,100 +50,58 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 	var _textItem7Amount:FlxText;
 	var _textItem8Amount:FlxText;
 	var _textItem9Amount:FlxText;
-	var _textItem10Amount:FlxText;
+	var _textItem10Amount:FlxText;*/
 	
     public function new() {
 		super();
-		_sprBack = new FlxSprite(0, 0);
-		_sprBack.loadGraphic(AssetPaths.ui_stats__png);
-		add(_sprBack);
+		// Add the stats background
+		stats = new FlxSprite(0, 0);
+		stats.loadGraphic(AssetPaths.ui_stats__png);
+		add(stats);
 
-		_textDay = new FlxText(_sprBack.x + 15, _sprBack.y + 20, 135, "Day 1");
-		_textDay.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textTime = new FlxText(_sprBack.x + 80, _sprBack.y + 20, 80, "Morning");
-		_textTime.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_sprDivideTime = new FlxSprite(_sprBack.x, _sprBack.y + 45);
-		_sprDivideTime.loadGraphic(AssetPaths.ui_divide__png);
-		add(_textDay);
-		add(_textTime);
-		add(_sprDivideTime);
+		// Add the day section of the UI
+		day = new FlxText(stats.x + 15, stats.y + 20, 135, "Day 1");
+		day.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		time = new FlxText(stats.x + 80, stats.y + 20, 80, "Morning");
+		time.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		divider1 = new FlxSprite(stats.x, stats.y + 45);
+		divider1.loadGraphic(AssetPaths.ui_divide__png);
+		add(day);
+		add(time);
+		add(divider1);
 
-		_textPlayer = new FlxText(_sprBack.x + 15, _sprBack.y + 60, 80, "Shimotsuki");
-		_textPlayer.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_sprPlayer = new FlxSprite(_sprBack.x + 100, _sprBack.y + 55);
-		_sprPlayer.loadGraphic("assets/images/avaplayer0.png");
-		_sprDividePlayer = new FlxSprite(_sprBack.x, _sprBack.y + 90);
-		_sprDividePlayer.loadGraphic(AssetPaths.ui_divide__png);
-		_textMoney = new FlxText(_sprBack.x + 15, _sprBack.y + 100, "Money:");
-		_textMoney.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textMoneyAmount = new FlxText(_sprBack.x + 80, _sprBack.y + 100, "0");
-		_textMoneyAmount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);		
-		add(_textPlayer);
-		add(_sprPlayer);
-		add(_textMoney);
-		add(_textMoneyAmount);
-		add(_sprDividePlayer);
-		//∞
-		_textItem1 = new FlxText(_sprBack.x + 15, _sprBack.y + 140, 150, "Sake:");
-		_textItem1.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem1Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 140, 80, "∞");
-		_textItem1Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem1);
-		add(_textItem1Amount);
-		_textItem2 = new FlxText(_sprBack.x + 15, _sprBack.y + 160, 150, "Tea:");
-		_textItem2.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem2Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 160, 80, "0");
-		_textItem2Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem2);
-		add(_textItem2Amount);
-		_textItem3 = new FlxText(_sprBack.x + 15, _sprBack.y + 180, 150, "Ink:");
-		_textItem3.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem3Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 180, 80, "0");
-		_textItem3Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem3);
-		add(_textItem3Amount);
-		_textItem4 = new FlxText(_sprBack.x + 15, _sprBack.y + 200, 150, "Arranged Flowers:");
-		_textItem4.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem4Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 200, 80, "0");
-		_textItem4Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem4);
-		add(_textItem4Amount);
-		_textItem5 = new FlxText(_sprBack.x + 15, _sprBack.y + 220, 150, "German Pen:");
-		_textItem5.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem5Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 220, 80, "0");
-		_textItem5Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem5);
-		add(_textItem5Amount);
-		_textItem6 = new FlxText(_sprBack.x + 15, _sprBack.y + 240, 150, "Famous Katana:");
-		_textItem6.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem6Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 240, 80, "0");
-		_textItem6Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem6);
-		add(_textItem6Amount);
-		_textItem7 = new FlxText(_sprBack.x + 15, _sprBack.y + 260, 150, "Chinese Tea Pot:");
-		_textItem7.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem7Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 260, 80, "0");
-		_textItem7Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem7);
-		add(_textItem7Amount);
-		_textItem8 = new FlxText(_sprBack.x + 15, _sprBack.y + 280, 150, "Kimono:");
-		_textItem8.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem8Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 280, 80, "0");
-		_textItem8Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem8);
-		add(_textItem8Amount);
-		_textItem9 = new FlxText(_sprBack.x + 15, _sprBack.y + 300, 150, "Japanese Fan:");
-		_textItem9.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem9Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 300, 80, "0");
-		_textItem9Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem9);
-		add(_textItem9Amount);
-		_textItem10 = new FlxText(_sprBack.x + 15, _sprBack.y + 320, 150, "Mythic Shamisen:");
-		_textItem10.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		_textItem10Amount = new FlxText(_sprBack.x + 120, _sprBack.y + 320, 80, "0");
-		_textItem10Amount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		add(_textItem10);
-		add(_textItem10Amount);
+		// Add the player section of the UI
+		namePlayer = new FlxText(stats.x + 15, stats.y + 60, 80, "Shimotsuki");
+		namePlayer.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		avaPlayer = new FlxSprite(stats.x + 100, stats.y + 55);
+		avaPlayer.loadGraphic("assets/images/avaplayer0.png");
+		divider2 = new FlxSprite(stats.x, stats.y + 90);
+		divider2.loadGraphic(AssetPaths.ui_divide__png);	
+		add(namePlayer);
+		add(avaPlayer);
+		add(divider2);
+		
+		// Add the money section of the UI
+		money = new FlxText(stats.x + 15, stats.y + 100, "Money:");
+		money.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		moneyCount = new FlxText(stats.x + 80, stats.y + 100, "0");
+		moneyCount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);	
+		add(money);
+		add(moneyCount);
+		
+		// Add items to inventory
+		var offsety:Int = 140;
+		for (key in limitedItems.keys()) {
+			var tempItemName:FlxText = new FlxText(stats.x + 15, stats.y + offsety, 150, key);
+			tempItemName.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+			var tempItemCount:FlxText = new FlxText(stats.x + 120, stats.y + offsety, 80, Std.string(limitedItems[key]));
+			tempItemCount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+			itemName.add(tempItemName);
+			itemCount.add(tempItemCount);
+			add(tempItemName);
+			add(tempItemCount);
+			offsety += 20;
+		}
 		
 		forEach(function(spr:FlxSprite) {
 			spr.scrollFactor.set(0,0);
@@ -138,30 +110,30 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 
 	//Change days
 	public function updateDay(Day:Int = 1):Void {
-		_textDay.text = "Day "+Std.string(Day);
+		day.text = "Day "+Std.string(Day);
 	}
 	
 	//Change time. True is morining, False is night
 	public function updateTime(IsMorning:Bool = true):Void {
-		if (IsMorning == true) {
-			_textTime.text = "Morining";
+		if (IsMorning) {
+			time.text = "Morining";
 		} else {
-			_textTime.text = "Night";
+			time.text = "Night";
 		}
-	}
-
-	public function updatePlayerName(Name:String):Void {
-		_textDay.text = Name;
 	}
 	
 	public function updateMoney(Money:Int = 0):Void {
-		_textMoneyAmount.text = Std.string(Money);
+		moneyCount.text = Std.string(Money);
 	}
 	
-	public function updatePlayerPicture(PlayerIndex:Int = 0):Void {
-		if (PlayerIndex == 1) {
-			_sprPlayer.loadGraphic("assets/images/ui_divide.png");
-		}
+	// Changes the player name by index
+	public function updatePlayerName(index:Int):Void {
+		namePlayer.text = playerNames[index];
+	}
+		
+	// Changes the avatar picture by index
+	public function updatePlayerPicture(index:Int):Void {
+		avaPlayer.loadGraphic("assets/images/avaplayer"+index+".png");
 	}
 
 }
