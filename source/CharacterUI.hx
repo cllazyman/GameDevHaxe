@@ -7,32 +7,26 @@ import flixel.util.FlxColor;
 
 
 class CharacterUI extends FlxTypedGroup<FlxSprite> {
-	// For UI stuff
-	var playerNames:Array<String> = ["Shimotsuki", "Tsuruko", "Setsuko", "Kawako"];
-	var npcNames:Array<String> = ["shop", "intel", "brother", "mA", "mB", "mC"];
-	
 	// Background
-	var stats:FlxSprite;
+	private var stats:FlxSprite;
 	
 	// Day section
-	var day:FlxText;
-	var time:FlxText;
-	var divider1:FlxSprite;
+	private var day:FlxText;
+	private var time:FlxText;
+	private var divider1:FlxSprite;
 	
 	// Player section
-	var namePlayer:FlxText;
-	var avaPlayer:FlxSprite;
-	var divider2:FlxSprite;
+	private var namePlayer:FlxText;
+	private var avaPlayer:FlxSprite;
+	private var divider2:FlxSprite;
 	
 	// Money section
-	var money:FlxText;
-	var moneyCount:FlxText;
+	private var money:FlxText;
+	private var moneyCount:FlxText;
 	
 	// Inventory Content
-	var Names:Array<String> = ["Sake", "Tea", "Ink", "Arranged Flowers"];
-	var Counts:Array<Int> = [0, 0, 0, 0];
-	var itemName:Map<String, FlxText> = new Map<String, FlxText>();
-	var itemCount:Map<String, FlxText> = new Map<String, FlxText>();
+	private var itemName:Map<String, FlxText> = new Map<String, FlxText>();
+	private var itemCount:Map<String, FlxText> = new Map<String, FlxText>();
 	
     public function new() {
 		super();
@@ -42,9 +36,9 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 		add(stats);
 
 		// Add the day section of the UI
-		day = new FlxText(stats.x + 15, stats.y + 20, 135, "Day 1");
+		day = new FlxText(stats.x + 15, stats.y + 20, 135, "Day "+Storage.Day);
 		day.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		time = new FlxText(stats.x + 80, stats.y + 20, 80, "Morning");
+		time = new FlxText(stats.x + 80, stats.y + 20, 80, (Storage.time ? "Morning" : "Night"));
 		time.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
 		divider1 = new FlxSprite(stats.x, stats.y + 45);
 		divider1.loadGraphic(AssetPaths.ui_divide__png);
@@ -73,33 +67,19 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 		
 		// Add items to inventory
 		var offsety:Int = 140;
-		for (i in 0...Names.length) {
-			var tempItemName:FlxText = new FlxText(stats.x+15, stats.y+offsety, 150, Names[i]);
+		for (i in 0...Storage.limitedItemNames.length) {
+			var tempItemName:FlxText = new FlxText(stats.x+15, stats.y+offsety, 150, Storage.limitedItemNames[i]);
 			tempItemName.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-			var tempItemCount:FlxText = new FlxText(stats.x+120, stats.y+offsety, 80, Std.string(Counts[i]));
+			var tempItemCount:FlxText = new FlxText(stats.x+120, stats.y+offsety, 80, Std.string(Storage.limitedItemCounts[i]));
 			tempItemCount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-			itemName[Names[i]] = tempItemName;
-			itemCount[Names[i]] = tempItemCount;
+			itemName[Storage.limitedItemNames[i]] = tempItemName;
+			itemCount[Storage.limitedItemNames[i]] = tempItemCount;
 			add(tempItemName);
 			add(tempItemCount);
 			offsety += 20;
 		}
 		
 		forEach(function(spr:FlxSprite) { spr.scrollFactor.set(0,0); });
-	}
-
-	// Change days
-	public function updateDay(Day:Int = 1):Void {
-		day.text = "Day "+Std.string(Day);
-	}
-	
-	// Change time. True is morining, False is night
-	public function updateTime(IsMorning:Bool = true):Void {
-		if (IsMorning) {
-			time.text = "Morining";
-		} else {
-			time.text = "Night";
-		}
 	}
 	
 	public function updateMoney(Money:Int = 0):Void {
@@ -108,12 +88,11 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 	
 	// Changes the player name by index
 	public function updatePlayerName(index:Int):Void {
-		namePlayer.text = playerNames[index];
+		namePlayer.text = Storage.playerNames[index];
 	}
 		
 	// Changes the avatar picture by index
 	public function updatePlayerPicture(index:Int):Void {
 		avaPlayer.loadGraphic("assets/images/avaplayer"+index+".png");
 	}
-
 }

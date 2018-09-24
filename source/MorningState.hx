@@ -22,8 +22,6 @@ class MorningState extends FlxState {
 	var collisionEntities:FlxTypedGroup<FlxObject>;
 	var players:FlxTypedGroup<Player>;
 	var npcs:FlxTypedGroup<NPC>;
-	//var playerNames:Array<String> = ["Shimotsuki", "Tsuruko", "Setsuko", "Kawako"];
-	//var npcNames:Array<String> = ["shop", "intel", "brother", "mA", "mB", "mC"];
 	
 	// UI
 	var characterUI:CharacterUI;
@@ -34,6 +32,9 @@ class MorningState extends FlxState {
 	var selectedPlayer:Player;
 	
 	override public function create():Void {
+		// Update Storage values
+		Storage.time = true;
+		
 		// Music
 		FlxG.sound.play(AssetPaths.morning__ogg);
 
@@ -70,10 +71,10 @@ class MorningState extends FlxState {
 		add(shopUI);
 		
 		// Extra
-		FlxG.watch.add(selectedPlayer, "touching");
+		/*FlxG.watch.add(selectedPlayer, "touching");
 		FlxG.watch.add(npcs.getFirstAlive(), "touching");
 		FlxG.watch.add(npcs.getFirstAlive().velocity, "x");
-		FlxG.watch.add(npcs.getFirstAlive().velocity, "y");
+		FlxG.watch.add(npcs.getFirstAlive().velocity, "y");*/
 		
 		super.create();
 	}
