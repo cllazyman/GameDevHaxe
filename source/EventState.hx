@@ -13,7 +13,7 @@ import flixel.util.FlxSort;
  * @author Jon Castro
  */
 class EventState extends FlxState {
-{
+	
 	//Maps
 	var eventMap:FlxOgmoLoader;
 	
@@ -26,14 +26,13 @@ class EventState extends FlxState {
 	var collisionEntities:FlxTypedGroup<FlxObject>;
 	var players:FlxTypedGroup<Player>;
 	var npcs:FlxTypedGroup<NPC>;
-	
-	// UI
-	var characterUI:CharacterUI;
-	var shopUI:ShopUI;
-	var index:Int = 0;
 
 	// Actions
 	var selectedPlayer:Player;
+	
+	//UI
+	var shopUI:ShopUI;
+
 	
 	override public function create():Void {
 		// Update Storage values
@@ -59,20 +58,17 @@ class EventState extends FlxState {
 		collisionEntities = new FlxTypedGroup<FlxObject>();
 		players = new FlxTypedGroup<Player>();
 		npcs = new FlxTypedGroup<NPC>();
-		morningMap.loadEntities(placeEntities, "entities");
+		eventMap.loadEntities(placeEntities, "entities");
 		
-		// UI
-		characterUI = new CharacterUI();
+		//UI
 		shopUI = new ShopUI();
-		shopUI.toggleHUD(false);
+		
 		// Select the player
 		Select();
 		
 		// Add values to view
 		add(layers);
 		add(entities);
-		add(characterUI);
-		add(shopUI);
 		
 		// Extra
 		/*FlxG.watch.add(selectedPlayer, "touching");
@@ -99,7 +95,7 @@ class EventState extends FlxState {
 	
 	// Initialize layers
 	private function placeLayers(layerName:String, collision:Bool):Void {
-		var tempLayer:FlxTilemap = morningMap.loadTilemap(AssetPaths.tileset__png, 32, 32, layerName);
+		var tempLayer:FlxTilemap = eventMap.loadTilemap(AssetPaths.tileset__png, 32, 32, layerName);
 		tempLayer.follow();
 		if (collision) {
 			collisionLayers.add(tempLayer);
@@ -125,7 +121,18 @@ class EventState extends FlxState {
 		}
 	}
 	
-	// Performs an action
+	// Selects the first alive player and changes state once inactive
+	private function Select(): Void {
+		selectedPlayer = players.getFirstAlive();
+		if (selectedPlayer != null) {
+			selectedPlayer.isSelected(true);
+			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
+		} else {
+			FlxG.switchState(new NightState());
+		}
+		
+	}
+	
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
 		if (FlxG.keys.justPressed.E) {
 			switch (npc.nType) {
