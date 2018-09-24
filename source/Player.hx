@@ -6,9 +6,7 @@ import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 
 /**
- *  [shimotsuki, tsuruko, setsuko, kawako]
- * Sake, Tea, Ink, Arranged Flowers
- * German Pen,Famous Katana, Chinese Tea Pot, Kimono, Japanese Fan, Mythic Shamisen
+ * The controllable character class
  * @author Christian
  */
 class Player extends FlxSprite {
@@ -21,10 +19,6 @@ class Player extends FlxSprite {
 	// Actions
 	public var actionBox:FlxObject;
 	
-	// Inventory
-	public var limitedItems:Map<String, Int>;
-	public var unlimitedItems = ["German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese", "Mythic Shamisen"];
-
 	public function new(X:Float, Y:Float, PType:Int) {
 		// Variables
 		super(X, Y);
@@ -46,9 +40,6 @@ class Player extends FlxSprite {
 		
 		// Actions
 		actionBox = new FlxObject(x-13, y-15, 47, 53);
-		
-		// Inventory
-		limitedItems = ["Sake" => 0, "Tea" => 1, "Ink" => 2, "Arranged Flowers" => 3];
 	}
 	
 	override public function update(elapsed:Float):Void {
