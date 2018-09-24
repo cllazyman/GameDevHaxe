@@ -10,24 +10,34 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxSort;
 
 class MorningState extends FlxState {
-	// Initialization
+	// Maps
 	var morningMap:FlxOgmoLoader;
-	var visualLayers:FlxTypedGroup<FlxTilemap>;
+
+	// Layers
+	var layers:FlxTypedGroup<FlxTilemap>;
 	var collisionLayers:FlxTypedGroup<FlxTilemap>;
-	var playerList:FlxTypedGroup<Player>;
-	var npcList:FlxTypedGroup<NPC>;
+	
+	// Entities
+	var entities:FlxTypedGroup<FlxObject>;
+	var collisionEntities:FlxTypedGroup<FlxObject>;
+	var players:FlxTypedGroup<Player>;
+	var npcs:FlxTypedGroup<NPC>;
+	
+	// UI
 	var characterUI:CharacterUI;
+
 	// For Player actions
 	var selectedPlayer:Player;
 	
 	override public function create():Void {
-		// Load the "morning1" file from the Ogmo Editor
-		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
 		// Play the music
 		FlxG.sound.play(AssetPaths.morning__ogg);
+
+		// Load the "morning" file from the Ogmo Editor
+		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
 		
-		// Initialize Layers
-		visualLayers = new FlxTypedGroup<FlxTilemap>();
+		// Initialize layers
+		layers = new FlxTypedGroup<FlxTilemap>();
 		collisionLayers = new FlxTypedGroup<FlxTilemap>();
 		placeLayers("walls", true);
 		placeLayers("floor", false);
@@ -35,9 +45,11 @@ class MorningState extends FlxState {
 		placeLayers("stuff2", false);
 		placeLayers("unwalkable", true);
 		
-		// Initialize all entities
-		playerList = new FlxTypedGroup<Player>();
-		npcList = new FlxTypedGroup<NPC>();
+		// Initialize entities
+		entities = new FlxTypedGroup<FlxObject>();
+		collisionEntities = new FlxTypedGroup<FlxObject>();
+		players = new FlxTypedGroup<Player>();
+		npcs = new FlxTypedGroup<NPC>();
 		morningMap.loadEntities(placeEntities, "entities");
 		
 		// Initialize UI
@@ -47,14 +59,15 @@ class MorningState extends FlxState {
 		Select();
 		
 		// Add values to view
-		add(visualLayers);
-		add(playerList);
-		add(npcList);
-		
+		add(layers);
+		add(entities);
 		add(characterUI);
 		
 		// Extra
-		npcList.getFirstAlive().target = selectedPlayer;
+		FlxG.watch.add(selectedPlayer, "touching");
+		FlxG.watch.add(npcs.getFirstAlive(), "touching");
+		FlxG.watch.add(npcs.getFirstAlive().velocity, "x");
+		FlxG.watch.add(npcs.getFirstAlive().velocity, "y");
 		
 		super.create();
 	}
@@ -65,14 +78,15 @@ class MorningState extends FlxState {
 			selectPlayer();
 		}
 		
-		// Update depth changes
-		playerList.sort(FlxSort.byY);
+		// Update Views
+		entities.sort(FlxSort.byY);
 		
 		// Update Collisions
 		FlxG.collide(selectedPlayer, collisionLayers);
-		FlxG.collide(selectedPlayer, playerList);
-		FlxG.collide(selectedPlayer, npcList);
-		FlxG.overlap(selectedPlayer.actionBox, npcList, playerActions);
+		FlxG.collide(selectedPlayer, collisionEntities);
+		FlxG.collide(npcs, collisionLayers);
+		FlxG.overlap(selectedPlayer.actionBox, npcs, playerActions);
+
 		super.update(elapsed);
 	}
 	
@@ -83,7 +97,7 @@ class MorningState extends FlxState {
 		if (collision) {
 			collisionLayers.add(tempLayer);
 		}
-		visualLayers.add(tempLayer);
+		layers.add(tempLayer);
 	}
 	
 	// Initialize Objects onto screen
@@ -91,15 +105,22 @@ class MorningState extends FlxState {
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
 		if (entityName == "player") {
-			playerList.add(new Player(x, y, Std.parseInt(entityData.get("pType"))));
+			var temp:Player = new Player(x, y, Std.parseInt(entityData.get("pType")));
+			entities.add(temp);
+			collisionEntities.add(temp);
+			players.add(temp);
+			add(temp.actionBox);
 		} else if (entityName == "npc") {
-			npcList.add(new NPC(x, y, Std.parseInt(entityData.get("nType"))));
+			var temp:NPC = new NPC(x+5, y, Std.parseInt(entityData.get("nType")));
+			entities.add(temp);
+			collisionEntities.add(temp);
+			npcs.add(temp);
 		}
 	}
 	
 	// Selects the first alive player
 	private function Select(): Void {
-		selectedPlayer = playerList.getFirstAlive();
+		selectedPlayer = players.getFirstAlive();
 		if (selectedPlayer != null) {
 			selectedPlayer.isSelected(true);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
@@ -112,7 +133,7 @@ class MorningState extends FlxState {
 	private function selectPlayer():Void {
 		var tempPosition:FlxPoint = FlxG.mouse.getWorldPosition();
 		var tempPlayer:Player = selectedPlayer;
-		for (player in playerList) {
+		for (player in players) {
 			if (player.overlapsPoint(tempPosition) && player.alive) {
 				tempPlayer = player;
 			} else {
@@ -127,9 +148,11 @@ class MorningState extends FlxState {
 	// Performs an action
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
 		if (FlxG.keys.justPressed.E) {
+			npc.setFollow(selectedPlayer);
+			collisionEntities.remove(npc);
 			// DO SOME ACTION
-			selectedPlayer.setInactive();
-			Select();
+			//selectedPlayer.setInactive();
+			//Select();
 		}
 	}
 }

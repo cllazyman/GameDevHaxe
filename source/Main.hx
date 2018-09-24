@@ -6,6 +6,6 @@ import openfl.display.Sprite;
 class Main extends Sprite {
 	public function new() {
 		super();
-		addChild(new FlxGame(640, 360, MorningState));
+		addChild(new FlxGame(640, 360, MenuState));
 	}
 }

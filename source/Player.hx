@@ -4,8 +4,6 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
-
 
 /**
  *  [shimotsuki, tsuruko, setsuko, kawako]
@@ -16,10 +14,10 @@ import flixel.math.FlxRect;
 class Player extends FlxSprite {
 	// Initialize variables
 	private var pType:Int;
-	public var collisionBox:FlxRect;
 	public var actionBox:FlxObject;
 	public var selected:Bool = false;
 	public var limitedItems:Map<String, Int>;
+	public var unlimitedItems = ["German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese", "Mythic Shamisen"];
 
 	public function new(X:Float, Y:Float, PType:Int) {
 		//Set variables
@@ -34,15 +32,14 @@ class Player extends FlxSprite {
 		animation.add("l", [2, 3], 6, false);
 		animation.add("r", [4, 5], 6, false);
 		animation.add("u", [6, 7], 6, false);
-		setSize(21, 23);
-		offset.set(3, 5);
 		
 		// Set movement
 		drag.x = drag.y = 1600;
 		
-		// Set actions
-		collisionBox = new FlxRect(x, y, 27, 33);
-		actionBox = new FlxObject(x, y, 30, 40);
+		// Set collisions and actions
+		setSize(21, 23);
+		offset.set(3, 5);
+		actionBox = new FlxObject(x-13, y-15, 47, 53);
 		
 		limitedItems = ["Sake" => 0, "Tea" => 1, "Ink" => 2, "Arranged Flowers" => 3];
 	}
@@ -101,7 +98,7 @@ class Player extends FlxSprite {
 			velocity.rotate(FlxPoint.weak(0, 0), mA);
 			
 			// Change the face
-			if ((velocity.x != 0 || velocity.y != 0) && touching == FlxObject.NONE) {
+			if (velocity.x != 0 || velocity.y != 0) {
 				switch (facing) {
 					case FlxObject.LEFT:
 						animation.play("l");
@@ -114,8 +111,8 @@ class Player extends FlxSprite {
 				}
 			}
 		}
-		//collisionBox.setPosition(x, y+23);
-		actionBox.setPosition(x, y);
+		// Update action box
+		actionBox.setPosition(x-13, y-15);
 	}
 	
 	// Set player to selected or not
