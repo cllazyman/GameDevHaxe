@@ -27,30 +27,12 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 	// Money section
 	var money:FlxText;
 	var moneyCount:FlxText;
-
-	var limitedItems:Map<String, Int> = ["Sake" => 0, "Tea" => 0, "Ink" => 0, "Arranged Flowers" => 0];
-	var itemName:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
-	var itemCount:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
-	/*var _textItem1:FlxText;
-	var _textItem2:FlxText;
-	var _textItem3:FlxText;
-	var _textItem4:FlxText;
-	var _textItem5:FlxText;
-	var _textItem6:FlxText;
-	var _textItem7:FlxText;
-	var _textItem8:FlxText;
-	var _textItem9:FlxText;
-	var _textItem10:FlxText;
-	var _textItem1Amount:FlxText;
-	var _textItem2Amount:FlxText;
-	var _textItem3Amount:FlxText;
-	var _textItem4Amount:FlxText;
-	var _textItem5Amount:FlxText;
-	var _textItem6Amount:FlxText;
-	var _textItem7Amount:FlxText;
-	var _textItem8Amount:FlxText;
-	var _textItem9Amount:FlxText;
-	var _textItem10Amount:FlxText;*/
+	
+	// Inventory Content
+	var Names:Array<String> = ["Sake", "Tea", "Ink", "Arranged Flowers"];
+	var Counts:Array<Int> = [0, 0, 0, 0];
+	var itemName:Map<String, FlxText> = new Map<String, FlxText>();
+	var itemCount:Map<String, FlxText> = new Map<String, FlxText>();
 	
     public function new() {
 		super();
@@ -91,29 +73,27 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 		
 		// Add items to inventory
 		var offsety:Int = 140;
-		for (key in limitedItems.keys()) {
-			var tempItemName:FlxText = new FlxText(stats.x + 15, stats.y + offsety, 150, key);
+		for (i in 0...Names.length) {
+			var tempItemName:FlxText = new FlxText(stats.x+15, stats.y+offsety, 150, Names[i]);
 			tempItemName.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-			var tempItemCount:FlxText = new FlxText(stats.x + 120, stats.y + offsety, 80, Std.string(limitedItems[key]));
+			var tempItemCount:FlxText = new FlxText(stats.x+120, stats.y+offsety, 80, Std.string(Counts[i]));
 			tempItemCount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-			itemName.add(tempItemName);
-			itemCount.add(tempItemCount);
+			itemName[Names[i]] = tempItemName;
+			itemCount[Names[i]] = tempItemCount;
 			add(tempItemName);
 			add(tempItemCount);
 			offsety += 20;
 		}
 		
-		forEach(function(spr:FlxSprite) {
-			spr.scrollFactor.set(0,0);
-		});
+		forEach(function(spr:FlxSprite) { spr.scrollFactor.set(0,0); });
 	}
 
-	//Change days
+	// Change days
 	public function updateDay(Day:Int = 1):Void {
 		day.text = "Day "+Std.string(Day);
 	}
 	
-	//Change time. True is morining, False is night
+	// Change time. True is morining, False is night
 	public function updateTime(IsMorning:Bool = true):Void {
 		if (IsMorning) {
 			time.text = "Morining";

@@ -33,10 +33,10 @@ class PlayState extends FlxState {
 		add(_player);
 
 		FlxG.camera.follow(_player, TOPDOWN, 1);
-		_characterUI = new CharacterUI();
-		add(_characterUI);
-		_beginning2 = new Beginning2();
-		add(_beginning2);
+		//_characterUI = new CharacterUI();
+		//add(_characterUI);
+		//_beginning2 = new Beginning2();
+		//add(_beginning2);
 		_shop = new Shop();
 		add(_shop);
 		super.create();

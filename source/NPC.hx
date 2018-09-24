@@ -13,7 +13,7 @@ import flixel.math.FlxVelocity;
  */
 class NPC extends FlxSprite {
 	// Differentiating npcs
-	private var nType:Int;
+	public var nType:Int;
 	
 	// Follow AI
 	private var following:Bool = false;
@@ -42,15 +42,11 @@ class NPC extends FlxSprite {
 	}
 	
 	override public function update(elapsed:Float):Void {
-		switch (nType) {
-			case 1:
-				idle();
-			case 2:
-				idle();
-			case 3, 4, 5:
-				if (following) {
-					follow();
-				}
+		if (nType == 1 || nType == 2) {
+			idle();
+		}
+		if (following) {
+			follow();
 		}
 		super.update(elapsed);
 	}

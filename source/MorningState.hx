@@ -27,6 +27,7 @@ class MorningState extends FlxState {
 	
 	// UI
 	var characterUI:CharacterUI;
+	var shopUI:ShopUI;
 	var index:Int = 0;
 
 	// Actions
@@ -57,7 +58,8 @@ class MorningState extends FlxState {
 		
 		// UI
 		characterUI = new CharacterUI();
-		
+		shopUI = new ShopUI();
+		shopUI.toggleHUD(false);
 		// Select the player
 		Select();
 		
@@ -65,6 +67,7 @@ class MorningState extends FlxState {
 		add(layers);
 		add(entities);
 		add(characterUI);
+		add(shopUI);
 		
 		// Extra
 		FlxG.watch.add(selectedPlayer, "touching");
@@ -155,11 +158,18 @@ class MorningState extends FlxState {
 	// Performs an action
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
 		if (FlxG.keys.justPressed.E) {
-			//npc.setFollow(selectedPlayer);
-			//collisionEntities.remove(npc);
+			switch (npc.nType) {
+				case 0:
+					shopUI.toggleHUD(true);
+				//case 1:
+				//case 2:
+				case 3, 4, 5:
+					npc.setFollow(selectedPlayer);
+					collisionEntities.remove(npc);
+			}
 			// DO SOME ACTION
-			selectedPlayer.setInactive();
-			Select();
+			//selectedPlayer.setInactive();
+			//Select();
 		}
 	}
 }
