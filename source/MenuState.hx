@@ -20,7 +20,7 @@ class MenuState extends FlxState {
 		// Background
 		background = new FlxSprite(0, 0);
 		background.loadGraphic(AssetPaths.title__png, true, 640, 360);
-		background.animation.add("idle", [0, 1], 600, false);
+		background.animation.add("idle", [0, 1], 1, false);
 		
 		// Game title
 		titleText = new FlxText(14, 14, 100, "Red Snow Falling in Autumn Moon: The Story");
@@ -41,7 +41,7 @@ class MenuState extends FlxState {
 	}
 
 	override public function update(elapsed:Float):Void {
-		//background.animation.play("idle");
+		background.animation.play("idle");
 		super.update(elapsed);
 	}
 
