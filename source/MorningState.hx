@@ -71,6 +71,7 @@ class MorningState extends FlxState {
 		add(shopUI);
 		
 		// Extra
+		//FlxG.debugger.drawDebug = true;
 		/*FlxG.watch.add(selectedPlayer, "touching");
 		FlxG.watch.add(npcs.getFirstAlive(), "touching");
 		FlxG.watch.add(npcs.getFirstAlive().velocity, "x");
