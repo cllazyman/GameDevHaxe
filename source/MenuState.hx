@@ -7,11 +7,13 @@ import flixel.addons.ui.FlxButtonPlus;
 import flixel.text.FlxText;
 import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
+import lime.system.System;
 
 class MenuState extends FlxState {
 	var background:FlxSprite;
 	var titleText:FlxText;
 	var playButton:FlxButtonPlus;
+	var exitButton:FlxButtonPlus;
 	
 	override public function create():Void {
 		// Play title screen music
@@ -23,19 +25,31 @@ class MenuState extends FlxState {
 		background.animation.add("idle", [0, 1], 1, false);
 		
 		// Game title
-		titleText = new FlxText(14, 14, 100, "Red Snow Falling in Autumn Moon: The Story");
-		titleText.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+		// "Red Snow Falling in Autumn Moon" OR "Akizuki Ni Furu No Akayuki"
+		titleText = new FlxText(0, 58, 600, "Life and Death of the Inner Demon of the Blood Red Catacalysm of Darkness");
+		titleText.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
+		titleText.screenCenter(FlxAxes.X);
+		titleText.wordWrap = false;
+		titleText.autoSize = false;
+		titleText.alignment = FlxTextAlign.CENTER;
 		
 		// Play Button
 		playButton = new FlxButtonPlus(0, 228, clickPlay, "Play", 132, 19);
 		playButton.screenCenter(FlxAxes.X);
-		//playButton.onDown.sound = FlxG.sound.load(AssetPaths.ButtonClickSFX__ogg);
-		//playButton.onUp.sound = FlxG.sound.load(AssetPaths.ButtonClickSFX2__ogg);
+		playButton.updateActiveButtonColors([FlxColor.GREEN]);
+		playButton.updateInactiveButtonColors([FlxColor.BLACK]);
+		
+		// Exit Button
+		exitButton = new FlxButtonPlus(0, 295, clickClose, "Exit", 132, 19);
+		exitButton.screenCenter(FlxAxes.X);
+		exitButton.updateActiveButtonColors([FlxColor.RED]);
+		exitButton.updateInactiveButtonColors([FlxColor.BLACK]);
 		
 		// Add values to view
 		add(background);
 		add(titleText);
 		add(playButton);
+		add(exitButton);
 		
 		super.create();
 	}
@@ -44,13 +58,17 @@ class MenuState extends FlxState {
 		background.animation.play("idle");
 		super.update(elapsed);
 	}
-
-	function clickPlay():Void {
-		FlxG.switchState(new MorningState());
-		/*
+	
+	private function clickPlay():Void {
+		FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
+		//FlxG.switchState(new MorningState());
 		FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
 			FlxG.switchState(new MorningState());
-		})
-		*/
+		});
+	}
+	
+	private function clickClose():Void {
+		FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
+		System.exit(0);
 	}
 }
