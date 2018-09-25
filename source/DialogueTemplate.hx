@@ -52,7 +52,7 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		add(_sprName);
 		
 		//Text
-		_text = new FlxText(_sprText.x + 15, _sprText.y + 10, 470, _textContent[0]);
+		_text = new FlxText(_sprText.x + 15, _sprText.y + 10, 460, _textContent[0]);
 		_text.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(_text);
 		_name = new FlxText(_sprName.x + 15, _sprName.y + 5, 100, _nameContent[0]);
@@ -153,34 +153,29 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		super.update(elapsed);
 
 	}
-	/**
-	 * This function is triggered when our results text has finished fading in. If we're not defeated, we will fade out the entire hud after a short delay
-	 */
-	function doneResultsIn(_):Void
-	{
-		FlxTween.num(1, 0, .66, { ease: FlxEase.circOut, onComplete: finishFadeOut, startDelay: 1 }, updateAlpha);
+	// Turn on/off HUD
+	public function toggleHUD(power:Bool):Void {
+		_textIndex = 0;
+		if (power) {
+			FlxTween.num(0, 1, .66, { onComplete: function(_) {
+				active = true;
+				_text.text = _textContent[0];
+				_name.text = _nameContent[0];
+			}}, function(Alpha:Float) {
+				forEach(function(spr:FlxSprite) {
+					spr.alpha = Alpha;
+				});
+			});
+		} else {
+			active = false;
+			FlxTween.num(1, 0, .66, function(Alpha:Float) {
+				forEach(function(spr:FlxSprite) {
+					spr.alpha = Alpha;
+				});
+			});
+		}
 	}
-	/**
-	 * After we fade our hud out, we set it to not be active or visible (no update and no draw)
-	 */
-	function finishFadeOut(_):Void
-	{
-		active = false;
-		visible = false;
-	}
-	
-	/**
-	 * This function is called by our Tween to fade in/out all the items in our hud.
-	 */
-	function updateAlpha(Value:Float):Void
-	{
-		_alpha = Value;
-		forEach(function(spr:FlxSprite)
-		{
-			spr.alpha = _alpha;
-		});
-	}
-	
+
 	function setChoiceVisible(Visible:Bool):Void{
 		_sprChoice1.visible = Visible;
 		_textChoice1.visible = Visible;

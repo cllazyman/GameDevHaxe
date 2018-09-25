@@ -19,29 +19,23 @@ class Transitions extends FlxTypedGroup<FlxSprite>
 	
 	// ** These are the sprites that we will use to show the combat hud interface
 	var _text:FlxText;	// Text
-	var _transitionIndex:Int;
 	var _textIndex = 0; // Count the index of text
 	var _alpha:Float = 0;	// we will use this to fade in and out our combat hud
-	var _textTransition1:Array<String>;   // Contain all the texts
+	var _textTransition:Array<String>;   // Contain all the texts
 	
 	
 	var _choosingSound:FlxSound;
-	public function new(index:Int) 
+	public function new() 
 	{
 		super();
 		_textIndex = 0;
-		_transitionIndex = index;
-		_textTransition1 = ["Sep 6. Morning"];
+		_textTransition = [];
 		//Text
 		_text = new FlxText();
-		if (index == 1){
-			_text.text = _textTransition1[0];
-		}
 		_text.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		_text.screenCenter();
 		add(_text);
-		
-		
+			
 		forEach(function(spr:FlxSprite)
 		{
 			spr.scrollFactor.set();
@@ -50,25 +44,47 @@ class Transitions extends FlxTypedGroup<FlxSprite>
 		// Load Sounds
 		_choosingSound = FlxG.sound.load(AssetPaths.ButtonClickSFX__ogg);
 	}
+	public function chooseTrasition(Index:Int):Void{
+		_textIndex = 0;
+		switch Index{
+			case 1:{
+				_textTransition = ["On the next day","Sep 6. Morning"];
+			}
+		}
+	}
 
 	
 	override public function update(elapsed:Float):Void 
 	{
-
 		if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
 			{
 				_choosingSound.play();
 				_textIndex = _textIndex + 1;
-				if (_transitionIndex == 1){
-					_text.text = _textTransition1[_textIndex];
-					if (_textIndex >= _textTransition1.length ){
-						visible = false;
-						active = false;
-					}
-				}
-				
+				_text.text = _textTransition[_textIndex];
+				if (_textIndex >=  _textTransition.length){
+						toggleHUD(false);
+				}	
 			}
 		super.update(elapsed);
 	}
-	
+	// Turn on/off HUD
+	public function toggleHUD(power:Bool):Void {
+		if (power) {
+			FlxTween.num(0, 1, .66, { onComplete: function(_) {
+				active = true;
+				_text.text = _textTransition[0];
+			}}, function(Alpha:Float) {
+				forEach(function(spr:FlxSprite) {
+					spr.alpha = Alpha;
+				});
+			});
+		} else {
+			active = false;
+			FlxTween.num(1, 0, .66, function(Alpha:Float) {
+				forEach(function(spr:FlxSprite) {
+					spr.alpha = Alpha;
+				});
+			});
+		}
+	}
 }
