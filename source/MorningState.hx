@@ -37,7 +37,7 @@ class MorningState extends FlxState {
 		
 		// Music
 		FlxG.sound.play(AssetPaths.morning__ogg);
-
+		
 		// Map
 		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
 		
@@ -60,7 +60,7 @@ class MorningState extends FlxState {
 		// UI
 		characterUI = new CharacterUI();
 		shopUI = new ShopUI();
-		shopUI.toggleHUD(false);
+		
 		// Select the player
 		Select();
 		
@@ -162,16 +162,16 @@ class MorningState extends FlxState {
 			switch (npc.nType) {
 				case 0:
 					shopUI.toggleHUD(true);
-
 				//case 1:
+					//
 				//case 2:
+					//
 				case 3, 4, 5:
 					npc.setFollow(selectedPlayer);
 					collisionEntities.remove(npc);
+					//selectedPlayer.setInactive();
+					//Select();
 			}
-			// DO SOME ACTION
-			//selectedPlayer.setInactive();
-			//Select();
 		}
 	}
 }

@@ -53,20 +53,22 @@ class MenuState extends FlxState {
 		
 		super.create();
 	}
-
+	
+	// For animations
 	override public function update(elapsed:Float):Void {
 		background.animation.play("idle");
 		super.update(elapsed);
 	}
 	
+	// For playing
 	private function clickPlay():Void {
 		FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
-		//FlxG.switchState(new MorningState());
 		FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
 			FlxG.switchState(new MorningState());
 		});
 	}
 	
+	// For exiting
 	private function clickClose():Void {
 		FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
 		System.exit(0);

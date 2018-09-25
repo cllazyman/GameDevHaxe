@@ -16,10 +16,6 @@ import Storage;
  */
 
 class ShopUI extends FlxTypedGroup<FlxSprite> {
-	// For UI stuff
-	var nameStuff:Array<String> = ["Shopkeeper"];
-	var textStuff:Array<String> = ["Welcome. How can I help you?\nPress SPACE to finish shopping."];
-	
 	// Background
 	var name:FlxSprite;
 	var text:FlxSprite;
@@ -32,7 +28,7 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 	
 	// Shop Content
 	var Names:Array<String> = ["Sake", "Tea", "Ink", "Arranged Flowers", "German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese Fan", "Mythic Shamisen"];
-	var Prices:Array<Int> = [10000, 12000, 8000, 6000, 94000, 108000, 130000, 125000, 98000, 85000];
+	var Prices:Array<Int> = [1000, 1200, 800, 600, 9400, 10800, 13000, 12500, 9800, 8500];
 	var itemName:Map<String, FlxText> = new Map<String, FlxText>();
 	var itemPrice:Map<String, FlxText> = new Map<String, FlxText>();
 	
@@ -43,7 +39,6 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 	
 	public function new()  {
 		super();
-		textIndex = 0;
 		// Add the shop backgrounds
 		name = new FlxSprite(150, 220);
 		name.loadGraphic(AssetPaths.ui_name__png);
@@ -56,10 +51,10 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 		add(shop);
 		
 		// Content section
-		nameContent = new FlxText(name.x + 15, name.y + 5, 100, nameStuff[0]);
+		nameContent = new FlxText(name.x + 15, name.y + 5, 100, "Shopkeeper");
 		nameContent.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(nameContent);
-		textContent = new FlxText(text.x + 15, text.y + 10, 470, textStuff[0]);
+		textContent = new FlxText(text.x + 15, text.y + 10, 470, "Welcome. How can I help you?\nPress SPACE to finish shopping.");
 		textContent.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(textContent);
 				
@@ -83,118 +78,96 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 			}
 			count++;
 		}
+		
 		// Load Sounds
 		_chooseSound = FlxG.sound.load(AssetPaths.ButtonClickSFX__ogg);
+		
+		// Set to disabled
+		forEach(function(spr:FlxSprite) {
+			spr.alpha = 0;
+		});
+		active = false;
+		
 		// like we did in our HUD class, we need to set the scrollFactor on each of our children objects to 0,0. We also set alpha to 0 (so we can fade this in)
 		forEach(function(spr:FlxSprite) { spr.scrollFactor.set(); });
 	}
 
 	
-	override public function update(elapsed:Float):Void 
-	{
-		if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
-		{
+	override public function update(elapsed:Float):Void {
+		if (FlxG.keys.anyJustReleased([SPACE,ENTER])) {
 			_chooseSound.play();
-			nameContent.text = nameStuff[textIndex];
-			textContent.text = textStuff[textIndex];
-			textIndex = textIndex + 1;
-			if (textIndex == 1){
-				toggleHUD(false);
-			}
-
+			toggleHUD(false);
 		}			
-		if (FlxG.mouse.justReleased){
+		if (FlxG.mouse.justReleased) {
 			_chooseSound.play();
-				if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX<= 435 && FlxG.mouse.screenY>=25 && FlxG.mouse.screenY <= 60){
-					buy(0);
-				}
-				else if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX <= 435 && FlxG.mouse.screenY >= 70 && FlxG.mouse.screenY <= 105){
-					buy(1);
-				}
-				else if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX<= 435 && FlxG.mouse.screenY>=115 && FlxG.mouse.screenY<=150){
-					buy(2);
-				}
-				else if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX<= 435 && FlxG.mouse.screenY>=160 && FlxG.mouse.screenY<=195){
-					buy(3);
-				}
-				else if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX<= 435 && FlxG.mouse.screenY>=205 && FlxG.mouse.screenY<=240){
-					buy(4);
-				}
-				else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX<= 590 && FlxG.mouse.screenY>=25 && FlxG.mouse.screenY<=60){
-					buy(5);
-				}
-				else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX<= 590  && FlxG.mouse.screenY>=70 && FlxG.mouse.screenY<=105){
-					buy(6);
-				}
-				else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX<= 590  && FlxG.mouse.screenY>=115 && FlxG.mouse.screenY<=150){
-					buy(7);
-				}
-				else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX<= 590  && FlxG.mouse.screenY>=160 && FlxG.mouse.screenY<=195){
-					buy(8);
-				}
-				else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX<= 590  && FlxG.mouse.screenY>=205 && FlxG.mouse.screenY<=240){
-					buy(9);
-				}				
-			}	
-				
-				//textContent.text = Std.string(_shopItem) +"  " + Std.string(FlxG.mouse.x) +"   " + Std.string(FlxG.mouse.y);
-			super.update(elapsed);	
+			if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX <= 435 && FlxG.mouse.screenY >=25 && FlxG.mouse.screenY <= 60) {
+				buy(0);
+			} else if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX <= 435 && FlxG.mouse.screenY >= 70 && FlxG.mouse.screenY <= 105) {
+				buy(1);
+			} else if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX <= 435 && FlxG.mouse.screenY >= 115 && FlxG.mouse.screenY <= 150) {
+				buy(2);
+			} else if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX <= 435 && FlxG.mouse.screenY >= 160 && FlxG.mouse.screenY <= 195) {
+				buy(3);
+			} else if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX <= 435 && FlxG.mouse.screenY >= 205 && FlxG.mouse.screenY <= 240) {
+				buy(4);
+			} else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX <= 590 && FlxG.mouse.screenY >= 25 && FlxG.mouse.screenY <= 60) {
+				buy(5);
+			} else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX <= 590  && FlxG.mouse.screenY >= 70 && FlxG.mouse.screenY <= 105) {
+				buy(6);
+			} else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX <= 590  && FlxG.mouse.screenY >= 115 && FlxG.mouse.screenY <= 150) {
+				buy(7);
+			} else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX <= 590  && FlxG.mouse.screenY >= 160 && FlxG.mouse.screenY <= 195) {
+				buy(8);
+			} else if (FlxG.mouse.screenX >= 450 && FlxG.mouse.screenX <= 590  && FlxG.mouse.screenY >= 205 && FlxG.mouse.screenY <= 240) {
+				buy(9);
+			}
+		}
+		super.update(elapsed);	
 	}
-
-
-
-	/**
-	 * This function is triggered when our results text has finished fading in. If we're not defeated, we will fade out the entire hud after a short delay
-	 */
-	function doneResultsIn(_):Void {
-		FlxTween.num(1, 0, .66, { ease: FlxEase.circOut, onComplete: finishFadeOut, startDelay: 1 }, updateAlpha);
-	}
-	/**
-	 * After we fade our hud out, we set it to not be active or visible (no update and no draw)
-	 */
-	function finishFadeOut(_):Void {
-
-		active = false;
-		visible = false;
-
-	}
-	
-	// This function is called by our Tween to fade in/out all the items in our hud.
-	function updateAlpha(Alpha:Float):Void {
-		forEach(function(spr:FlxSprite) { spr.alpha = Alpha; });
-	}
-
-	
+		
 	// Turn on/off HUD
 	public function toggleHUD(power:Bool):Void {
 		textIndex = 0;
-		active = power;
-		visible = power;
+		if (power) {
+			FlxTween.num(0, 1, .66, { onComplete: function(_) {
+				active = true;
+				nameContent.text = "Shopkeeper";
+				textContent.text = "Welcome. How can I help you?\nPress SPACE to finish shopping.";
+			}}, function(Alpha:Float) {
+				forEach(function(spr:FlxSprite) {
+					spr.alpha = Alpha;
+				});
+			});
+		} else {
+			active = false;
+			FlxTween.num(1, 0, .66, function(Alpha:Float) {
+				forEach(function(spr:FlxSprite) {
+					spr.alpha = Alpha;
+				});
+			});
+		}
 	}
-	public function buy(shopItem:Int):Void{
+	
+	public function buy(shopItem:Int):Void {
 		textContent.text = Std.string(_shopItem) +"  " + Std.string(FlxG.mouse.screenX) +"   " + Std.string(FlxG.mouse.screenY);
-		if (shopItem >= 0 && shopItem <= 3){
-			if (Storage.money >= Prices[shopItem]){
+		if (shopItem >= 0 && shopItem <= 3) {
+			if (Storage.money >= Prices[shopItem]) {
 				Storage.limitedItemCounts[shopItem] += 1;
 				Storage.money -= Prices[shopItem];
 				textContent.text = "You buy "+Storage.limitedItemNames[shopItem]+" successfully!\nPress SPACE to finish shopping.";
-			}
-			else{
+			} else {
 				textContent.text = "Sorry, you don't have enough money.\nPress SPACE to finish shopping.";
 			}
 				
-		}
-		else if (shopItem >= 4 && shopItem <= 9){
-			if (Storage.unlimitedCounts[shopItem - 4] > 0){
+		} else if (shopItem >= 4 && shopItem <= 9) {
+			if (Storage.unlimitedCounts[shopItem - 4] > 0) {
 				textContent.text = "This item is sold out.\nPress SPACE to finish shopping.";
-			}
-			else{
-				if (Storage.money >= Prices[shopItem]){
+			} else {
+				if (Storage.money >= Prices[shopItem]) {
 					Storage.unlimitedCounts[shopItem-4] += 1;
 					Storage.money -= Prices[shopItem];
 					textContent.text = "You buy "+Storage.unlimitedItems[shopItem-4]+" successfully!\nPress SPACE to finish shopping.";
-			}
-				else{
+				} else {
 					textContent.text = "Sorry, you don't have enough money.\nPress SPACE to finish shopping.";
 				}	
 			}

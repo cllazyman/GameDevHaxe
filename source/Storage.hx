@@ -12,13 +12,13 @@ class Storage {
 	static public var time:Bool = true;
 	
 	// The current money
-	static public var money:Int = 9300000;
+	static public var money:Int = 930000;
 	
 	// The list of player names
 	static public var playerNames:Array<String> = ["Shimotsuki", "Tsuruko", "Setsuko", "Kawako"];
 	
 	// The list of npc names
-	static public var npcNames:Array<String> = ["shop", "intel", "brother", "mA", "mB", "mC"];
+	static public var npcNames:Array<String> = ["Shopkeeper", "Yamamoto", "Brother", "Guest1", "Guest2", "Guest3"];
 	
 	// The list of limited items
 	static public var limitedItemNames:Array<String> = ["Sake", "Tea", "Ink", "Arranged Flowers"];
