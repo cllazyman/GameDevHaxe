@@ -81,7 +81,12 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 		
 		forEach(function(spr:FlxSprite) { spr.scrollFactor.set(0,0); });
 	}
-	
+	override public function update(elapsed:Float):Void {
+		for (i in 0...Storage.limitedItemNames.length) {
+			itemCount[Storage.limitedItemNames[i]].text = Std.string(Storage.limitedItemCounts[i]);
+		}
+		moneyCount.text = Std.string(Storage.money)+" G";
+	}
 	public function updateMoney(Money:Int = 0):Void {
 		moneyCount.text = Std.string(Money);
 	}

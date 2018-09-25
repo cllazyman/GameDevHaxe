@@ -7,6 +7,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import Storage;
 
 /**
  * The beginning of the story
@@ -15,8 +16,8 @@ import flixel.util.FlxColor;
 
 class ShopUI extends FlxTypedGroup<FlxSprite> {
 	// For UI stuff
-	var nameStuff:Array<String> = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
-	var textStuff:Array<String> = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister"];
+	var nameStuff:Array<String> = ["Shopkeeper","Shopkeeper"];
+	var textStuff:Array<String> = ["Welcome. How can I help you?\nPress Space to finish shopping.","Thank you, see you next time."];
 	
 	// Background
 	var name:FlxSprite;
@@ -29,15 +30,16 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 	var textContent:FlxText;
 	
 	// Shop Content
-	var Names:Array<String> = ["Sake", "Tea", "Ink", "Arranged Flowers", "Item4", "Item5", "Item6", "Item7", "Item8", "Item9"];
-	var Prices:Array<Int> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	var Names:Array<String> = ["Sake", "Tea", "Ink", "Arranged Flowers", "German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese Fan", "Mythic Shamisen"];
+	var Prices:Array<Int> = [10000, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	var itemName:Map<String, FlxText> = new Map<String, FlxText>();
 	var itemPrice:Map<String, FlxText> = new Map<String, FlxText>();
 	
-	var shopItem:Int = 0;
-	
+	var _shopItem:Int = 0;
+	//var _specialText:Bool = false;
 	public function new()  {
 		super();
+		textIndex = 0;
 		// Add the shop backgrounds
 		name = new FlxSprite(150, 220);
 		name.loadGraphic(AssetPaths.ui_name__png);
@@ -85,17 +87,25 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 	
 	override public function update(elapsed:Float):Void 
 	{
+
 		if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
-			{
-				textIndex = textIndex + 1;
+		{
 				nameContent.text = nameStuff[textIndex];
 				textContent.text = textStuff[textIndex];
-			}
+				textIndex = textIndex + 1;
+				if (textIndex == 1){
+					toggleHUD(false);
+				}
+
+		}			
+		if (FlxG.mouse.justReleased){
+
+				buy();
+
+				//textContent.text = Std.string(_shopItem) +"  " + Std.string(FlxG.mouse.x) +"   " + Std.string(FlxG.mouse.y);
 			
-		if (FlxG.mouse.justReleased){	
-				textContent.text = Std.string(shopItem) +"  " + Std.string(FlxG.mouse.x) +"   " + Std.string(FlxG.mouse.y);
 		}
-			super.update(elapsed);
+		super.update(elapsed);
 	}
 
 	/**
@@ -108,8 +118,10 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 	 * After we fade our hud out, we set it to not be active or visible (no update and no draw)
 	 */
 	function finishFadeOut(_):Void {
+
 		active = false;
 		visible = false;
+
 	}
 	
 	// This function is called by our Tween to fade in/out all the items in our hud.
@@ -120,7 +132,25 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 	
 	// Turn on/off HUD
 	public function toggleHUD(power:Bool):Void {
+		textIndex = 0;
 		active = power;
 		visible = power;
 	}
+	public function buy():Void{
+		//textContent.text = Std.string(_shopItem) +"  " + Std.string(FlxG.mouse.screenX) +"   " + Std.string(FlxG.mouse.screenY);
+		if (FlxG.mouse.screenX >= 290 && FlxG.mouse.screenX <= 435 && FlxG.mouse.screenY >= 30 && FlxG.mouse.screenY <= 55){
+			_shopItem = 1;
+			if (Storage.money >= Prices[0]){
+				Storage.limitedItemCounts[0] += 1;
+				Storage.money -= Prices[0];
+				textContent.text = "You buy sake successfully!";
+			}
+			else{
+				textContent.text = "Sorry, you don't have enough money.";
+			}
+				
+		}
+		
+	}
+	
 }
