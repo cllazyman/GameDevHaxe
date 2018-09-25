@@ -127,9 +127,9 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 	// Turn on/off HUD
 	public function toggleHUD(power:Bool):Void {
 		textIndex = 0;
-		Storage.pauseUI = power;
 		if (power) {
-			FlxTween.num(0, 1, .66, { onComplete: function(_) {
+			Storage.pauseUI = true;
+			FlxTween.num(0, 1, .33, { onComplete: function(_) {
 				active = true;
 				nameContent.text = "Shopkeeper";
 				textContent.text = "Welcome. How can I help you?\nPress SPACE to finish shopping.";
@@ -139,14 +139,18 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 				});
 			});
 		} else {
+			Storage.pauseUI = power;
 			active = false;
-			FlxTween.num(1, 0, .66, function(Alpha:Float) {
+			FlxTween.num(1, 0, .33, { onComplete: function(_) {
+				Storage.pauseUI = false;
+			}}, function(Alpha:Float) {
 				forEach(function(spr:FlxSprite) {
 					spr.alpha = Alpha;
 				});
 			});
 		}
 	}
+	
 	//Buy items
 	public function buy(shopItem:Int):Void {
 		//limitedItems

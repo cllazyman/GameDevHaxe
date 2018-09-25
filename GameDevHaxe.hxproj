@@ -15,16 +15,17 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\haxelib\flixel\4,5,1" />
-    <class path="C:\haxelib\openfl\8,4,1\src" />
-    <class path="C:\haxelib\lime\7,0,0\src" />
-    <class path="C:\haxelib\flixel-addons\2,7,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel\4,5,1" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\8,4,1\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\7,0,0\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\hscript\2,2,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel-addons\2,7,0" />
     <class path="source" />
     <class path="export\neko\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=4.5.1&#xA;openfl=8.4.1&#xA;lime=7.0.0&#xA;flixel-addons=2.7.0&#xA;lime-harfbuzz&#xA;lime-openal&#xA;tools=7.0.0&#xA;lime-cairo&#xA;NAPE_NO_INLINE&#xA;lime-opengl&#xA;no-compilation&#xA;native&#xA;FLX_NO_TOUCH&#xA;lime-curl&#xA;lime-native&#xA;lime-vorbis&#xA;openfl-native&#xA;lime-cffi&#xA;windows&#xA;desktop&#xA;display" />
+    <option directives="flixel=4.5.1&#xA;openfl=8.4.1&#xA;lime=7.0.0&#xA;hscript=2.2.0&#xA;flixel-addons=2.7.0&#xA;lime-harfbuzz&#xA;lime-openal&#xA;tools=7.0.0&#xA;lime-cairo&#xA;NAPE_NO_INLINE&#xA;lime-opengl&#xA;no-compilation&#xA;native&#xA;FLX_NO_TOUCH&#xA;lime-curl&#xA;lime-native&#xA;lime-vorbis&#xA;openfl-native&#xA;lime-cffi&#xA;windows&#xA;desktop&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />

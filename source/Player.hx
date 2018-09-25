@@ -11,7 +11,7 @@ import flixel.math.FlxPoint;
  */
 class Player extends FlxSprite {
 	// Differentiating players
-	private var pType:Int;
+	public var pType:Int;
 
 	// Selection
 	private var selected:Bool = false;
@@ -26,8 +26,8 @@ class Player extends FlxSprite {
 		immovable = true;
 		alpha = 0.75;
 		
-		// Graphics and size
-		loadGraphic("assets/images/player" + pType + ".png", true, 27, 33);
+		loadGraphic("assets/images/player" + pType + (Storage.time ? "" : "_night") + ".png", true, 27, 33);
+		
 		animation.add("d", [0, 1], 6, false);
 		animation.add("l", [2, 3], 6, false);
 		animation.add("r", [4, 5], 6, false);

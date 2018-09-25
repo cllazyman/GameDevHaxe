@@ -120,6 +120,9 @@ class MorningState extends FlxState {
 			players.add(temp);
 			add(temp.actionBox);
 		} else if (entityName == "npc") {
+			if (Std.parseInt(entityData.get("nType")) == 2) {
+				return;
+			}
 			var temp:NPC = new NPC(x+5, y, Std.parseInt(entityData.get("nType")));
 			entities.add(temp);
 			collisionEntities.add(temp);
@@ -130,7 +133,7 @@ class MorningState extends FlxState {
 	// Selects the first alive player and changes state once inactive
 	private function Select(): Void {
 		selectedPlayer = players.getFirstAlive();
-		if (selectedPlayer != null) {
+		if (players.countLiving() > 1) {
 			selectedPlayer.isSelected(true);
 			characterUI.updatePlayer(index);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
@@ -162,15 +165,17 @@ class MorningState extends FlxState {
 			switch (npc.nType) {
 				case 0:
 					shopUI.toggleHUD(true);
-				//case 1:
-					//
-				//case 2:
-					//
+				case 1:
+					if (selectedPlayer.pType == 0) {
+						// Info guy stuff
+					}
 				case 3, 4, 5:
-					npc.setFollow(selectedPlayer);
-					collisionEntities.remove(npc);
-					//selectedPlayer.setInactive();
-					//Select();
+					if (selectedPlayer.pType != 0) {
+						npc.setFollow(selectedPlayer);
+						collisionEntities.remove(npc);
+						selectedPlayer.setInactive();
+						Select();
+					}
 			}
 		}
 	}

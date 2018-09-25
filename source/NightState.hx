@@ -11,7 +11,7 @@ import flixel.util.FlxSort;
 
 class NightState extends FlxState {
 	// Maps
-	var morningMap:FlxOgmoLoader;
+	var nightMap:FlxOgmoLoader;
 
 	// Layers
 	var layers:FlxTypedGroup<FlxTilemap>;
@@ -33,13 +33,13 @@ class NightState extends FlxState {
 	
 	override public function create():Void {
 		// Update Storage values
-		Storage.time = true;
+		Storage.time = false;
 		
 		// Music
-		FlxG.sound.play(AssetPaths.morning__ogg);
+		FlxG.sound.play(AssetPaths.night__ogg);
 		
 		// Map
-		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
+		nightMap = new FlxOgmoLoader(AssetPaths.night__oel);
 		
 		// Layers
 		layers = new FlxTypedGroup<FlxTilemap>();
@@ -55,7 +55,7 @@ class NightState extends FlxState {
 		collisionEntities = new FlxTypedGroup<FlxObject>();
 		players = new FlxTypedGroup<Player>();
 		npcs = new FlxTypedGroup<NPC>();
-		morningMap.loadEntities(placeEntities, "entities");
+		nightMap.loadEntities(placeEntities, "entities");
 		
 		// UI
 		characterUI = new CharacterUI();
@@ -69,13 +69,6 @@ class NightState extends FlxState {
 		add(entities);
 		add(characterUI);
 		add(shopUI);
-		
-		// Extra
-		//FlxG.debugger.drawDebug = true;
-		/*FlxG.watch.add(selectedPlayer, "touching");
-		FlxG.watch.add(npcs.getFirstAlive(), "touching");
-		FlxG.watch.add(npcs.getFirstAlive().velocity, "x");
-		FlxG.watch.add(npcs.getFirstAlive().velocity, "y");*/
 		
 		super.create();
 	}
@@ -101,7 +94,7 @@ class NightState extends FlxState {
 	
 	// Initialize layers
 	private function placeLayers(layerName:String, collision:Bool):Void {
-		var tempLayer:FlxTilemap = morningMap.loadTilemap(AssetPaths.tileset__png, 16, 16, layerName);
+		var tempLayer:FlxTilemap = nightMap.loadTilemap(AssetPaths.tileset__png, 16, 16, layerName);
 		tempLayer.follow();
 		if (collision) {
 			collisionLayers.add(tempLayer);
@@ -120,6 +113,9 @@ class NightState extends FlxState {
 			players.add(temp);
 			add(temp.actionBox);
 		} else if (entityName == "npc") {
+			if (Std.parseInt(entityData.get("nType")) == 2 && (Storage.Day != 1 || Storage.Day != 7)) {
+				return;
+			}
 			var temp:NPC = new NPC(x+5, y, Std.parseInt(entityData.get("nType")));
 			entities.add(temp);
 			collisionEntities.add(temp);
@@ -135,9 +131,8 @@ class NightState extends FlxState {
 			characterUI.updatePlayer(index);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 		} else {
-			FlxG.switchState(new NightState());
+			FlxG.switchState(new MorningState());
 		}
-		
 	}
 	
 	// Selects a player that is clicked
@@ -163,15 +158,21 @@ class NightState extends FlxState {
 			switch (npc.nType) {
 				case 0:
 					shopUI.toggleHUD(true);
-				//case 1:
-					//
-				//case 2:
-					//
+				case 1:
+					if (selectedPlayer.pType == 0) {
+						// Info guy stuff
+					}
+				case 2:
+					if (selectedPlayer.pType == 0) {
+						// Info guy stuff
+					}
 				case 3, 4, 5:
-					npc.setFollow(selectedPlayer);
-					collisionEntities.remove(npc);
-					//selectedPlayer.setInactive();
-					//Select();
+					if (selectedPlayer.pType != 0) {
+						npc.setFollow(selectedPlayer);
+						collisionEntities.remove(npc);
+						selectedPlayer.setInactive();
+						Select();
+					}
 			}
 		}
 	}

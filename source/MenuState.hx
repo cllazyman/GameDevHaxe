@@ -34,13 +34,21 @@ class MenuState extends FlxState {
 		titleText.alignment = FlxTextAlign.CENTER;
 		
 		// Play Button
-		playButton = new FlxButtonPlus(0, 228, clickPlay, "Play", 132, 19);
+		playButton = new FlxButtonPlus(0, 228, 	function() {
+				FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
+				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
+					FlxG.switchState(new MorningState());
+				});
+			}, "Play", 132, 19);
 		playButton.screenCenter(FlxAxes.X);
 		playButton.updateActiveButtonColors([FlxColor.GREEN]);
 		playButton.updateInactiveButtonColors([FlxColor.BLACK]);
 		
 		// Exit Button
-		exitButton = new FlxButtonPlus(0, 295, clickClose, "Exit", 132, 19);
+		exitButton = new FlxButtonPlus(0, 295, function() {
+				FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
+				System.exit(0);
+			}, "Exit", 132, 19);
 		exitButton.screenCenter(FlxAxes.X);
 		exitButton.updateActiveButtonColors([FlxColor.RED]);
 		exitButton.updateInactiveButtonColors([FlxColor.BLACK]);
@@ -58,19 +66,5 @@ class MenuState extends FlxState {
 	override public function update(elapsed:Float):Void {
 		background.animation.play("idle");
 		super.update(elapsed);
-	}
-	
-	// For playing
-	private function clickPlay():Void {
-		FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
-		FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
-			FlxG.switchState(new IntroState());
-		});
-	}
-	
-	// For exiting
-	private function clickClose():Void {
-		FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
-		System.exit(0);
 	}
 }
