@@ -28,6 +28,8 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 	private var itemName:Map<String, FlxText> = new Map<String, FlxText>();
 	private var itemCount:Map<String, FlxText> = new Map<String, FlxText>();
 	
+
+	
     public function new() {
 		super();
 		// Add the stats background
@@ -78,19 +80,35 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 			add(tempItemCount);
 			offsety += 20;
 		}
-		
+		for (i in 0...Storage.unlimitedItems.length) {
+			var tempItemName:FlxText = new FlxText(stats.x+15, stats.y+offsety, 150, Storage.unlimitedItems[i]);
+			tempItemName.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+			var tempItemCount:FlxText = new FlxText(stats.x+120, stats.y+offsety, 80, Std.string(Storage.unlimitedCounts[i]));
+			tempItemCount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
+			itemName[Storage.unlimitedItems[i]] = tempItemName;
+			itemCount[Storage.unlimitedItems[i]] = tempItemCount;
+			add(tempItemName);
+			add(tempItemCount);
+			offsety += 20;
+		}
+
 		forEach(function(spr:FlxSprite) { spr.scrollFactor.set(0,0); });
 	}
 	override public function update(elapsed:Float):Void {
 		for (i in 0...Storage.limitedItemNames.length) {
 			itemCount[Storage.limitedItemNames[i]].text = Std.string(Storage.limitedItemCounts[i]);
 		}
+		for (i in 0...Storage.unlimitedCounts.length) {
+			if (Storage.unlimitedCounts[i] == 0){
+				itemCount[Storage.unlimitedItems[i]].text = "0";
+			}
+			else{
+				itemCount[Storage.unlimitedItems[i]].text = "∞";
+			}
+		}
 		moneyCount.text = Std.string(Storage.money)+" G";
 	}
-	public function updateMoney(Money:Int = 0):Void {
-		moneyCount.text = Std.string(Money);
-	}
-	
+
 	// Changes the player name by index
 	public function updatePlayerName(index:Int):Void {
 		namePlayer.text = Storage.playerNames[index];

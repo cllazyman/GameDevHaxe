@@ -12,7 +12,7 @@ class Storage {
 	static public var time:Bool = true;
 	
 	// The current money
-	static public var money:Int = 30000;
+	static public var money:Int = 9300000;
 	
 	// The list of player names
 	static public var playerNames:Array<String> = ["Shimotsuki", "Tsuruko", "Setsuko", "Kawako"];
@@ -27,7 +27,7 @@ class Storage {
 	
 	// The list of unlimited items
 	static public var unlimitedItems:Array<String> = ["German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese", "Mythic Shamisen"];
-	static public var unlimitesCounts:Array<Int> = [0, 0, 0, 0, 0];
+	static public var unlimitedCounts:Array<Int> = [0, 0, 0, 0, 0, 0];
 	
 	// A reference to the active playstate for global access
 	static public var PS:PlayState;
