@@ -11,15 +11,12 @@ class IntroDialogue extends DialogueTemplate
 	
 	override public function new() 
 	{	
-		
 		_textContent = [];
 		_nameContent = [];
 		_textChoice1Content = [];
 		_textChoice2Content = [];
 		_textChoice3Content = [];
 		super();
-		
-
 	}
 	public function chooseDialogue(Option:Int):Void{
 		_textIndex = 0;
@@ -73,13 +70,7 @@ class IntroDialogue extends DialogueTemplate
 				_nameContent = ["Kawako", "Shimotsuki", "Tsuruko", "Shimotsuki", "Nizaemon","Kawako","Shimotsuki","Tsuruko","Shimotsuki","Shimotsuki"];
 			}
 				
-		}
-			
-		
-		
-		
-		
-		
+		}	
 	}
 	override public function update(elapsed:Float):Void 
 	{	
@@ -89,6 +80,5 @@ class IntroDialogue extends DialogueTemplate
 		}	
 		super.update(elapsed);
 	}
-	
-	
+
 }

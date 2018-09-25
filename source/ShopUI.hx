@@ -147,10 +147,11 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 			});
 		}
 	}
-	
+	//Buy items
 	public function buy(shopItem:Int):Void {
+		//limitedItems
 		if (shopItem >= 0 && shopItem <= 3) {
-			if (Storage.money >= Prices[shopItem]) {
+			if (Storage.money >= Prices[shopItem]) { //Has enough money
 				chooseSound.play();
 				Storage.limitedItemCounts[shopItem] += 1;
 				Storage.money -= Prices[shopItem];
@@ -158,11 +159,12 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 			} else {
 				textContent.text = "Sorry, you don't have enough money.\nPress SPACE to finish shopping.";
 			}
+		//UnlimitedItems
 		} else if (shopItem >= 4 && shopItem <= 9) {
-			if (Storage.unlimitedItemCounts[shopItem - 4] > 0) {
+			if (Storage.unlimitedItemCounts[shopItem - 4] > 0) { //Player has bought it
 				textContent.text = "This item is sold out.\nPress SPACE to finish shopping.";
 			} else {
-				if (Storage.money >= Prices[shopItem]) {
+				if (Storage.money >= Prices[shopItem]) { //Has enough money
 					chooseSound.play();
 					Storage.unlimitedItemCounts[shopItem-4] += 1;
 					Storage.money -= Prices[shopItem];

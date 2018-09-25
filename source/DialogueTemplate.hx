@@ -102,7 +102,7 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 	
 	override public function update(elapsed:Float):Void 
 	{
-
+		//When clicking SPACE or ENTER, show next text
 		if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
 			{
 				_choosingSound.play();
@@ -113,10 +113,10 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 					_name.text = _nameContent[_textIndex];
 				}
 			}
+		//When making choice, show three choices
 		if (_isMakingChoice == true){
 			if (FlxG.mouse.justReleased){	
 				_choosingSound.play();
-
 				if (FlxG.mouse.screenX >= 285 && FlxG.mouse.screenX<=465){
 					if (FlxG.mouse.screenY >= 85 && FlxG.mouse.screenY <= 105){
 						_choiceMake = 1;
@@ -175,7 +175,7 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 			});
 		}
 	}
-
+	//Set whether choices are visible
 	function setChoiceVisible(Visible:Bool):Void{
 		_sprChoice1.visible = Visible;
 		_textChoice1.visible = Visible;

@@ -45,9 +45,9 @@ class Transitions extends FlxTypedGroup<FlxSprite>
 		_choosingSound = FlxG.sound.load(AssetPaths.ButtonClickSFX__ogg);
 	}
 	public function chooseTrasition(Index:Int):Void{
-		_textIndex = 0;
+		_textIndex = 0;		//Initialize the index of text
 		switch Index{
-			case 1:{
+			case 1:{ 		//Beginning of the text
 				_textTransition = ["On the next day","Sep 6. Morning"];
 			}
 		}
@@ -61,7 +61,7 @@ class Transitions extends FlxTypedGroup<FlxSprite>
 				_choosingSound.play();
 				_textIndex = _textIndex + 1;
 				_text.text = _textTransition[_textIndex];
-				if (_textIndex >=  _textTransition.length){
+				if (_textIndex >=  _textTransition.length){ //Make HUD disappear
 						toggleHUD(false);
 				}	
 			}
