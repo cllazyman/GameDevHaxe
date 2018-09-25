@@ -5,10 +5,9 @@ package;
  * The beginning of the story
  * @author Tony
  */
-
 class IntroDialogue extends DialogueTemplate 
 {
-	
+	var _dialogueIndex:Int;
 	override public function new() 
 	{	
 		_textContent = [];
@@ -20,7 +19,8 @@ class IntroDialogue extends DialogueTemplate
 	}
 	public function chooseDialogue(Option:Int):Void{
 		_textIndex = 0;
-		switch Option{
+		_dialogueIndex = Option;
+		switch _dialogueIndex{
 			case 1:{
 				//Beginning
 				_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Shimotsuki comes inside the room, walks to Nizaemon","Sorry, you must been waiting for a while.", "I just arrived, my sister", "What brings you here", "I was given another name and I am going to do what I have to","It is not what you have to. How many times you want me to worry about you.", "Why dont you just quit", "Why DONT you just quit", "Why dont YOU just quit", "What you have done has dishonored the entire family!",
@@ -73,7 +73,31 @@ class IntroDialogue extends DialogueTemplate
 		}	
 	}
 	override public function update(elapsed:Float):Void 
-	{	
+	{
+		switch (_dialogueIndex){
+			case 1:{
+				switch(_textIndex){
+					case 3:
+						setNameVisible(false);
+					case 4:
+						setNameVisible(true);
+					case 23:
+						setNameVisible(false);
+					case 24:
+						setNameVisible(true);
+				}
+			
+		}
+		case 4:{
+				switch (_textIndex){
+					case 20:
+						setNameVisible(false);
+					case 21:
+						setNameVisible(true);
+				}
+			}
+		}
+		
 		// check to see any keys are pressed and set the cooresponding flags.
 		if (_textIndex == _textContent.length){
 			toggleHUD(false);

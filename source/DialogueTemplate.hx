@@ -107,6 +107,7 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 			{
 				_choosingSound.play();
 				
+				
 				if (_isMakingChoice == false){
 					_textIndex = _textIndex + 1;
 					_text.text = _textContent[_textIndex];
@@ -184,5 +185,8 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		_sprChoice3.visible = Visible;
 		_textChoice3.visible = Visible;
 	
+	 }
+	 function setNameVisible(Visible:Bool):Void{
+		 _sprName.visible = Visible;
 	 }
 }
