@@ -16,7 +16,7 @@
     <Width>800</Width>
     <Height>600</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\Christian\Documents\GitHub\GameDevHaxe\assets\levels\Tilemap Editor.oep</Filename>
+  <Filename>F:\homework\gd1\project 1\GameDevHaxe\assets\levels\Tilemap Editor.oep</Filename>
   <AngleMode>Degrees</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -31,8 +31,8 @@
     <LayerDefinition xsi:type="TileLayerDefinition">
       <Name>walls</Name>
       <Grid>
-        <Width>32</Width>
-        <Height>32</Height>
+        <Width>16</Width>
+        <Height>16</Height>
       </Grid>
       <ScrollFactor>
         <X>1</X>
@@ -54,8 +54,8 @@
     <LayerDefinition xsi:type="TileLayerDefinition">
       <Name>floor</Name>
       <Grid>
-        <Width>32</Width>
-        <Height>32</Height>
+        <Width>16</Width>
+        <Height>16</Height>
       </Grid>
       <ScrollFactor>
         <X>1</X>
@@ -66,8 +66,8 @@
     <LayerDefinition xsi:type="TileLayerDefinition">
       <Name>stuff1</Name>
       <Grid>
-        <Width>32</Width>
-        <Height>32</Height>
+        <Width>16</Width>
+        <Height>16</Height>
       </Grid>
       <ScrollFactor>
         <X>1</X>
@@ -78,8 +78,8 @@
     <LayerDefinition xsi:type="TileLayerDefinition">
       <Name>stuff2</Name>
       <Grid>
-        <Width>32</Width>
-        <Height>32</Height>
+        <Width>16</Width>
+        <Height>16</Height>
       </Grid>
       <ScrollFactor>
         <X>1</X>
@@ -90,8 +90,8 @@
     <LayerDefinition xsi:type="TileLayerDefinition">
       <Name>unwalkable</Name>
       <Grid>
-        <Width>32</Width>
-        <Height>32</Height>
+        <Width>16</Width>
+        <Height>16</Height>
       </Grid>
       <ScrollFactor>
         <X>1</X>
@@ -100,7 +100,19 @@
       <ExportMode>CSV</ExportMode>
     </LayerDefinition>
     <LayerDefinition xsi:type="TileLayerDefinition">
-      <Name>NewLayer0</Name>
+      <Name>Foreground1</Name>
+      <Grid>
+        <Width>16</Width>
+        <Height>16</Height>
+      </Grid>
+      <ScrollFactor>
+        <X>1</X>
+        <Y>1</Y>
+      </ScrollFactor>
+      <ExportMode>CSV</ExportMode>
+    </LayerDefinition>
+    <LayerDefinition xsi:type="TileLayerDefinition">
+      <Name>Foreground2</Name>
       <Grid>
         <Width>16</Width>
         <Height>16</Height>

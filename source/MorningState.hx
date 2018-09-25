@@ -99,7 +99,7 @@ class MorningState extends FlxState {
 	
 	// Initialize layers
 	private function placeLayers(layerName:String, collision:Bool):Void {
-		var tempLayer:FlxTilemap = morningMap.loadTilemap(AssetPaths.tileset__png, 32, 32, layerName);
+		var tempLayer:FlxTilemap = morningMap.loadTilemap(AssetPaths.tileset__png, 16, 16, layerName);
 		tempLayer.follow();
 		if (collision) {
 			collisionLayers.add(tempLayer);
