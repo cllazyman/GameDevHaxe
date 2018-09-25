@@ -23,12 +23,12 @@ class IntroDialogue extends DialogueTemplate
 		switch Option{
 			case 1:{
 				//Beginning
-				_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister", "So what bring you here", "I just got another target and i am going to do what i have to","It is not what you have to. How many times you want me to worry about you.", "Why dont you just quit", "Why DONT you just quit", "Why dont YOU just quit", "How can you simply let those disgusting man put their dirty hands on you!",
-				"At least I am not risking my life!", "No you are not, and I have never heard of a Yujo who is 25 and still alive!", "You are already 23 now my sister", "After this, we would have enough money to live anywhere else.",
-				"And the risk can make you killed anytime, right my brother?", "…", "I might not ever see you again", "So promise me, keep safe.", "I wont promise you unless you come back alive, Yukinoshin.",
+				_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Shimotsuki comes inside the room, walks to Nizaemon","Sorry, you must been waiting for a while.", "I just arrived, my sister", "What brings you here", "I was given another name and I am going to do what I have to","It is not what you have to. How many times you want me to worry about you.", "Why dont you just quit", "Why DONT you just quit", "Why dont YOU just quit", "What you have done has dishonored the entire family!",
+				"You are the only family I have and that is the way you think of me?","No, but you are selling your soul.", "At least I am not risking my life！","No you are not, and I have never heard of a Yujo who is 25 and still alive!", "You are already 23 now my sister", "After this, we would have enough money to live anywhere else.",
+				"And the risk can make you killed anytime, right my brother?", "…", "I might not ever see you again", "So promise me, keep safe.", "Nizaemon walks towards the door","I wont promise you unless you come back alive, Yukinoshin.",
 				"That boy has died 15 years ago.", "Sayonara, Tachibana Shimotsuki sama."];
-				_nameContent = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon", "Shimotsuki", "Nizaemon", "Shimotsuki", "Shimotsuki", "Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon", "Nizaemon", "Nizaemon",
-				"Shimotsuki", "Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Shimotsuki", "Shimotsuki"];
+				_nameContent = ["Nizaemon", "Nizaemon", "Nizaemon", "","Shimotsuki", "Nizaemon", "Shimotsuki", "Nizaemon", "Shimotsuki", "Shimotsuki", "Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon","Shimotsuki", "Nizaemon", "Nizaemon", "Nizaemon",
+				"Shimotsuki", "Nizaemon", "Nizaemon", "Nizaemon", "","Shimotsuki", "Nizaemon", "Nizaemon"];
 			}
 			case 2:{
 				// 9.6
