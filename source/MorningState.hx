@@ -162,6 +162,7 @@ class MorningState extends FlxState {
 			switch (npc.nType) {
 				case 0:
 					shopUI.toggleHUD(true);
+
 				//case 1:
 				//case 2:
 				case 3, 4, 5:

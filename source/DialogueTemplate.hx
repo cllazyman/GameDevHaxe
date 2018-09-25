@@ -117,7 +117,13 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 					else if (FlxG.mouse.y >= 270 && FlxG.mouse.y <= 285){
 						_choiceMake = 3;
 					}
+					else{
+						_choiceMake = 0;
+					}
 				}
+			}
+			else{
+				_choiceMake = 0;
 			}
 		}
 	/**
