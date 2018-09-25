@@ -26,8 +26,11 @@ class Storage {
 	//static public var Names:Map<String, Int> = ["Sake" => 0, "Tea" => 0, "Ink" => 0, "Arranged Flowers" => 0];
 	
 	// The list of unlimited items
-	static public var unlimitedItems:Array<String> = ["German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese", "Mythic Shamisen"];
-	static public var unlimitedCounts:Array<Int> = [0, 0, 0, 0, 0, 0];
+	static public var unlimitedItemNames:Array<String> = ["German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese", "Mythic Shamisen"];
+	static public var unlimitedItemCounts:Array<Int> = [0, 0, 0, 0, 0, 0];
+	
+	// Stop all update actions when a UI is active
+	static public var pauseUI:Bool = false;
 	
 	// A reference to the active playstate for global access
 	static public var PS:PlayState;

@@ -44,8 +44,10 @@ class Player extends FlxSprite {
 	
 	override public function update(elapsed:Float):Void {
 		// Move if selected and alive
-		if (selected && alive) {
-			movement();
+		if (!Storage.pauseUI) {
+			if (selected && alive) {
+				movement();
+			}
 		}
 		super.update(elapsed);
 	}

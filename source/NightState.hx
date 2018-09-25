@@ -7,120 +7,172 @@ import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.math.FlxPoint;
 import flixel.tile.FlxTilemap;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.util.FlxSort;
 
 class NightState extends FlxState {
-	// Initialization
+	// Maps
 	var morningMap:FlxOgmoLoader;
-	var visualLayers:FlxTypedGroup<FlxTilemap>;
+
+	// Layers
+	var layers:FlxTypedGroup<FlxTilemap>;
 	var collisionLayers:FlxTypedGroup<FlxTilemap>;
-	var playerList:FlxTypedGroup<Player>;
-	var npcList:FlxTypedGroup<NPC>;
 	
-	// For Player actions
+	// Entities
+	var entities:FlxTypedGroup<FlxObject>;
+	var collisionEntities:FlxTypedGroup<FlxObject>;
+	var players:FlxTypedGroup<Player>;
+	var npcs:FlxTypedGroup<NPC>;
+	
+	// UI
+	var characterUI:CharacterUI;
+	var shopUI:ShopUI;
+	var index:Int = 0;
+
+	// Actions
 	var selectedPlayer:Player;
 	
 	override public function create():Void {
-		// Load the "night" file from the Ogmo Editor
-		/*morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
+		// Update Storage values
+		Storage.time = true;
 		
-		// Initialize Layers
-		visualLayers = new FlxTypedGroup<FlxTilemap>();
+		// Music
+		FlxG.sound.play(AssetPaths.morning__ogg);
+		
+		// Map
+		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);
+		
+		// Layers
+		layers = new FlxTypedGroup<FlxTilemap>();
 		collisionLayers = new FlxTypedGroup<FlxTilemap>();
 		placeLayers("walls", true);
 		placeLayers("floor", false);
 		placeLayers("stuff1", false);
 		placeLayers("stuff2", false);
 		placeLayers("unwalkable", true);
-		placeLayers("overlay", false);
-		//Play music
-		FlxG.sound.play(AssetPaths.night__ogg);
 		
-		// Initialize all entities
-		playerList = new FlxTypedGroup<Player>();
-		npcList = new FlxTypedGroup<NPC>();
+		// Entities
+		entities = new FlxTypedGroup<FlxObject>();
+		collisionEntities = new FlxTypedGroup<FlxObject>();
+		players = new FlxTypedGroup<Player>();
+		npcs = new FlxTypedGroup<NPC>();
 		morningMap.loadEntities(placeEntities, "entities");
+		
+		// UI
+		characterUI = new CharacterUI();
+		shopUI = new ShopUI();
 		
 		// Select the player
 		Select();
 		
 		// Add values to view
-		add(visualLayers);
-		add(playerList);
-		add(npcList);*/
+		add(layers);
+		add(entities);
+		add(characterUI);
+		add(shopUI);
 		
 		// Extra
+		//FlxG.debugger.drawDebug = true;
+		/*FlxG.watch.add(selectedPlayer, "touching");
+		FlxG.watch.add(npcs.getFirstAlive(), "touching");
+		FlxG.watch.add(npcs.getFirstAlive().velocity, "x");
+		FlxG.watch.add(npcs.getFirstAlive().velocity, "y");*/
 		
 		super.create();
 	}
 
-	/*override public function update(elapsed:Float):Void {
-		// For selecting players
-		if (FlxG.mouse.justReleased) {
-			selectPlayer();
+	override public function update(elapsed:Float):Void {
+		if (!Storage.pauseUI) {
+			// Select players on mouse input
+			if (FlxG.mouse.justReleased) {
+				selectPlayer();
+			}
+			
+			// Update Views for foreground/background
+			entities.sort(FlxSort.byY);
+			
+			// Update Collisions
+			FlxG.collide(selectedPlayer, collisionLayers);
+			FlxG.collide(selectedPlayer, collisionEntities);
+			FlxG.collide(npcs, collisionLayers);
+			FlxG.overlap(selectedPlayer.actionBox, npcs, playerActions);
 		}
-		
-		// Update Collisions
-		FlxG.collide(selectedPlayer, collisionLayers);
-		FlxG.collide(selectedPlayer, npcList);
-		FlxG.collide(selectedPlayer, playerList);
-		FlxG.overlap(selectedPlayer.actionBox, npcList, playerActions);
 		super.update(elapsed);
 	}
 	
-	// Initialize Layers onto screen
+	// Initialize layers
 	private function placeLayers(layerName:String, collision:Bool):Void {
-		var tempLayer:FlxTilemap = morningMap.loadTilemap(AssetPaths.tileset__png, 32, 32, layerName);
+		var tempLayer:FlxTilemap = morningMap.loadTilemap(AssetPaths.tileset__png, 16, 16, layerName);
 		tempLayer.follow();
 		if (collision) {
 			collisionLayers.add(tempLayer);
 		}
-		visualLayers.add(tempLayer);
+		layers.add(tempLayer);
 	}
 	
-	// Initialize Objects onto screen
+	// Initialize entities
 	private function placeEntities(entityName:String, entityData:Xml):Void {
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
 		if (entityName == "player") {
-			playerList.add(new Player(x, y, Std.parseInt(entityData.get("pType"))));
+			var temp:Player = new Player(x, y, Std.parseInt(entityData.get("pType")));
+			entities.add(temp);
+			collisionEntities.add(temp);
+			players.add(temp);
+			add(temp.actionBox);
 		} else if (entityName == "npc") {
-			npcList.add(new NPC(x, y, Std.parseInt(entityData.get("nType"))));
+			var temp:NPC = new NPC(x+5, y, Std.parseInt(entityData.get("nType")));
+			entities.add(temp);
+			collisionEntities.add(temp);
+			npcs.add(temp);
 		}
 	}
 	
-	// Selects the first alive player
+	// Selects the first alive player and changes state once inactive
 	private function Select(): Void {
-		selectedPlayer = playerList.getFirstAlive();
+		selectedPlayer = players.getFirstAlive();
 		if (selectedPlayer != null) {
-			selectedPlayer.setSelected(true, false);
+			selectedPlayer.isSelected(true);
+			characterUI.updatePlayer(index);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 		} else {
-			FlxG.switchState(new MenuState());
+			FlxG.switchState(new NightState());
 		}
+		
 	}
 	
 	// Selects a player that is clicked
 	private function selectPlayer():Void {
 		var tempPosition:FlxPoint = FlxG.mouse.getWorldPosition();
 		var tempPlayer:Player = selectedPlayer;
-		for (player in playerList) {
+		for (player in players) {
 			if (player.overlapsPoint(tempPosition) && player.alive) {
 				tempPlayer = player;
 			} else {
-				player.setSelected(false, true);
+				player.isSelected(false);
 			}
 		}
 		selectedPlayer = tempPlayer;
-		selectedPlayer.setSelected(true, false);
+		index = selectedPlayer.isSelected(true);
+		characterUI.updatePlayer(index);
 		FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 	}
 	
 	// Performs an action
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
 		if (FlxG.keys.justPressed.E) {
-			// DO SOME ACTION
-			selectedPlayer.setInactive();
-			Select();
+			switch (npc.nType) {
+				case 0:
+					shopUI.toggleHUD(true);
+				//case 1:
+					//
+				//case 2:
+					//
+				case 3, 4, 5:
+					npc.setFollow(selectedPlayer);
+					collisionEntities.remove(npc);
+					//selectedPlayer.setInactive();
+					//Select();
+			}
 		}
-	}*/
+	}
 }

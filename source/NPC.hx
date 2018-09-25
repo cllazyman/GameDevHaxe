@@ -42,11 +42,13 @@ class NPC extends FlxSprite {
 	}
 	
 	override public function update(elapsed:Float):Void {
-		if (nType == 1 || nType == 2) {
-			idle();
-		}
-		if (following) {
-			follow();
+		if (!Storage.pauseUI) {
+			if (nType == 1 || nType == 2) {
+				idle();
+			}
+			if (following) {
+				follow();
+			}
 		}
 		super.update(elapsed);
 	}

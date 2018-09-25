@@ -81,20 +81,21 @@ class MorningState extends FlxState {
 	}
 
 	override public function update(elapsed:Float):Void {
-		// Select players on mouse input
-		if (FlxG.mouse.justReleased) {
-			selectPlayer();
+		if (!Storage.pauseUI) {
+			// Select players on mouse input
+			if (FlxG.mouse.justReleased) {
+				selectPlayer();
+			}
+			
+			// Update Views for foreground/background
+			entities.sort(FlxSort.byY);
+			
+			// Update Collisions
+			FlxG.collide(selectedPlayer, collisionLayers);
+			FlxG.collide(selectedPlayer, collisionEntities);
+			FlxG.collide(npcs, collisionLayers);
+			FlxG.overlap(selectedPlayer.actionBox, npcs, playerActions);
 		}
-		
-		// Update Views for foreground/background
-		entities.sort(FlxSort.byY);
-		
-		// Update Collisions
-		FlxG.collide(selectedPlayer, collisionLayers);
-		FlxG.collide(selectedPlayer, collisionEntities);
-		FlxG.collide(npcs, collisionLayers);
-		FlxG.overlap(selectedPlayer.actionBox, npcs, playerActions);
-
 		super.update(elapsed);
 	}
 	
@@ -131,11 +132,11 @@ class MorningState extends FlxState {
 		selectedPlayer = players.getFirstAlive();
 		if (selectedPlayer != null) {
 			selectedPlayer.isSelected(true);
+			characterUI.updatePlayer(index);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 		} else {
 			FlxG.switchState(new NightState());
 		}
-		
 	}
 	
 	// Selects a player that is clicked
@@ -151,9 +152,7 @@ class MorningState extends FlxState {
 		}
 		selectedPlayer = tempPlayer;
 		index = selectedPlayer.isSelected(true);
-		characterUI.updatePlayerName(index);
-		characterUI.updatePlayerPicture(index);
-		
+		characterUI.updatePlayer(index);
 		FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 	}
 	
