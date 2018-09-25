@@ -63,7 +63,7 @@ class MenuState extends FlxState {
 		FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
 		//FlxG.switchState(new MorningState());
 		FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
-			FlxG.switchState(new MorningState());
+			FlxG.switchState(new IntroState());
 		});
 	}
 	

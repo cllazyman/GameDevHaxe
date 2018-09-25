@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -37,6 +38,8 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 	
 	var _isMakingChoice:Bool = false;  //When making a choice, SPACE is banned
 	var _choiceMake:Int = 0;   //Which choice the player chooses
+	
+	var _choosingSound:FlxSound;
 	public function new() 
 	{
 		super();
@@ -91,30 +94,37 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		{
 			spr.scrollFactor.set();
 		});
+		
+		// Load Sounds
+		_choosingSound = FlxG.sound.load(AssetPaths.ButtonClickSFX__ogg);
 	}
 
 	
 	override public function update(elapsed:Float):Void 
 	{
+
 		if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
 			{
+				_choosingSound.play();
+				
 				if (_isMakingChoice == false){
 					_textIndex = _textIndex + 1;
 					_text.text = _textContent[_textIndex];
 					_name.text = _nameContent[_textIndex];
 				}
 			}
-			
 		if (_isMakingChoice == true){
 			if (FlxG.mouse.justReleased){	
-				if (FlxG.mouse.x >= 615 && FlxG.mouse.y <= 795){
-					if (FlxG.mouse.y >= 185 && FlxG.mouse.y <= 205){
+				_choosingSound.play();
+
+				if (FlxG.mouse.screenX >= 285 && FlxG.mouse.screenX<=465){
+					if (FlxG.mouse.screenY >= 85 && FlxG.mouse.screenY <= 105){
 						_choiceMake = 1;
 					}
-					else if (FlxG.mouse.y >= 230 && FlxG.mouse.y <= 245){
+					else if (FlxG.mouse.screenY >= 125 && FlxG.mouse.screenY <= 145){
 						_choiceMake = 2;
 					}
-					else if (FlxG.mouse.y >= 270 && FlxG.mouse.y <= 285){
+					else if (FlxG.mouse.screenY >= 165 && FlxG.mouse.screenY <= 185){
 						_choiceMake = 3;
 					}
 					else{

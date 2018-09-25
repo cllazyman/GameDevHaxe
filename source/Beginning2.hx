@@ -37,12 +37,12 @@ class Beginning2 extends DialogueTemplate
 	override public function update(elapsed:Float):Void 
 	{	
 			// check to see any keys are pressed and set the cooresponding flags.
-			if (_textIndex == 2){
+			if (_textIndex == 0){
 				_isMakingChoice = true;
 				setChoiceVisible(true);
 				if (_choiceMake != 0 ){
 					_textIndex = 3;
-					_text.text = _textContent[_textIndex];
+					_text.text = _text.text = _choiceMake+"  " + FlxG.mouse.screenX +"  " + FlxG.mouse.screenY;
 					_name.text = _nameContent[_textIndex];
 					setChoiceVisible(false);
 					_choiceMake = 0;
@@ -53,6 +53,7 @@ class Beginning2 extends DialogueTemplate
 				doneResultsIn(_sprText);
 				doneResultsIn(_sprName);
 			}	
+			
 			
 			
 			
