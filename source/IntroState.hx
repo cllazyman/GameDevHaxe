@@ -12,6 +12,7 @@ class IntroState extends FlxState {
 	override public function create():Void {
 		FlxG.sound.play(AssetPaths.night__ogg);
 		_introDialogue = new IntroDialogue();
+		_introDialogue.chooseDialogue(1);
 		_transition = new Transitions(1);
 		add(_introDialogue);
 		super.create();

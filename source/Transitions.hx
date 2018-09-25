@@ -31,7 +31,7 @@ class Transitions extends FlxTypedGroup<FlxSprite>
 		super();
 		_textIndex = 0;
 		_transitionIndex = index;
-		_textTransition1 = ["Sep 6. Morining"];
+		_textTransition1 = ["Sep 6. Morning"];
 		//Text
 		_text = new FlxText();
 		if (index == 1){
