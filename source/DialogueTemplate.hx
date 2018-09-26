@@ -141,20 +141,7 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 				_choiceMake = 0;
 			}
 		}
-	/**
-		if (_textIndex == 2){
-				_isMakingChoice = true;
-				setChoiceVisible(true);
-				if (_choiceMake != 0 ){
-					_textIndex = 3;
-					_text.text = _textContent[_textIndex];
-					_name.text = _nameContent[_textIndex];
-					setChoiceVisible(false);
-					_choiceMake = 0;
-					_isMakingChoice = false;
-				}			
-			}
-			**/
+	
 		super.update(elapsed);
 
 	}

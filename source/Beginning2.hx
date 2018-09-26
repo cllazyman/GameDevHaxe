@@ -46,12 +46,7 @@ class Beginning2 extends DialogueTemplate
 			if (_textIndex == 4){
 				//doneResultsIn(_sprText);
 				//doneResultsIn(_sprName);
-			}	
-			
-			
-			
-			
-			
+			}		
 			
 		super.update(elapsed);
 		
