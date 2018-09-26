@@ -33,7 +33,9 @@ class MorningState extends FlxState {
 	var npc2UI:NPC2UI;
 	var npc3UI:NPC3UI;
 	var infoNPCUI:InfoNPCUI;
-
+	var girl1UI:Girl1UI;
+	var girl2UI:Girl2UI;
+	var girl3UI:Girl3UI;
 	// Actions
 	var selectedPlayer:Player;
 	var switchPlayer:Int = 0;
@@ -76,6 +78,9 @@ class MorningState extends FlxState {
 		npc2UI = new NPC2UI();
 		npc3UI = new NPC3UI();
 		infoNPCUI = new InfoNPCUI();
+		girl1UI = new Girl1UI();
+		girl2UI = new Girl2UI();
+		girl3UI = new Girl3UI();
 		
 		// Select the player
 		Select();
@@ -90,6 +95,9 @@ class MorningState extends FlxState {
 		add(npc2UI);
 		add(npc3UI);
 		add(infoNPCUI);
+		add(girl1UI);
+		add(girl2UI);
+		add(girl3UI);
 		// Extra
 		//FlxG.debugger.drawDebug = true;
 		/*FlxG.watch.add(selectedPlayer, "touching");
@@ -117,6 +125,7 @@ class MorningState extends FlxState {
 			FlxG.collide(selectedPlayer, collisionLayers);
 			FlxG.collide(selectedPlayer, collisionEntities);
 			FlxG.collide(npcs, collisionLayers);
+			FlxG.overlap(selectedPlayer.actionBox, players, GirlActions);
 			FlxG.overlap(selectedPlayer.actionBox, npcs, playerActions);
 			FlxG.overlap(selectedPlayer, rooms, setRoom);
 		} else {
@@ -242,6 +251,19 @@ class MorningState extends FlxState {
 							collisionEntities.remove(npc);
 						}
 					}
+			}
+		}
+	}
+	private function GirlActions(actionBox:FlxObject,player:Player):Void{
+		if (FlxG.keys.justPressed.E && selectedPlayer.pType ==0){
+			switch (player.pType){
+				case 1:
+					girl1UI.toggleHUD(true);
+				case 2:
+					girl2UI.toggleHUD(true);
+				case 3:
+					girl3UI.toggleHUD(true);
+					
 			}
 		}
 	}
