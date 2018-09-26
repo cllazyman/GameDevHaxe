@@ -105,6 +105,11 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 				}
 			}
 			moneyCount.text = Std.string(Storage.money) + " G";
+			if (Storage.time == true){
+				time.text == "Morning";
+			}else{
+				time.text == "Night";
+			}
 		}
 	}
 	

@@ -28,14 +28,12 @@ class MorningState extends FlxState {
 	// UI
 	var characterUI:CharacterUI;
 	var shopUI:ShopUI;
-	var index:Int = 0;
 	var npc1UI:NPC1UI;
 	var npc2UI:NPC2UI;
 	var npc3UI:NPC3UI;
 	
 	// Actions
 	var selectedPlayer:Player;
-	
 	
 	override public function create():Void {
 		// Update Storage values
@@ -231,7 +229,7 @@ class MorningState extends FlxState {
 					}
 				case 5:
 					if (selectedPlayer.pType != 0) {
-						FlxG.watch.add(npc3UI, "_finishtalking");
+						//FlxG.watch.add(npc3UI, "_finishtalking");
 						if (npc3UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);

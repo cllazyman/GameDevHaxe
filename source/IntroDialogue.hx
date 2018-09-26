@@ -8,6 +8,7 @@ package;
 class IntroDialogue extends DialogueTemplate 
 {
 	var _dialogueIndex:Int;
+	public var _finishDialoge:Bool = false;
 	override public function new() 
 	{	
 		_textContent = [];
@@ -15,6 +16,7 @@ class IntroDialogue extends DialogueTemplate
 		_textChoice1Content = [];
 		_textChoice2Content = [];
 		_textChoice3Content = [];
+		_finishDialoge = false;
 		super();
 	}
 	public function chooseDialogue(Option:Int):Void{
@@ -100,6 +102,7 @@ class IntroDialogue extends DialogueTemplate
 		
 		// check to see any keys are pressed and set the cooresponding flags.
 		if (_textIndex == _textContent.length){
+			_finishDialoge = true;
 			toggleHUD(false);
 		}	
 		super.update(elapsed);

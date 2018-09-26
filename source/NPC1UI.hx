@@ -20,10 +20,12 @@ class NPC1UI extends DialogueTemplate {
 		Choices3 = [];
 		
 		random = new FlxRandom();
-		
-		dialogueChoose = random.int(1, 6, Storage.npc1HasTalk);
-		Texts[0] = Texts[dialogueChoose];
+		if (Storage.time) {
+    		dialogueChoose = random.int(1, 6, Storage.npc1HasTalk);
+    		Texts[0] = Texts[dialogueChoose];
+		}
 		super();
+		finishTalking = false;
 		normalDialogue = false;
 		finishChecking = false;
 	}
@@ -57,22 +59,22 @@ class NPC1UI extends DialogueTemplate {
 		switch Storage.playerIndex {
 			case 1:
 				Storage.npc1 += 1;
-				Texts[0] = "(Singing)\n~I'll go back to my native home, when I get days off.~\n~But I don't have a nice dress or shoes to wear.~";
-				if (Storage.limitedItemCounts[3] > 0){
+				Texts[0] = "The moon is so beautiful tonight";
+				if (Storage.limitedItemCounts[3] > 0) {
 					Storage.limitedItemCounts[3] -= 1;
 					Storage.npc1 += 1;
 				}
 			case 2:
 				Storage.npc1 += 1;
-				Texts[0] = "(Singing)\n~I'll go back to my native home, when I get days off.~\n~But I don't have a nice dress or shoes to wear.~";
-				if (Storage.limitedItemCounts[2] > 0){
+				Texts[0] = "The moon is so beautiful tonight";
+				if (Storage.limitedItemCounts[2] > 0) {
 					Storage.limitedItemCounts[2] -= 1;
 					Storage.npc1 += 1;
-				}
-			case 3:
-				Texts[0] = "(leaving without saying anything)";
-				Storage.npc1 -= 1;
-		}
+				}	
+				case 3:
+					Texts[0] = "The air is so refreshing outside";
+					Storage.npc1 -= 1;
+			}
 	}
 
 }

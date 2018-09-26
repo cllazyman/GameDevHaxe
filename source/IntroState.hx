@@ -13,50 +13,32 @@ class IntroState extends FlxState {
 	var _transitionAct:Bool = false;	//Whether transition has acted
 
 	override public function create():Void {
+		Storage.Day += 1;
 		FlxG.sound.play(AssetPaths.night__ogg);
 		_introDialogue = new IntroDialogue();
 		_transition = new Transitions();
-		_introDialogue.chooseDialogue(Storage.Day+1);
-		add(_introDialogue);
-		_introDialogue.toggleHUD(true);
-		/**
-		switch Storage.Day{
-			case 0:{
-				_introDialogue.chooseDialogue(1);
-				add(_introDialogue);
+		//_introDialogue.chooseDialogue(Storage.Day+1);
+		//add(_introDialogue);
+		//_introDialogue.toggleHUD(true);
+
+		
+				_introDialogue.chooseDialogue(Storage.Day);
 				_introDialogue.toggleHUD(true);
-			}
-			case 1:
+				add(_introDialogue);
 			
-		}
-		**/
+
 		super.create();
 	}
 	
+	
 	override public function update(elapsed:Float):Void {
-		if (Storage.Day == 0){
-			if (_introDialogue.active == false){
-					if (_transitionAct == false){ //act transition
-						_transitionAct = true;
-						_transition.chooseTrasition(1);
-						_transition.toggleHUD(true);
-						add(_transition);
-					}
-					if (_transition.active == false){ //Move to next scene
-						FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
-						FlxG.switchState(new MorningState());
-						});
-						_transitionAct = false;
-						Storage.Day += 1;
-					}
-				}
-		}
-		else{
-			FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
-			FlxG.switchState(new MorningState());
-			});
-			Storage.Day += 1;
-		}
+		if (_introDialogue._finishDialoge==true){
+				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
+				FlxG.switchState(new MorningState());
+				});
+				
+			}
+		
 		
 		
 		super.update(elapsed);

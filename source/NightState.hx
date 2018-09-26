@@ -10,7 +10,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxSort;
 
 class NightState extends FlxState {
-	
 	// Maps
 	var nightMap:FlxOgmoLoader;
 
@@ -29,13 +28,16 @@ class NightState extends FlxState {
 	// UI
 	var characterUI:CharacterUI;
 	var shopUI:ShopUI;
+	var npc1UI:NPC1UI;
+	var npc2UI:NPC2UI;
+	var npc3UI:NPC3UI;
 
 	// Actions
 	var selectedPlayer:Player;
 	
 	override public function create():Void {
 		// Update Storage values
-		Storage.time = true;
+		Storage.time = false;
 		
 		// Music
 		FlxG.sound.play(AssetPaths.night__ogg);
@@ -66,6 +68,9 @@ class NightState extends FlxState {
 		// UI
 		characterUI = new CharacterUI();
 		shopUI = new ShopUI();
+		npc1UI = new NPC1UI();
+		npc2UI = new NPC2UI();
+		npc3UI = new NPC3UI();
 		
 		// Select the player
 		Select();
@@ -76,6 +81,9 @@ class NightState extends FlxState {
 		add(foregroundLayer);
 		add(characterUI);
 		add(shopUI);
+		add(npc1UI);
+		add(npc2UI);
+		add(npc3UI);
 		
 		super.create();
 	}
@@ -146,11 +154,13 @@ class NightState extends FlxState {
 						collisionEntities.add(temp);
 						npcs.add(temp);
 					}
-				case 3, 4, 5:
-					temp = new GuestNPC(x + 5, y, tempType);
-					entities.add(temp);
-					collisionEntities.add(temp);
-					npcs.add(temp);
+				case 3,4,5:{
+						temp = new GuestNPC(x + 5, y, tempType);
+						entities.add(temp);
+						collisionEntities.add(temp);
+						npcs.add(temp);
+				}
+					
 			}
 		}
 	}
@@ -163,7 +173,7 @@ class NightState extends FlxState {
 			characterUI.updatePlayer(selectedPlayer.pType);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 		} else {
-			FlxG.switchState(new MorningState());
+			FlxG.switchState(new IntroState());
 		}
 	}
 	
@@ -193,12 +203,44 @@ class NightState extends FlxState {
 					npc.face(selectedPlayer);
 				case 2:
 					npc.face(selectedPlayer);
-				case 3, 4, 5:
+				case 3:
 					if (selectedPlayer.pType != 0) {
-						npc.setFollow(selectedPlayer);
-						collisionEntities.remove(npc);
-						selectedPlayer.setInactive();
-						Select();
+						Storage.money += 10000;
+						if (npc1UI._finishTalking == true){
+							npc.setFollow(selectedPlayer);
+							collisionEntities.remove(npc);
+							selectedPlayer.setInactive();
+							Select();
+						}
+						else{
+							npc1UI.toggleHUD(true);
+						}
+					}
+				case 4:
+					if (selectedPlayer.pType != 0) {
+						Storage.money += 10000;
+						if (npc2UI._finishTalking == true){
+							npc.setFollow(selectedPlayer);
+							collisionEntities.remove(npc);
+							selectedPlayer.setInactive();
+							Select();
+						}
+						else{
+							npc2UI.toggleHUD(true);
+						}
+					}
+				case 5:
+					if (selectedPlayer.pType != 0) {
+						Storage.money += 10000;
+						if (npc3UI._finishTalking == true){
+							npc.setFollow(selectedPlayer);
+							collisionEntities.remove(npc);
+							selectedPlayer.setInactive();
+							Select();
+						}
+						else{
+							npc3UI.toggleHUD(true);
+						}
 					}
 			}
 		}

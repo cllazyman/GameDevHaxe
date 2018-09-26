@@ -6,7 +6,7 @@ package;
  */
 class Storage {
 	// The current day
-	static public var Day:Int = 1;
+	static public var Day:Int = 0;
 
 	// The current time
 	static public var time:Bool = true;

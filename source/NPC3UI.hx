@@ -21,9 +21,12 @@ class NPC3UI extends DialogueTemplate {
 		
 		random = new FlxRandom();
 		
-		dialogueChoose = random.int(1, 6, Storage.npc2HasTalk);
-		Texts[0] = Texts[dialogueChoose];
+		if (Storage.time) {
+    		dialogueChoose = random.int(1, 6, Storage.npc2HasTalk);
+    		Texts[0] = Texts[dialogueChoose];
+		}
 		super();
+		finishTalking = false;
 		normalDialogue = false;
 		finishChecking = false;
 	}

@@ -1,5 +1,9 @@
 package;
 
+
+import flixel.FlxG;
+
+
 /**
  * The beginning of the story
  * @author Tony
