@@ -9,19 +9,19 @@ import flixel.util.FlxAxes;
 import flixel.util.FlxColor;
 import lime.system.System;
 
-class CreditState extends FlxState {
+class GoodEndingState extends FlxState {
 	var background:FlxSprite;
 	var exitButton:FlxButtonPlus;
 	var creditText:FlxText;
 	
 	override public function create():Void {
 		// Play credits screen music
-		FlxG.sound.play(AssetPaths.badEnding__ogg);
-		//FlxG.sound.play(AssetPaths.goodEnding__ogg);
+		//FlxG.sound.play(AssetPaths.badEnding__ogg);
+		FlxG.sound.play(AssetPaths.goodEnding__ogg);
 		
 		// Background
 		background = new FlxSprite(0, 0);
-		background.loadGraphic(AssetPaths.title__png, true, 640, 360);
+		background.loadGraphic("assets/images/happy ending.png", true, 640, 360);
 		background.animation.add("idle", [0, 1], 1, false);	
 		
 		//Credit Test
