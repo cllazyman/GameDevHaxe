@@ -211,37 +211,34 @@ class MorningState extends FlxState {
 					
 				case 3:
 					if (selectedPlayer.pType != 0) {
-						if (npc1UI._finishTalking == true){
+						if (npc1UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}
-						else{
+						} else {
 							npc1UI.toggleHUD(true);
 						}
 					}
 				case 4:
 					if (selectedPlayer.pType != 0) {						
-						if (npc2UI._finishTalking == true){
+						if (npc2UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}else{
+						} else {
 							npc2UI.toggleHUD(true);	
 						}
 					}
 				case 5:
 					if (selectedPlayer.pType != 0) {
-						//FlxG.watch.add(npc3UI, "_finishtalking");
-						if (npc3UI._finishTalking == true){
+						if (npc3UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}
-						else{
+						} else {
 							npc3UI.toggleHUD(true);
 						}
 					}

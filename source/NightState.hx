@@ -84,7 +84,6 @@ class NightState extends FlxState {
 		add(npc1UI);
 		add(npc2UI);
 		add(npc3UI);
-		
 		super.create();
 	}
 
@@ -142,11 +141,6 @@ class NightState extends FlxState {
 			var tempType:Int = Std.parseInt(entityData.get("nType"));
 			var temp:NPC;
 			switch (tempType) {
-				case 1:
-					temp = new ShopNPC(x + 5, y, tempType);
-					entities.add(temp);
-					collisionEntities.add(temp);
-					npcs.add(temp);
 				case 2:
 					if (Storage.Day == 0 || Storage.Day == 7) {
 						temp = new InfoNPC(x + 5, y, tempType);
@@ -154,13 +148,11 @@ class NightState extends FlxState {
 						collisionEntities.add(temp);
 						npcs.add(temp);
 					}
-				case 3,4,5:{
+				case 3, 4, 5:
 						temp = new GuestNPC(x + 5, y, tempType);
 						entities.add(temp);
 						collisionEntities.add(temp);
 						npcs.add(temp);
-				}
-					
 			}
 		}
 	}
@@ -198,47 +190,41 @@ class NightState extends FlxState {
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
 		if (FlxG.keys.justPressed.E) {
 			switch (npc.nType) {
-				case 0:
-					shopUI.toggleHUD(true);
-					npc.face(selectedPlayer);
 				case 2:
 					npc.face(selectedPlayer);
 				case 3:
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
-						if (npc1UI._finishTalking == true){
+						if (npc1UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}
-						else{
+						} else {
 							npc1UI.toggleHUD(true);
 						}
 					}
 				case 4:
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
-						if (npc2UI._finishTalking == true){
+						if (npc2UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}
-						else{
+						} else {
 							npc2UI.toggleHUD(true);
 						}
 					}
 				case 5:
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
-						if (npc3UI._finishTalking == true){
+						if (npc3UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}
-						else{
+						} else {
 							npc3UI.toggleHUD(true);
 						}
 					}
