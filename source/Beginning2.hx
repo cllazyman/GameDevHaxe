@@ -1,55 +1,39 @@
 package;
 
-
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
-using flixel.util.FlxSpriteUtil;
-
 /**
  * The beginning of the story
  * @author Tony
  */
 
-class Beginning2 extends DialogueTemplate 
-{
+class Beginning2 extends DialogueTemplate {
 	
 	// ** These are the sprites that we will use to show the combat hud interface
 	
-
-	
-	override public function new() 
-	{
-		
-		_textContent = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister"];
-		_nameContent = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
-		_textChoice1Content = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
-		_textChoice2Content = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
-		_textChoice3Content = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
+	override public function new() {
+		Texts = ["Dark and frigid night", "Silent wind hang red moon high", "The misfortune die", "Sorry, you must been waiting for a while.", "I just arrived, my sister"];
+		Names = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
+		Choices1 = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
+		Choices2 = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
+		Choices3 = ["Nizaemon", "Nizaemon", "Nizaemon", "Shimotsuki", "Nizaemon"];
 		super();
 		
 
 	}
-	override public function update(elapsed:Float):Void 
-	{	
+	override public function update(elapsed:Float):Void {
 			// check to see any keys are pressed and set the cooresponding flags.
-			if (_textIndex == 0){
-				_isMakingChoice = true;
+			if (textIndex == 0){
+				isMakingChoice = true;
 				setChoiceVisible(true);
-				if (_choiceMake != 0 ){
-					_textIndex = 3;
-					_text.text = _text.text = _choiceMake+"  " + FlxG.mouse.screenX +"  " + FlxG.mouse.screenY;
-					_name.text = _nameContent[_textIndex];
+				if (choiceMake != 0 ){
+					textIndex = 3;
+					textContent.text = textContent.text = choiceMake+"  " + FlxG.mouse.screenX +"  " + FlxG.mouse.screenY;
+					nameContent.text = Names[textIndex];
 					setChoiceVisible(false);
-					_choiceMake = 0;
-					_isMakingChoice = false;
+					choiceMake = 0;
+					isMakingChoice = false;
 				}			
 			}
-			if (_textIndex == 4){
+			if (textIndex == 4){
 				//doneResultsIn(_sprText);
 				//doneResultsIn(_sprName);
 			}	
