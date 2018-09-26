@@ -91,14 +91,11 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 		add(choiceContent2);
 		add(choiceContent3);
 		
+		// Set to disabled
+		forEach(function(spr:FlxSprite) {
+			spr.visible = false;
+		});
 		active = false;
-		
-		choice1.visible = false;
-		choiceContent1.visible = false;
-		choice2.visible = false;
-		choiceContent2.visible = false;
-		choice3.visible = false;
-		choiceContent3.visible = false;
 		
 		forEach(function(spr:FlxSprite) { spr.scrollFactor.set(); });
 		
@@ -157,10 +154,14 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 	
 	// Turn on/off HUD
 	public function toggleHUD(power:Bool):Void {
+		Storage.pauseUI = power;
 		textIndex = 0;
 		active = power;
 		textContent.text = Texts[0];
 		nameContent.text = Names[0];
+		forEach(function(spr:FlxSprite) {
+			spr.visible = power;
+		});
 	}
 	
 	// Set whether choices are visible

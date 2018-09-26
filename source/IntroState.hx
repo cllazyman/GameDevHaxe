@@ -19,6 +19,7 @@ class IntroState extends FlxState {
 		transition = new Transitions();
 		introDialogue.chooseDialogue(Storage.Day);
 		introDialogue.toggleHUD(true);
+		introDialogue.setChoiceVisible(false);
 		add(introDialogue);
 		super.create();
 	}

@@ -85,6 +85,8 @@ class NightState extends FlxState {
 		add(npc2UI);
 		add(npc3UI);
 		
+		FlxG.log.redirectTraces = true;
+		FlxG.watch.add(players, "length");
 		super.create();
 	}
 
@@ -142,11 +144,6 @@ class NightState extends FlxState {
 			var tempType:Int = Std.parseInt(entityData.get("nType"));
 			var temp:NPC;
 			switch (tempType) {
-				case 1:
-					temp = new ShopNPC(x + 5, y, tempType);
-					entities.add(temp);
-					collisionEntities.add(temp);
-					npcs.add(temp);
 				case 2:
 					if (Storage.Day == 0 || Storage.Day == 7) {
 						temp = new InfoNPC(x + 5, y, tempType);
@@ -154,24 +151,24 @@ class NightState extends FlxState {
 						collisionEntities.add(temp);
 						npcs.add(temp);
 					}
-				case 3,4,5:{
+				case 3, 4, 5:
 						temp = new GuestNPC(x + 5, y, tempType);
 						entities.add(temp);
 						collisionEntities.add(temp);
 						npcs.add(temp);
-				}
-					
 			}
 		}
 	}
 	
 	// Selects the first alive player and changes state once inactive
 	private function Select(): Void {
+		trace(players.getFirstAlive());
 		selectedPlayer = players.getFirstAlive();
 		if (players.countLiving() > 1) {
 			selectedPlayer.isSelected(true);
 			characterUI.updatePlayer(selectedPlayer.pType);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
+			Storage.pauseUI = false;
 		} else {
 			FlxG.switchState(new IntroState());
 		}
@@ -198,34 +195,32 @@ class NightState extends FlxState {
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
 		if (FlxG.keys.justPressed.E) {
 			switch (npc.nType) {
-				case 0:
-					shopUI.toggleHUD(true);
-					npc.face(selectedPlayer);
 				case 2:
 					npc.face(selectedPlayer);
 				case 3:
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
 						if (npc1UI.finishTalking) {
+							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}
-						else{
+						} else {
 							npc1UI.toggleHUD(true);
 						}
 					}
 				case 4:
+					trace("error");
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
 						if (npc2UI.finishTalking) {
+							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}
-						else{
+						} else {
 							npc2UI.toggleHUD(true);
 						}
 					}
@@ -233,12 +228,12 @@ class NightState extends FlxState {
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
 						if (npc3UI.finishTalking) {
+							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
 							Select();
-						}
-						else{
+						} else {
 							npc3UI.toggleHUD(true);
 						}
 					}
