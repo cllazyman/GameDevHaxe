@@ -31,7 +31,7 @@ class MorningState extends FlxState {
 	var npc1UI:NPC1UI;
 	var npc2UI:NPC2UI;
 	var npc3UI:NPC3UI;
-	
+	var infoNPCUI:InfoNPCUI;
 	// Actions
 	var selectedPlayer:Player;
 	
@@ -71,6 +71,7 @@ class MorningState extends FlxState {
 		npc1UI = new NPC1UI();
 		npc2UI = new NPC2UI();
 		npc3UI = new NPC3UI();
+		infoNPCUI = new InfoNPCUI();
 		
 		// Select the player
 		Select();
@@ -84,7 +85,7 @@ class MorningState extends FlxState {
 		add(npc1UI);
 		add(npc2UI);
 		add(npc3UI);
-		
+		add(infoNPCUI);
 		// Extra
 		//FlxG.debugger.drawDebug = true;
 		/*FlxG.watch.add(selectedPlayer, "touching");
@@ -205,7 +206,9 @@ class MorningState extends FlxState {
 					shopUI.toggleHUD(true);
 					npc.face(selectedPlayer);
 				case 1:
+					infoNPCUI.toggleHUD(true);
 					npc.face(selectedPlayer);
+					
 				case 3:
 					if (selectedPlayer.pType != 0) {
 						if (npc1UI.finishTalking) {

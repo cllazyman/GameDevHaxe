@@ -12,7 +12,7 @@ class Storage {
 	static public var time:Bool = true;
 	
 	// The current money
-	static public var money:Int = 1000000;
+	static public var money:Int = 5366;
 	
 	// The list of player names
 	static public var playerNames:Array<String> = ["Shimotsuki", "Tsuruko", "Setsuko", "Kawako"];
@@ -37,12 +37,15 @@ class Storage {
 	static public var PS:PlayState;
 	
 	//The favorability of three NPC 1-10
-	static public var npc1:Int = 1;
-	static public var npc2:Int = 2;
-	static public var npc3:Int = 3;
+	static public var npc1:Int = 5;
+	static public var npc2:Int = 5;
+	static public var npc3:Int = 5;
 	//Dialogue NPC has talked
 	static public var npc1HasTalk:Array<Int> = [];
 	static public var npc2HasTalk:Array<Int> = [];
 	static public var npc3HasTalk:Array<Int> = [];
+	
+	//Info
+	static public var info:Bool = false;
 	
 }
