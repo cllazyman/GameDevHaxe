@@ -16,20 +16,21 @@ class MorningState extends FlxState {
 	// Layers
 	var layers:FlxTypedGroup<FlxTilemap>;
 	var collisionLayers:FlxTypedGroup<FlxTilemap>;
+	var collisionMainLayer:FlxTilemap;
+	var foregroundLayer:FlxTilemap;
 	
 	// Entities
 	var entities:FlxTypedGroup<FlxObject>;
 	var collisionEntities:FlxTypedGroup<FlxObject>;
-	var subPlayers:FlxTypedGroup<SubPlayers>;
+	var players:FlxTypedGroup<Player>;
 	var npcs:FlxTypedGroup<NPC>;
-	var mainPlayer:MainPlayer;
 	
 	// UI
 	var characterUI:CharacterUI;
 	var shopUI:ShopUI;
 
 	// Actions
-	var selectedPlayer:SubPlayers;
+	var selectedPlayer:Player;
 	
 	override public function create():Void {
 		// Update Storage values
@@ -44,16 +45,18 @@ class MorningState extends FlxState {
 		// Layers
 		layers = new FlxTypedGroup<FlxTilemap>();
 		collisionLayers = new FlxTypedGroup<FlxTilemap>();
-		placeLayers("walls", true);
-		placeLayers("floor", false);
-		placeLayers("stuff1", false);
-		placeLayers("stuff2", false);
-		placeLayers("unwalkable", true);
+		placeLayers("walls", 1);
+		placeLayers("floor", 0);
+		placeLayers("stuff1", 0);
+		placeLayers("stuff2", 0);
+		placeLayers("unwalkable", 1);
+		placeLayers("unwalkableMain", 2);
+		placeLayers("Foreground1", 3);
 		
 		// Entities
 		entities = new FlxTypedGroup<FlxObject>();
 		collisionEntities = new FlxTypedGroup<FlxObject>();
-		subPlayers = new FlxTypedGroup<SubPlayers>();
+		players = new FlxTypedGroup<Player>();
 		npcs = new FlxTypedGroup<NPC>();
 		morningMap.loadEntities(placeEntities, "entities");
 		
@@ -67,6 +70,7 @@ class MorningState extends FlxState {
 		// Add values to view
 		add(layers);
 		add(entities);
+		add(foregroundLayer);
 		add(characterUI);
 		add(shopUI);
 		
@@ -86,6 +90,9 @@ class MorningState extends FlxState {
 			if (FlxG.mouse.justReleased) {
 				selectPlayer();
 			}
+			if (selectedPlayer.pType == 0) {
+				FlxG.collide(selectedPlayer, collisionMainLayer);
+			}
 			
 			// Update Views for foreground/background
 			entities.sort(FlxSort.byY);
@@ -100,13 +107,21 @@ class MorningState extends FlxState {
 	}
 	
 	// Initialize layers
-	private function placeLayers(layerName:String, collision:Bool):Void {
+	private function placeLayers(layerName:String, state:Int):Void {
 		var tempLayer:FlxTilemap = morningMap.loadTilemap(AssetPaths.tileset__png, 16, 16, layerName);
 		tempLayer.follow();
-		if (collision) {
-			collisionLayers.add(tempLayer);
+		switch (state) {
+			case 0:
+				layers.add(tempLayer);
+			case 1:
+				collisionLayers.add(tempLayer);
+				layers.add(tempLayer);
+			case 2:
+				collisionMainLayer = tempLayer;
+				layers.add(tempLayer);
+			case 3:
+				foregroundLayer = tempLayer;
 		}
-		layers.add(tempLayer);
 	}
 	
 	// Initialize entities
@@ -114,41 +129,38 @@ class MorningState extends FlxState {
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
 		if (entityName == "player") {
-			var tempType:Int = Std.parseInt(entityData.get("pType"));
-			var temp:Player = new Player(0,0,0);
-			switch (tempType) {
-				case 0:
-					mainPlayer = new MainPlayer(x + 5, y, tempType);
-					temp = mainPlayer;
-				case 1, 2, 3:
-					var subtemp:SubPlayers = new SubPlayers(x + 5, y, tempType);
-					add(subtemp.actionBox);
-					subPlayers.add(subtemp);
-					temp = subtemp;
-			}
+			var temp:Player = new Player(x, y, Std.parseInt(entityData.get("pType")));
 			entities.add(temp);
 			collisionEntities.add(temp);
+			players.add(temp);
+			add(temp.actionBox);
 		} else if (entityName == "npc") {
 			var tempType:Int = Std.parseInt(entityData.get("nType"));
-			var temp:NPC = new NPC(0,0,0);
+			var temp:NPC;
 			switch (tempType) {
 				case 0:
 					temp = new ShopNPC(x + 5, y, tempType);
+					entities.add(temp);
+					collisionEntities.add(temp);
+					npcs.add(temp);
 				case 1:
 					temp = new InfoNPC(x + 5, y, tempType);
+					entities.add(temp);
+					collisionEntities.add(temp);
+					npcs.add(temp);
 				case 3, 4, 5:
 					temp = new GuestNPC(x + 5, y, tempType);
+					entities.add(temp);
+					collisionEntities.add(temp);
+					npcs.add(temp);
 			}
-			entities.add(temp);
-			collisionEntities.add(temp);
-			npcs.add(temp);
 		}
 	}
 	
 	// Selects the first alive player and changes state once inactive
 	private function Select(): Void {
-		selectedPlayer = subPlayers.getFirstAlive();
-		if (selectedPlayer != null) {
+		selectedPlayer = players.getFirstAlive();
+		if (players.countLiving() > 1) {
 			selectedPlayer.isSelected(true);
 			characterUI.updatePlayer(selectedPlayer.pType);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
@@ -160,8 +172,8 @@ class MorningState extends FlxState {
 	// Selects a player that is clicked
 	private function selectPlayer():Void {
 		var tempPosition:FlxPoint = FlxG.mouse.getWorldPosition();
-		var tempPlayer:SubPlayers = selectedPlayer;
-		for (player in subPlayers) {
+		var tempPlayer:Player = selectedPlayer;
+		for (player in players) {
 			if (player.overlapsPoint(tempPosition) && player.alive) {
 				tempPlayer = player;
 			} else {

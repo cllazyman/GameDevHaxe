@@ -10,7 +10,7 @@ import flixel.math.FlxVelocity;
 class GuestNPC extends NPC {
 	// Follow AI
 	private var following:Bool = false;
-	private var target:SubPlayers;
+	private var target:Player;
 	
 	public function new(X:Float, Y:Float, NType:Int) {
 		super(X, Y, NType);
@@ -35,7 +35,7 @@ class GuestNPC extends NPC {
 	}
 	
 	// Set the NPC to follow the target
-	override public function setFollow(tar:SubPlayers):Void {
+	override public function setFollow(tar:Player):Void {
 		target = tar;
 		immovable = false;
 		following = true;
