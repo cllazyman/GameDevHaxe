@@ -175,7 +175,6 @@ class MorningState extends FlxState {
 			selectedPlayer.isSelected(true);
 			characterUI.updatePlayer(selectedPlayer.pType);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
-			Storage.pauseUI = false;
 		} else {
 			FlxG.switchState(new NightState());
 		}
@@ -210,7 +209,6 @@ class MorningState extends FlxState {
 				case 3:
 					if (selectedPlayer.pType != 0) {
 						if (npc1UI.finishTalking) {
-							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
@@ -222,7 +220,6 @@ class MorningState extends FlxState {
 				case 4:
 					if (selectedPlayer.pType != 0) {						
 						if (npc2UI.finishTalking) {
-							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
@@ -234,7 +231,6 @@ class MorningState extends FlxState {
 				case 5:
 					if (selectedPlayer.pType != 0) {
 						if (npc3UI.finishTalking) {
-							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();

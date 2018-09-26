@@ -84,9 +84,6 @@ class NightState extends FlxState {
 		add(npc1UI);
 		add(npc2UI);
 		add(npc3UI);
-		
-		FlxG.log.redirectTraces = true;
-		FlxG.watch.add(players, "length");
 		super.create();
 	}
 
@@ -162,13 +159,11 @@ class NightState extends FlxState {
 	
 	// Selects the first alive player and changes state once inactive
 	private function Select(): Void {
-		trace(players.getFirstAlive());
 		selectedPlayer = players.getFirstAlive();
 		if (players.countLiving() > 1) {
 			selectedPlayer.isSelected(true);
 			characterUI.updatePlayer(selectedPlayer.pType);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
-			Storage.pauseUI = false;
 		} else {
 			FlxG.switchState(new IntroState());
 		}
@@ -201,7 +196,6 @@ class NightState extends FlxState {
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
 						if (npc1UI.finishTalking) {
-							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
@@ -211,11 +205,9 @@ class NightState extends FlxState {
 						}
 					}
 				case 4:
-					trace("error");
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
 						if (npc2UI.finishTalking) {
-							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
@@ -228,7 +220,6 @@ class NightState extends FlxState {
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
 						if (npc3UI.finishTalking) {
-							Storage.pauseUI = true;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
