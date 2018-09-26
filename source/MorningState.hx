@@ -27,9 +27,13 @@ class MorningState extends FlxState {
 	var characterUI:CharacterUI;
 	var shopUI:ShopUI;
 	var index:Int = 0;
+	var npc1UI:NPC1UI;
+	var npc2UI:NPC2UI;
+	var npc3UI:NPC3UI;
 
 	// Actions
 	var selectedPlayer:Player;
+	
 	
 	override public function create():Void {
 		// Update Storage values
@@ -60,6 +64,9 @@ class MorningState extends FlxState {
 		// UI
 		characterUI = new CharacterUI();
 		shopUI = new ShopUI();
+		npc1UI = new NPC1UI();
+		npc2UI = new NPC2UI();
+		npc3UI = new NPC3UI();
 		
 		// Select the player
 		Select();
@@ -69,7 +76,9 @@ class MorningState extends FlxState {
 		add(entities);
 		add(characterUI);
 		add(shopUI);
-		
+		add(npc1UI);
+		add(npc2UI);
+		add(npc3UI);
 		// Extra
 		//FlxG.debugger.drawDebug = true;
 		/*FlxG.watch.add(selectedPlayer, "touching");
@@ -167,14 +176,40 @@ class MorningState extends FlxState {
 					shopUI.toggleHUD(true);
 				case 1:
 					if (selectedPlayer.pType == 0) {
+		
+		
+		
 						// Info guy stuff
 					}
-				case 3, 4, 5:
+				case 3:
 					if (selectedPlayer.pType != 0) {
-						npc.setFollow(selectedPlayer);
-						collisionEntities.remove(npc);
-						selectedPlayer.setInactive();
-						Select();
+						npc1UI.toggleHUD(true);
+						if (npc1UI._finishTalking == true){
+							npc.setFollow(selectedPlayer);
+							collisionEntities.remove(npc);
+							selectedPlayer.setInactive();
+							Select();
+						}
+					}
+				case 4:
+					if (selectedPlayer.pType != 0) {
+						npc2UI.toggleHUD(true);											
+						if (npc2UI._finishTalking == true){
+							npc.setFollow(selectedPlayer);
+							collisionEntities.remove(npc);
+							selectedPlayer.setInactive();
+							Select();
+						}
+					}
+				case 5:
+					if (selectedPlayer.pType != 0) {
+						npc3UI.toggleHUD(true);
+						if (npc3UI._finishTalking == true){
+							npc.setFollow(selectedPlayer);
+							collisionEntities.remove(npc);
+							selectedPlayer.setInactive();
+							Select();	
+						}
 					}
 			}
 		}
