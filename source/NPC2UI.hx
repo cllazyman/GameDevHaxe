@@ -31,9 +31,10 @@ class NPC2UI extends DialogueTemplate
 		if (Storage.time == true){ //Morning
 			_text.text = _textContent[0];
 			if (_textIndex >= 1){
+				_finishTalking = true;
 				toggleHUD(false);
 				Storage.npc2HasTalk.insert(0, _dialogueChoose);
-				_finishTalking = true;
+
 			}
 		}
 		else{
