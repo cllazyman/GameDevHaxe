@@ -24,6 +24,7 @@ class MorningState extends FlxState {
 	var collisionEntities:FlxTypedGroup<FlxObject>;
 	var players:FlxTypedGroup<Player>;
 	var npcs:FlxTypedGroup<NPC>;
+	var rooms:FlxTypedGroup<Room>;
 	
 	// UI
 	var characterUI:CharacterUI;
@@ -32,8 +33,10 @@ class MorningState extends FlxState {
 	var npc2UI:NPC2UI;
 	var npc3UI:NPC3UI;
 	var infoNPCUI:InfoNPCUI;
+
 	// Actions
 	var selectedPlayer:Player;
+	var switchPlayer:Int = 0;
 	
 	override public function create():Void {
 		// Update Storage values
@@ -63,6 +66,7 @@ class MorningState extends FlxState {
 		collisionEntities = new FlxTypedGroup<FlxObject>();
 		players = new FlxTypedGroup<Player>();
 		npcs = new FlxTypedGroup<NPC>();
+		rooms = new FlxTypedGroup<Room>();
 		morningMap.loadEntities(placeEntities, "entities");
 		
 		// UI
@@ -97,7 +101,7 @@ class MorningState extends FlxState {
 	}
 
 	override public function update(elapsed:Float):Void {
-		if (!Storage.pauseUI) {
+		if (!Storage.pauseUI && switchPlayer == 0) {
 			// Select players on mouse input
 			if (FlxG.mouse.justReleased) {
 				selectPlayer();
@@ -114,6 +118,23 @@ class MorningState extends FlxState {
 			FlxG.collide(selectedPlayer, collisionEntities);
 			FlxG.collide(npcs, collisionLayers);
 			FlxG.overlap(selectedPlayer.actionBox, npcs, playerActions);
+			FlxG.overlap(selectedPlayer, rooms, setRoom);
+		} else {
+			if (switchPlayer == 1 && npc1UI.finishTalking) {
+				selectedPlayer.setInactive();
+				Select();
+				switchPlayer = 0;
+			}
+			if (switchPlayer == 2 && npc2UI.finishTalking) {
+				selectedPlayer.setInactive();
+				Select();
+				switchPlayer = 0;
+			}
+			if (switchPlayer == 3 && npc3UI.finishTalking) {
+				selectedPlayer.setInactive();
+				Select();
+				switchPlayer = 0;
+			}
 		}
 		super.update(elapsed);
 	}
@@ -166,6 +187,10 @@ class MorningState extends FlxState {
 					collisionEntities.add(temp);
 					npcs.add(temp);
 			}
+		} else if (entityName == "room") {
+			var temp:Room = new Room(x, y, Std.parseInt(entityData.get("rType")));
+			entities.add(temp);
+			rooms.add(temp);
 		}
 	}
 	
@@ -200,7 +225,7 @@ class MorningState extends FlxState {
 	
 	// Performs an action
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
-		if (FlxG.keys.justPressed.E) {
+		if (FlxG.keys.anyJustReleased([SPACE,ENTER]) && selectedPlayer.followed == null) {
 			switch (npc.nType) {
 				case 0:
 					shopUI.toggleHUD(true);
@@ -209,39 +234,36 @@ class MorningState extends FlxState {
 					infoNPCUI.toggleHUD(true);
 					npc.face(selectedPlayer);
 					
-				case 3:
+				case 3, 4, 5:
 					if (selectedPlayer.pType != 0) {
-						if (npc1UI.finishTalking) {
+						if (selectedPlayer.followed == null) {
+							selectedPlayer.followed = npc;
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
-							selectedPlayer.setInactive();
-							Select();
-						} else {
-							npc1UI.toggleHUD(true);
 						}
 					}
-				case 4:
-					if (selectedPlayer.pType != 0) {						
-						if (npc2UI.finishTalking) {
-							npc.setFollow(selectedPlayer);
-							collisionEntities.remove(npc);
-							selectedPlayer.setInactive();
-							Select();
-						} else {
-							npc2UI.toggleHUD(true);	
-						}
-					}
-				case 5:
-					if (selectedPlayer.pType != 0) {
-						if (npc3UI.finishTalking) {
-							npc.setFollow(selectedPlayer);
-							collisionEntities.remove(npc);
-							selectedPlayer.setInactive();
-							Select();
-						} else {
-							npc3UI.toggleHUD(true);
-						}
-					}
+			}
+		}
+	}
+	
+	// Sets NPC to room
+	private function setRoom(player:Player, room:Room):Void {
+		if (FlxG.keys.anyJustReleased([SPACE,ENTER])) {
+			if (room.active) {
+				room.active = false;
+				player.followed.stop();
+				switch (player.followed.nType){
+					case 3:
+						npc1UI.toggleHUD(true);
+						switchPlayer = 1;
+					case 4:
+						npc2UI.toggleHUD(true);
+						switchPlayer = 2;
+					case 5:
+						npc3UI.toggleHUD(true);
+						switchPlayer = 3;
+				}
+				player.followed = null;
 			}
 		}
 	}

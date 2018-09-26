@@ -9,7 +9,6 @@ import flixel.math.FlxVelocity;
  */
 class GuestNPC extends NPC {
 	// Follow AI
-	private var following:Bool = false;
 	private var target:Player;
 	
 	public function new(X:Float, Y:Float, NType:Int) {
@@ -70,5 +69,11 @@ class GuestNPC extends NPC {
 					animation.play("d");
 			}
 		}
+	}
+	
+	// Stops the npc from moving
+	override public function stop():Void {
+		immovable = true;
+		following = false;
 	}
 }

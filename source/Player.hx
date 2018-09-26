@@ -18,6 +18,7 @@ class Player extends FlxSprite {
 	
 	// Actions
 	public var actionBox:FlxObject;
+	public var followed:NPC = null;
 	
 	public function new(X:Float, Y:Float, PType:Int) {
 		// Variables
@@ -122,6 +123,7 @@ class Player extends FlxSprite {
 	public function isSelected(select:Bool): Int {
 		selected = select;
 		immovable = !select;
+		velocity.x = velocity.y = 0;
 		if (select) {
 			alpha = 1;
 		} else {
