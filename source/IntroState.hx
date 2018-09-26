@@ -18,20 +18,20 @@ class IntroState extends FlxState {
 		FlxG.sound.play(AssetPaths.night__ogg);
 		_introDialogue = new IntroDialogue();
 		_transition = new Transitions();
-		if (Storage.Day <= 6){
+		if (Storage.Day <= 5){
 			_introDialogue.chooseDialogue(Storage.Day);
 			_introDialogue.toggleHUD(true);
 			add(_introDialogue);
 		}
 		else{
 			if (Storage.info == true){
-				//Good end means Day7
+				//Good end means Day6
 				_introDialogue.chooseDialogue(Storage.Day);
 				_introDialogue.toggleHUD(true);
 				add(_introDialogue);
 			}
 			else{
-				//Bad end means Day8
+				//Bad end means Day7
 				Storage.Day += 1;
 				_introDialogue.chooseDialogue(Storage.Day);
 				_introDialogue.toggleHUD(true);
@@ -45,13 +45,13 @@ class IntroState extends FlxState {
 	
 	override public function update(elapsed:Float):Void {
 		if (_introDialogue._finishDialoge == true){
-				if (Storage.Day <= 6){
+				if (Storage.Day <= 5){
 					FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
 					FlxG.switchState(new MorningState());
 					});
 				}
 				else{
-					if (Storage.Day == 7){
+					if (Storage.Day == 6){
 						FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
 						FlxG.switchState(new GoodEndingState());
 						});
