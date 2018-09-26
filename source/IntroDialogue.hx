@@ -67,10 +67,17 @@ class IntroDialogue extends DialogueTemplate
 
 			}
 			case 7:{
-				// 9.13
-				_textContent = ["Why is it usually white?", "The snow never stopped", "But today it is red then", "Because...", "Because the flake is red", "Why it is white?", "The snow never stopped", "But yesterday it was red then", "Because...", "The flake is red only today"];
-				_nameContent = ["Kawako", "Shimotsuki", "Tsuruko", "Shimotsuki", "Nizaemon","Kawako","Shimotsuki","Tsuruko","Shimotsuki","Shimotsuki"];
+				// GE
+				_textContent = ["Why is it usually white?", "The snow never stopped", "But today it is red then", "Because...", "Because the flake is red"];
+				_nameContent = ["Kawako", "Shimotsuki", "Tsuruko", "Shimotsuki", "Nizaemon"];
+				
 			}
+			case 8:{
+				//be
+				_textContent = ["Why it is white?", "The snow never stopped", "But yesterday it was red then", "Because...", "The flake is red only today"];
+				_nameContent=["Kawako","Shimotsuki","Tsuruko","Shimotsuki","Shimotsuki"];
+			}
+			
 				
 		}	
 	}

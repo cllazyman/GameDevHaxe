@@ -45,4 +45,7 @@ class Storage {
 	static public var npc2HasTalk:Array<Int> = [];
 	static public var npc3HasTalk:Array<Int> = [];
 	
+	//Info
+	static public var info:Bool = false;
+	
 }

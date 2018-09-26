@@ -14,33 +14,55 @@ class IntroState extends FlxState {
 
 	override public function create():Void {
 		Storage.Day += 1;
+		Storage.money += Std.int(3300 * (Math.pow(1.2, Storage.npc1) + Math.pow(1.2, Storage.npc2) + Math.pow(1.2, Storage.npc3)));
 		FlxG.sound.play(AssetPaths.night__ogg);
 		_introDialogue = new IntroDialogue();
 		_transition = new Transitions();
-		//_introDialogue.chooseDialogue(Storage.Day+1);
-		//add(_introDialogue);
-		//_introDialogue.toggleHUD(true);
-
-		
+		if (Storage.Day <= 6){
+			_introDialogue.chooseDialogue(Storage.Day);
+			_introDialogue.toggleHUD(true);
+			add(_introDialogue);
+		}
+		else{
+			if (Storage.info == true){
+				//Good end means Day7
 				_introDialogue.chooseDialogue(Storage.Day);
 				_introDialogue.toggleHUD(true);
 				add(_introDialogue);
-			
-
+			}
+			else{
+				//Bad end means Day8
+				Storage.Day += 1;
+				_introDialogue.chooseDialogue(Storage.Day);
+				_introDialogue.toggleHUD(true);
+				add(_introDialogue);
+			}
+		}
+		
 		super.create();
 	}
 	
 	
 	override public function update(elapsed:Float):Void {
-		if (_introDialogue._finishDialoge==true){
-				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
-				FlxG.switchState(new MorningState());
-				});
-				
+		if (_introDialogue._finishDialoge == true){
+				if (Storage.Day <= 6){
+					FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
+					FlxG.switchState(new MorningState());
+					});
+				}
+				else{
+					if (Storage.Day == 7){
+						FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
+						FlxG.switchState(new GoodEndingState());
+						});
+					}
+					else{
+						FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
+						FlxG.switchState(new BadEndingState());
+						});
+					}
+				}
 			}
-		
-		
-		
 		super.update(elapsed);
 	}
 }
