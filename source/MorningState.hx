@@ -204,12 +204,7 @@ class MorningState extends FlxState {
 					shopUI.toggleHUD(true);
 					npc.face(selectedPlayer);
 				case 1:
-					if (selectedPlayer.pType == 0) {
-		
-		
-		
-						// Info guy stuff
-					}
+					npc.face(selectedPlayer);
 				case 3:
 					if (selectedPlayer.pType != 0) {
 						npc1UI.toggleHUD(true);
