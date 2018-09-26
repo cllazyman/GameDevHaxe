@@ -5,7 +5,6 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 
@@ -39,6 +38,7 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 	var _isMakingChoice:Bool = false;  //When making a choice, SPACE is banned
 	var _choiceMake:Int = 0;   //Which choice the player chooses
 	
+	var _normalDialogue:Bool = true;
 	var _choosingSound:FlxSound;
 	public function new() 
 	{
@@ -90,6 +90,12 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		_sprChoice3.visible = false;
 		_textChoice3.visible = false;
 		
+		// Set to disabled
+		forEach(function(spr:FlxSprite) {
+			spr.alpha = 0;
+		});
+		active = false;
+		
 		forEach(function(spr:FlxSprite)
 		{
 			spr.scrollFactor.set();
@@ -106,12 +112,12 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite>
 		if (FlxG.keys.anyJustReleased([SPACE,ENTER]))
 			{
 				_choosingSound.play();
-				
-				
 				if (_isMakingChoice == false){
 					_textIndex = _textIndex + 1;
-					_text.text = _textContent[_textIndex];
-					_name.text = _nameContent[_textIndex];
+					if (_normalDialogue == true){
+						_text.text = _textContent[_textIndex];
+						_name.text = _nameContent[_textIndex];
+					}
 				}
 			}
 		//When making choice, show three choices

@@ -16,6 +16,7 @@ class Storage {
 	
 	// The list of player names
 	static public var playerNames:Array<String> = ["Shimotsuki", "Tsuruko", "Setsuko", "Kawako"];
+	static public var playerIndex:Int = 1; //Which character the player is controlling
 	
 	// The list of npc names
 	static public var npcNames:Array<String> = ["Shopkeeper", "Yamamoto", "Brother", "Guest1", "Guest2", "Guest3"];
@@ -34,5 +35,14 @@ class Storage {
 	
 	// A reference to the active playstate for global access
 	static public var PS:PlayState;
+	
+	//The favorability of three NPC 1-10
+	static public var npc1:Int = 1;
+	static public var npc2:Int = 2;
+	static public var npc3:Int = 3;
+	//Dialogue NPC has talked
+	static public var npc1HasTalk:Array<Int> = [];
+	static public var npc2HasTalk:Array<Int> = [];
+	static public var npc3HasTalk:Array<Int> = [];
 	
 }

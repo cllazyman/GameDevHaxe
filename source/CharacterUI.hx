@@ -111,6 +111,7 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 	// Changes the player name and avatar by index
 	public function updatePlayer(index:Int):Void {
 		namePlayer.text = Storage.playerNames[index];
+		Storage.playerIndex = index;
 		avaPlayer.loadGraphic("assets/images/avaplayer"+index+".png");
 	}
 }
