@@ -1,6 +1,9 @@
 package;
 
+import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 
 /**
  * The controllable character class
@@ -9,38 +12,50 @@ import flixel.FlxSprite;
 class Player extends FlxSprite {
 	// Differentiating players
 	public var pType:Int;
+
+	// Selection
+	private var selected:Bool = false;
+	
+	// Actions
+	public var actionBox:FlxObject;
 	
 	public function new(X:Float, Y:Float, PType:Int) {
+		// Variables
 		super(X, Y);
-		// Set variables
 		pType = PType;
 		immovable = true;
+		alpha = 0.75;
 		
 		// Add graphics
 		loadGraphic("assets/images/player" + pType + (Storage.time ? "" : "_night") + ".png", true, 27, 33);
+		setSize(21, 23);
+		offset.set(3, 5);
 		
 		// Add animations
 		animation.add("d", [0, 1], 6, false);
 		animation.add("l", [2, 3], 6, false);
 		animation.add("r", [4, 5], 6, false);
 		animation.add("u", [6, 7], 6, false);
-		setSize(21, 23);
-		offset.set(3, 5);
 		
 		// Movement
 		drag.x = drag.y = 1600;
+		
+		// Actions
+		actionBox = new FlxObject(x-13, y-15, 47, 53);
 	}
 	
 	override public function update(elapsed:Float):Void {
 		// Move if selected and alive
-		if (!Storage.pauseUI && selected && alive) {
-			movement();
+		if (!Storage.pauseUI) {
+			if (selected && alive) {
+				movement();
+			}
 		}
 		super.update(elapsed);
 	}
 	
 	// Moves the player on keyboard input
-	override private function movement():Void {
+	private function movement():Void {
 		// Get key inputs
 		var up:Bool = FlxG.keys.anyPressed([UP, W]);
 		var down:Bool = FlxG.keys.anyPressed([DOWN, S]);
@@ -104,18 +119,19 @@ class Player extends FlxSprite {
 	}
 	
 	// Set player to selected or not
-	override public function isSelected(select:Bool): Void {
+	public function isSelected(select:Bool): Int {
 		selected = select;
 		immovable = !select;
 		if (select) {
 			alpha = 1;
-		} else if (alive) {
+		} else {
 			alpha = 0.75;
 		}
+		return pType;
 	}
 	
 	// Set player to inactive
-	override public function setInactive(): Void {
+	public function setInactive(): Void {
 		selected = false;
 		alive = false;
 		alpha = 0.5;
