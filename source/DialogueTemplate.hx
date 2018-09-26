@@ -13,9 +13,7 @@ import flixel.util.FlxColor;
  * @author Tony
  */
 
-class DialogueTemplate extends FlxTypedGroup<FlxSprite>
-{
-	
+class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 	// ** These are the sprites that we will use to show the combat hud interface
 	var _sprName:FlxSprite;	// Sprite of character's name
 	var _sprText:FlxSprite;	// Spirte of the text

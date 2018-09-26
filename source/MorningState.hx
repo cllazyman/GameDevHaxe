@@ -12,12 +12,12 @@ import flixel.util.FlxSort;
 class MorningState extends FlxState {
 	// Maps
 	var morningMap:FlxOgmoLoader;
-
+	
 	// Layers
 	var layers:FlxTypedGroup<FlxTilemap>;
 	var collisionLayers:FlxTypedGroup<FlxTilemap>;
 	var collisionMainLayer:FlxTilemap;
-	var foregroundLayer:FlxTilemap;
+	var foregroundLayer:FlxTypedGroup<FlxTilemap>;
 	
 	// Entities
 	var entities:FlxTypedGroup<FlxObject>;
@@ -32,7 +32,7 @@ class MorningState extends FlxState {
 	var npc1UI:NPC1UI;
 	var npc2UI:NPC2UI;
 	var npc3UI:NPC3UI;
-
+	
 	// Actions
 	var selectedPlayer:Player;
 	
@@ -50,6 +50,7 @@ class MorningState extends FlxState {
 		// Layers
 		layers = new FlxTypedGroup<FlxTilemap>();
 		collisionLayers = new FlxTypedGroup<FlxTilemap>();
+		foregroundLayer = new FlxTypedGroup<FlxTilemap>();
 		placeLayers("walls", 1);
 		placeLayers("floor", 0);
 		placeLayers("stuff1", 0);
@@ -57,6 +58,7 @@ class MorningState extends FlxState {
 		placeLayers("unwalkable", 1);
 		placeLayers("unwalkableMain", 2);
 		placeLayers("Foreground1", 3);
+		placeLayers("Foreground2", 3);
 		
 		// Entities
 		entities = new FlxTypedGroup<FlxObject>();
@@ -130,7 +132,7 @@ class MorningState extends FlxState {
 				collisionMainLayer = tempLayer;
 				layers.add(tempLayer);
 			case 3:
-				foregroundLayer = tempLayer;
+				foregroundLayer.add(tempLayer);
 		}
 	}
 	
@@ -228,11 +230,12 @@ class MorningState extends FlxState {
 				case 5:
 					if (selectedPlayer.pType != 0) {
 						npc3UI.toggleHUD(true);
+						FlxG.watch.add(npc3UI, "_finishtalking");
 						if (npc3UI._finishTalking == true){
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
-							Select();	
+							Select();
 						}
 					}
 			}
