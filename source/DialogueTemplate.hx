@@ -91,10 +91,14 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 		add(choiceContent2);
 		add(choiceContent3);
 		
-		forEach(function(spr:FlxSprite) {
-			spr.visible = false;
-		});
 		active = false;
+		
+		choice1.visible = false;
+		choiceContent1.visible = false;
+		choice2.visible = false;
+		choiceContent2.visible = false;
+		choice3.visible = false;
+		choiceContent3.visible = false;
 		
 		forEach(function(spr:FlxSprite) { spr.scrollFactor.set(); });
 		
@@ -160,10 +164,14 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 	}
 	
 	// Set whether choices are visible
-	function setChoiceVisible(Visible:Bool):Void{
-		forEach(function(spr:FlxSprite) {
-			spr.visible = Visible;
-		});
+	public function setChoiceVisible(Visible:Bool):Void{
+		choice1.visible = Visible;
+		choiceContent1.visible = Visible;
+		choice2.visible = Visible;
+		choiceContent2.visible = Visible;
+		choice3.visible = Visible;
+		choiceContent3.visible = Visible;
+
 	}
 	
 	function setNameVisible(Visible:Bool):Void{

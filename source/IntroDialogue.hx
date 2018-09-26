@@ -77,7 +77,7 @@ class IntroDialogue extends DialogueTemplate
 	override public function update(elapsed:Float):Void 
 	{
 		switch (dialogueIndex) {
-			case 1: {
+			case 1:
 				switch(textIndex) {
 					case 3:
 						setNameVisible(false);
@@ -88,9 +88,7 @@ class IntroDialogue extends DialogueTemplate
 					case 24:
 						setNameVisible(true);
 				}
-			
-		}
-		case 4:{
+			case 4:{
 				switch (textIndex){
 					case 20:
 						setNameVisible(false);

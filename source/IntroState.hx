@@ -13,7 +13,7 @@ class IntroState extends FlxState {
 	var transitionAct:Bool = false;	//Whether transition has acted
 
 	override public function create():Void {
-		Storage.Day += 1;
+		Storage.Day++;
 		FlxG.sound.play(AssetPaths.night__ogg);
 		introDialogue = new IntroDialogue();
 		transition = new Transitions();
@@ -22,7 +22,6 @@ class IntroState extends FlxState {
 		add(introDialogue);
 		super.create();
 	}
-	
 	
 	override public function update(elapsed:Float):Void {
 		if (introDialogue.finishDialogue) {

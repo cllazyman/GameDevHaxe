@@ -229,7 +229,6 @@ class MorningState extends FlxState {
 					}
 				case 5:
 					if (selectedPlayer.pType != 0) {
-						//FlxG.watch.add(npc3UI, "_finishtalking");
 						if (npc3UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
