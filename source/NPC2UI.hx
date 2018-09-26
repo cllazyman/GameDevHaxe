@@ -38,11 +38,11 @@ class NPC2UI extends DialogueTemplate
 
 			}
 		}
-		else{/*
+		else{
 			if (_finishChecking == false){
 				checkFavorite();
 				_finishChecking = true;
-			}*/
+			}
 			_text.text = _textContent[0];
 			if (_textIndex >= 1){
 				toggleHUD(false);

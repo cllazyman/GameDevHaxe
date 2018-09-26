@@ -174,6 +174,15 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 					chooseSound.play();
 					Storage.unlimitedItemCounts[shopItem-4] += 1;
 					Storage.money -= Prices[shopItem];
+					if (shopItem == 4 || shopItem == 7){
+						Storage.npc1 += 1;
+					}
+					else if (shopItem == 5 || shopItem == 8){
+						Storage.npc2 += 1;
+					}
+					else{
+						Storage.npc3 += 1;
+					}
 					textContent.text = "You buy " + Storage.unlimitedItemNames[shopItem - 4] + " successfully!\nPress SPACE to finish shopping.";
 					chooseSound.play();
 				} else {
