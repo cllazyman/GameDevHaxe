@@ -12,7 +12,7 @@ class Storage {
 	static public var time:Bool = true;
 	
 	// The current money
-	static public var money:Int = 15000;
+	static public var money:Int = 5366;
 	
 	// The list of player names
 	static public var playerNames:Array<String> = ["Shimotsuki", "Tsuruko", "Setsuko", "Kawako"];
