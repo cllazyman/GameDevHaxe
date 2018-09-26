@@ -77,8 +77,8 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 		}
 		
 		// Load Sounds
-		chooseSound = FlxG.sound.load(AssetPaths.ButtonClickSFX__ogg);
-		//failSound = FlxG.sound.load(AssetPaths.ButtonClickSFX__ogg);
+		chooseSound = FlxG.sound.load(AssetPaths.ButtonSFXMenu__ogg);
+		failSound = FlxG.sound.load(AssetPaths.ButtonSFXBack__ogg);
 		
 		// Set to disabled
 		forEach(function(spr:FlxSprite) {
@@ -94,7 +94,6 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 	override public function update(elapsed:Float):Void {
 		if (Storage.pauseUI) {
 			if (FlxG.keys.anyJustReleased([SPACE,ENTER])) {
-				chooseSound.play();
 				toggleHUD(false);
 			}			
 			if (FlxG.mouse.justReleased) {
@@ -159,22 +158,27 @@ class ShopUI extends FlxTypedGroup<FlxSprite> {
 				chooseSound.play();
 				Storage.limitedItemCounts[shopItem] += 1;
 				Storage.money -= Prices[shopItem];
-				textContent.text = "You buy "+Storage.limitedItemNames[shopItem]+" successfully!\nPress SPACE to finish shopping.";
+				textContent.text = "You buy " + Storage.limitedItemNames[shopItem] + " successfully!\nPress SPACE to finish shopping.";
+				chooseSound.play();
 			} else {
 				textContent.text = "Sorry, you don't have enough money.\nPress SPACE to finish shopping.";
+				failSound.play();
 			}
 		//UnlimitedItems
 		} else if (shopItem >= 4 && shopItem <= 9) {
 			if (Storage.unlimitedItemCounts[shopItem - 4] > 0) { //Player has bought it
 				textContent.text = "This item is sold out.\nPress SPACE to finish shopping.";
+				failSound.play();
 			} else {
 				if (Storage.money >= Prices[shopItem]) { //Has enough money
 					chooseSound.play();
 					Storage.unlimitedItemCounts[shopItem-4] += 1;
 					Storage.money -= Prices[shopItem];
-					textContent.text = "You buy "+Storage.unlimitedItemNames[shopItem-4]+" successfully!\nPress SPACE to finish shopping.";
+					textContent.text = "You buy " + Storage.unlimitedItemNames[shopItem - 4] + " successfully!\nPress SPACE to finish shopping.";
+					chooseSound.play();
 				} else {
 					textContent.text = "Sorry, you don't have enough money.\nPress SPACE to finish shopping.";
+					failSound.play();
 				}	
 			}
 		} 
