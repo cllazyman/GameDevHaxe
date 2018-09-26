@@ -23,7 +23,7 @@ class Storage {
 	
 	// The list of limited items
 	static public var limitedItemNames:Array<String> = ["Sake", "Tea", "Ink", "Arranged Flowers"];
-	static public var limitedItemCounts:Array<Int> = [10,10, 10, 10];
+	static public var limitedItemCounts:Array<Int> = [1,1, 1, 1];
 	//static public var Names:Map<String, Int> = ["Sake" => 0, "Tea" => 0, "Ink" => 0, "Arranged Flowers" => 0];
 	
 	// The list of unlimited items
