@@ -1,34 +1,26 @@
 package;
-
-import flixel.FlxSprite;
+import flixel.FlxG;
+import flixel.FlxObject;
+import flixel.math.FlxPoint;
 
 /**
- * The controllable character class
+ * The controllable Sub Character class
  * @author Christian
  */
-class Player extends FlxSprite {
-	// Differentiating players
-	public var pType:Int;
+class SubPlayers extends Player {
+	// Selection
+	private var selected:Bool = false;
+	
+	// Actions
+	public var actionBox:FlxObject;
+	
 	
 	public function new(X:Float, Y:Float, PType:Int) {
-		super(X, Y);
-		// Set variables
-		pType = PType;
-		immovable = true;
+		super(X, Y, PType);
+		alpha = 0.75;
 		
-		// Add graphics
-		loadGraphic("assets/images/player" + pType + (Storage.time ? "" : "_night") + ".png", true, 27, 33);
-		
-		// Add animations
-		animation.add("d", [0, 1], 6, false);
-		animation.add("l", [2, 3], 6, false);
-		animation.add("r", [4, 5], 6, false);
-		animation.add("u", [6, 7], 6, false);
-		setSize(21, 23);
-		offset.set(3, 5);
-		
-		// Movement
-		drag.x = drag.y = 1600;
+		// Actions
+		actionBox = new FlxObject(x-13, y-15, 47, 53);
 	}
 	
 	override public function update(elapsed:Float):Void {

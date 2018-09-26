@@ -20,16 +20,16 @@ class NightState extends FlxState {
 	// Entities
 	var entities:FlxTypedGroup<FlxObject>;
 	var collisionEntities:FlxTypedGroup<FlxObject>;
-	var players:FlxTypedGroup<Player>;
+	var subPlayers:FlxTypedGroup<SubPlayers>;
 	var npcs:FlxTypedGroup<NPC>;
+	var mainPlayer:MainPlayer;
 	
 	// UI
 	var characterUI:CharacterUI;
 	var shopUI:ShopUI;
-	var index:Int = 0;
 
 	// Actions
-	var selectedPlayer:Player;
+	var selectedPlayer:SubPlayers;
 	
 	override public function create():Void {
 		// Update Storage values
@@ -53,7 +53,7 @@ class NightState extends FlxState {
 		// Entities
 		entities = new FlxTypedGroup<FlxObject>();
 		collisionEntities = new FlxTypedGroup<FlxObject>();
-		players = new FlxTypedGroup<Player>();
+		subPlayers = new FlxTypedGroup<SubPlayers>();
 		npcs = new FlxTypedGroup<NPC>();
 		nightMap.loadEntities(placeEntities, "entities");
 		
@@ -107,16 +107,34 @@ class NightState extends FlxState {
 		var x:Int = Std.parseInt(entityData.get("x"));
 		var y:Int = Std.parseInt(entityData.get("y"));
 		if (entityName == "player") {
-			var temp:Player = new Player(x, y, Std.parseInt(entityData.get("pType")));
+			var tempType:Int = Std.parseInt(entityData.get("pType"));
+			var temp:Player = new Player(0,0,0);
+			switch (tempType) {
+				case 0:
+					mainPlayer = new MainPlayer(x + 5, y, tempType);
+					temp = mainPlayer;
+				case 1, 2, 3:
+					var subtemp:SubPlayers = new SubPlayers(x + 5, y, tempType);
+					add(subtemp.actionBox);
+					subPlayers.add(subtemp);
+					temp = subtemp;
+			}
 			entities.add(temp);
 			collisionEntities.add(temp);
-			players.add(temp);
-			add(temp.actionBox);
 		} else if (entityName == "npc") {
-			if (Std.parseInt(entityData.get("nType")) == 2 && (Storage.Day != 1 || Storage.Day != 7)) {
-				return;
+			var tempType:Int = Std.parseInt(entityData.get("nType"));
+			var temp:NPC = new NPC(0,0,0);
+			switch (tempType) {
+				case 0:
+					temp = new ShopNPC(x + 5, y, tempType);
+				case 2:
+					if (Storage.Day == 0 || Storage.Day == 7) {
+						return;
+					}
+					temp = new BrotherNPC(x + 5, y, tempType);
+				case 3, 4, 5:
+					temp = new GuestNPC(x + 5, y, tempType);
 			}
-			var temp:NPC = new NPC(x+5, y, Std.parseInt(entityData.get("nType")));
 			entities.add(temp);
 			collisionEntities.add(temp);
 			npcs.add(temp);
@@ -125,10 +143,10 @@ class NightState extends FlxState {
 	
 	// Selects the first alive player and changes state once inactive
 	private function Select(): Void {
-		selectedPlayer = players.getFirstAlive();
+		selectedPlayer = subPlayers.getFirstAlive();
 		if (selectedPlayer != null) {
 			selectedPlayer.isSelected(true);
-			characterUI.updatePlayer(index);
+			characterUI.updatePlayer(selectedPlayer.pType);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 		} else {
 			FlxG.switchState(new MorningState());
@@ -138,8 +156,8 @@ class NightState extends FlxState {
 	// Selects a player that is clicked
 	private function selectPlayer():Void {
 		var tempPosition:FlxPoint = FlxG.mouse.getWorldPosition();
-		var tempPlayer:Player = selectedPlayer;
-		for (player in players) {
+		var tempPlayer:SubPlayers = selectedPlayer;
+		for (player in subPlayers) {
 			if (player.overlapsPoint(tempPosition) && player.alive) {
 				tempPlayer = player;
 			} else {
@@ -147,8 +165,8 @@ class NightState extends FlxState {
 			}
 		}
 		selectedPlayer = tempPlayer;
-		index = selectedPlayer.isSelected(true);
-		characterUI.updatePlayer(index);
+		selectedPlayer.isSelected(true);
+		characterUI.updatePlayer(selectedPlayer.pType);
 		FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 	}
 	
@@ -158,14 +176,9 @@ class NightState extends FlxState {
 			switch (npc.nType) {
 				case 0:
 					shopUI.toggleHUD(true);
-				case 1:
-					if (selectedPlayer.pType == 0) {
-						// Info guy stuff
-					}
+					npc.face(selectedPlayer);
 				case 2:
-					if (selectedPlayer.pType == 0) {
-						// Info guy stuff
-					}
+					npc.face(selectedPlayer);
 				case 3, 4, 5:
 					if (selectedPlayer.pType != 0) {
 						npc.setFollow(selectedPlayer);

@@ -112,7 +112,7 @@
       <ExportMode>CSV</ExportMode>
     </LayerDefinition>
     <LayerDefinition xsi:type="TileLayerDefinition">
-      <Name>Foreground2</Name>
+      <Name>unwalkableMain</Name>
       <Grid>
         <Width>16</Width>
         <Height>16</Height>
