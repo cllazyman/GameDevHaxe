@@ -37,7 +37,7 @@ class MenuState extends FlxState {
 		playButton = new FlxButtonPlus(0, 228, 	function() {
 				FlxG.sound.play(AssetPaths.ButtonClickSFX__ogg);
 				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
-					FlxG.switchState(new MorningState());
+					FlxG.switchState(new IntroState());
 				});
 			}, "Play", 132, 19);
 		playButton.screenCenter(FlxAxes.X);

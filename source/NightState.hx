@@ -206,7 +206,7 @@ class NightState extends FlxState {
 				case 3:
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
-						if (npc1UI._finishTalking == true){
+						if (npc1UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
@@ -219,7 +219,7 @@ class NightState extends FlxState {
 				case 4:
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
-						if (npc2UI._finishTalking == true){
+						if (npc2UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
@@ -232,7 +232,7 @@ class NightState extends FlxState {
 				case 5:
 					if (selectedPlayer.pType != 0) {
 						Storage.money += 10000;
-						if (npc3UI._finishTalking == true){
+						if (npc3UI.finishTalking) {
 							npc.setFollow(selectedPlayer);
 							collisionEntities.remove(npc);
 							selectedPlayer.setInactive();
