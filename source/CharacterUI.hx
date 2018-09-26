@@ -101,7 +101,7 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 				if (Storage.unlimitedItemCounts[i] == 0){
 					itemCount[Storage.unlimitedItemNames[i]].text = "0";
 				} else {
-					itemCount[Storage.unlimitedItemNames[i]].text = "∞";
+					itemCount[Storage.unlimitedItemNames[i]].text = "1";
 				}
 			}
 			moneyCount.text = Std.string(Storage.money) + " G";

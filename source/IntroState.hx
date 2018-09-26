@@ -13,6 +13,7 @@ class IntroState extends FlxState {
 	var transitionAct:Bool = false;	//Whether transition has acted
 
 	override public function create():Void {
+		FlxG.sound.play(AssetPaths.morning__ogg);
 		Storage.Day += 1;
 		Storage.money += Std.int(3300 * (Math.pow(1.2, Storage.npc1) + Math.pow(1.2, Storage.npc2) + Math.pow(1.2, Storage.npc3)));
 		FlxG.sound.play(AssetPaths.night__ogg);
