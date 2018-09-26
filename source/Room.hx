@@ -1,19 +1,15 @@
 package;
 
 import flixel.FlxObject;
-import flixel.FlxSprite;
 
 /**
- * ...
+ * For room overlaps
  * @author Christian
  */
 class Room extends FlxObject {
-	// Differentiating players
-	public var rType:Int;
 	
-	public function new(X:Float, Y:Float, RType:Int) {
+	public function new(X:Float, Y:Float) {
 		super(X, Y);
-		rType = RType;
 		setSize(128, 128);
 	}
 }

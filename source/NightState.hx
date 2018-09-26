@@ -188,7 +188,7 @@ class NightState extends FlxState {
 	
 	// Performs an action
 	private function playerActions(actionBox:FlxObject, npc:NPC):Void {
-		if (FlxG.keys.justPressed.E) {
+		if (FlxG.keys.anyJustReleased([SPACE,ENTER])) {
 			switch (npc.nType) {
 				case 2:
 					npc.face(selectedPlayer);

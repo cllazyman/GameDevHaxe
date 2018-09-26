@@ -36,6 +36,7 @@ class MorningState extends FlxState {
 	var girl1UI:Girl1UI;
 	var girl2UI:Girl2UI;
 	var girl3UI:Girl3UI;
+	
 	// Actions
 	var selectedPlayer:Player;
 	var switchPlayer:Int = 0;
@@ -98,13 +99,7 @@ class MorningState extends FlxState {
 		add(girl1UI);
 		add(girl2UI);
 		add(girl3UI);
-		// Extra
-		//FlxG.debugger.drawDebug = true;
-		/*FlxG.watch.add(selectedPlayer, "touching");
-		FlxG.watch.add(npcs.getFirstAlive(), "touching");
-		FlxG.watch.add(npcs.getFirstAlive().velocity, "x");
-		FlxG.watch.add(npcs.getFirstAlive().velocity, "y");*/
-		
+
 		super.create();
 	}
 
@@ -197,7 +192,7 @@ class MorningState extends FlxState {
 					npcs.add(temp);
 			}
 		} else if (entityName == "room") {
-			var temp:Room = new Room(x, y, Std.parseInt(entityData.get("rType")));
+			var temp:Room = new Room(x, y);
 			entities.add(temp);
 			rooms.add(temp);
 		}
@@ -242,7 +237,6 @@ class MorningState extends FlxState {
 				case 1:
 					infoNPCUI.toggleHUD(true);
 					npc.face(selectedPlayer);
-					
 				case 3, 4, 5:
 					if (selectedPlayer.pType != 0) {
 						if (selectedPlayer.followed == null) {
@@ -254,8 +248,9 @@ class MorningState extends FlxState {
 			}
 		}
 	}
+	
 	private function GirlActions(actionBox:FlxObject,player:Player):Void{
-		if (FlxG.keys.justPressed.E && selectedPlayer.pType ==0){
+		if (FlxG.keys.anyJustReleased([SPACE,ENTER]) && selectedPlayer.pType ==0){
 			switch (player.pType){
 				case 1:
 					girl1UI.toggleHUD(true);
@@ -270,7 +265,7 @@ class MorningState extends FlxState {
 	
 	// Sets NPC to room
 	private function setRoom(player:Player, room:Room):Void {
-		if (FlxG.keys.anyJustReleased([SPACE,ENTER])) {
+		if (FlxG.keys.justPressed.E) {
 			if (room.active) {
 				room.active = false;
 				player.followed.stop();
