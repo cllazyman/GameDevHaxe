@@ -23,6 +23,7 @@ class NPC1UI extends DialogueTemplate
 		_dialogueChoose = _random.int(1, 6, Storage.npc1HasTalk);
 		_textContent[0] = _textContent[_dialogueChoose];
 		super();
+		_finishTalking = false;
 		_normalDialogue = false;
 		_finishChecking = false;
 	}

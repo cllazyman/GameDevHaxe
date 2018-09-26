@@ -23,6 +23,7 @@ class NPC2UI extends DialogueTemplate
 		_dialogueChoose = _random.int(1, 6, Storage.npc2HasTalk);
 		_textContent[0] = _textContent[_dialogueChoose];
 		super();
+		_finishTalking = false;
 		_normalDialogue = false;
 		_finishChecking = false;
 	}
@@ -37,11 +38,11 @@ class NPC2UI extends DialogueTemplate
 
 			}
 		}
-		else{
+		else{/*
 			if (_finishChecking == false){
 				checkFavorite();
 				_finishChecking = true;
-			}
+			}*/
 			_text.text = _textContent[0];
 			if (_textIndex >= 1){
 				toggleHUD(false);
