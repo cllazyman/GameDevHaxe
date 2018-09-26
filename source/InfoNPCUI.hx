@@ -13,7 +13,7 @@ class InfoNPCUI extends DialogueTemplate
 	var finishChecking:Bool = false;
 	override public function new() {
 		normalDialogue = false;
-		Texts = ["If you do have enough money(150000 G), I can save your brother"];
+		Texts = ["If you do have enough money(180000 G), I can save your brother"];
 		Names = ["Yamamoto"];
 		if (Storage.info) {
 			Texts[0] = "I am sure your brother will be safe";
@@ -27,9 +27,9 @@ class InfoNPCUI extends DialogueTemplate
 			if (Storage.info == true || textIndex >1){
 				Storage.pauseUI = false;
 				toggleHUD(false);
-			} else if (Storage.money > 18000){
+			} else if (Storage.money > 180000){
 				Storage.pauseUI = true;
-				Storage.money -= 18000;
+				Storage.money -= 180000;
 				Storage.info = true;
 				Texts[0] = "I am sure brother will be safe";
 				textIndex += 1;
