@@ -60,7 +60,7 @@ class CharacterUI extends FlxTypedGroup<FlxSprite> {
 		// Add the money section of the UI
 		money = new FlxText(stats.x + 15, stats.y + 100, "Money:");
 		money.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);
-		moneyCount = new FlxText(stats.x + 80, stats.y + 100, Std.string(Storage.money));
+		moneyCount = new FlxText(stats.x + 80, stats.y + 100, Std.string(Storage.money) +" G");
 		moneyCount.setFormat("assets/fonts/SHPinscher-Regular.otf", 15, FlxColor.WHITE);	
 		add(money);
 		add(moneyCount);
