@@ -25,23 +25,18 @@ class InfoNPCUI extends DialogueTemplate
 		textContent.text = Texts[0];
 		if (FlxG.keys.anyJustReleased([SPACE,ENTER])){
 			if (Storage.info == true || textIndex >1){
-				storage.pauseUI = false;
+				Storage.pauseUI = false;
 				toggleHUD(false);
-			}
-			else if (Storage.money > 18000){
+			} else if (Storage.money > 18000){
 				Storage.pauseUI = true;
 				Storage.money -= 18000;
 				Storage.info = true;
 				Texts[0] = "I am sure brother will be safe";
 				textIndex += 1;
-			}
-			else{
+			} else {
 				Texts[0] = "You don't have enough money.";
 				toggleHUD(false);
 			}
-		
-			
-		
 		}
 	}
 }
