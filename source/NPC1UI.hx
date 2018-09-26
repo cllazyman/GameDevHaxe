@@ -15,9 +15,6 @@ class NPC1UI extends DialogueTemplate {
 	override public function new() {	
 		Texts = ["","These colorful branches are massagers of spring..","Dancing? Such vulgar art. It does not match my nobility.","The tone of stream is not what a true Japanese like to hear. Only the echo of the tide hitting the shore should be appreciated.","Let the brush carry the ink, as water falls and cloud flies.","My friends all say that they can see their fate through a cup, but I never did.","Why singers just don’t know how to speak in a normal way?"];
 		Names = ["Ugakima"];
-		Choices1 = [];
-		Choices2 = [];
-		Choices3 = [];
 		
 		random = new FlxRandom();
 		if (Storage.time) {

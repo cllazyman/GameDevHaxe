@@ -41,7 +41,7 @@ class IntroState extends FlxState {
 	}
 	
 	override public function update(elapsed:Float):Void {
-		if (introDialogue.finishDialoge) {
+		if (introDialogue.finishDialogue) {
 				if (Storage.Day <= 5) {
 					FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
 					FlxG.switchState(new MorningState());

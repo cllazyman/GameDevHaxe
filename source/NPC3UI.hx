@@ -15,9 +15,6 @@ class NPC3UI extends DialogueTemplate {
 	override public function new() {	
 		Texts = ["","The blossom today, the dust tomorrow. Nothing is everlasting.","Dance is the only memory I… Nothing…","Music is just sometimes too beautiful to describe our tough life","Never know the secret between these hardly recognized handwriting","You can only know how sweet being alive is, after the tea passes your throat.","Voice of young woman, such a relief."];
 		Names = ["Nagumo"];
-		Choices1 = [];
-		Choices2 = [];
-		Choices3 = [];
 		
 		random = new FlxRandom();
 		

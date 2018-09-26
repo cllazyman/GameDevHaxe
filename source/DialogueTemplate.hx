@@ -5,7 +5,6 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
-import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 
 /**
@@ -30,20 +29,7 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 	var itemName:Map<String, FlxText> = new Map<String, FlxText>();
 	var itemPrice:Map<String, FlxText> = new Map<String, FlxText>();
 	
-	// Choices
-	var choice1:FlxSprite;
-	var choiceContent1:FlxText;
-	var choice2:FlxSprite;
-	var choiceContent2:FlxText;
-	var choice3:FlxSprite;
-	var choiceContent3:FlxText;
-
-	var Choices1:Array<String>;
-	var Choices2:Array<String>;
-	var Choices3:Array<String>;
-	
 	// When making a choice, SPACE is banned
-	var isMakingChoice:Bool = false;
 	var normalDialogue:Bool = true;
 	// Which choice the player chooses
 	var choiceMake:Int = 0;
@@ -67,29 +53,6 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 		textContent.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
 		add(nameContent);
 		add(textContent);
-				
-		// Choices section
-		choice1 = new FlxSprite(280,80);
-		choice1.loadGraphic(AssetPaths.ui_choice__png);
-		choiceContent1 = new FlxText(choice1.x + 15, choice1.y + 8, 100, Choices1[0]);
-		choiceContent1.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
-	
-		choice2 = new FlxSprite(280, 120);
-		choice2.loadGraphic(AssetPaths.ui_choice__png);
-		choiceContent2 = new FlxText(choice2.x + 15, choice2.y + 8, 100, Choices2[0]);
-		choiceContent2.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
-		
-		choice3 = new FlxSprite(280, 160);
-		choice3.loadGraphic(AssetPaths.ui_choice__png);
-		choiceContent3 = new FlxText(choice3.x + 15, choice3.y + 8, 100, Choices3[0]);
-		choiceContent3.setFormat("assets/fonts/SHPinscher-Regular.otf", 20, FlxColor.WHITE);
-		
-		add(choice1);
-		add(choice2);
-		add(choice3);
-		add(choiceContent1);
-		add(choiceContent2);
-		add(choiceContent3);
 		
 		// Set to disabled
 		forEach(function(spr:FlxSprite) {
@@ -107,48 +70,13 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 	override public function update(elapsed:Float):Void {
 		//When clicking SPACE or ENTER, show next text
 		if (FlxG.keys.anyJustReleased([SPACE,ENTER])) {
-				choosingSound.play();
-				if (!isMakingChoice) {
-					textIndex++;
-					if (normalDialogue) {
-						textContent.text = Texts[textIndex];
-						nameContent.text = Names[textIndex];
-					}
-				}
-			}
-		//When making choice, show three choices
-		if (isMakingChoice) {
-			if (FlxG.mouse.justReleased) {
-				choosingSound.play();
-				if (FlxG.mouse.screenX >= 285 && FlxG.mouse.screenX <= 465) {
-					if (FlxG.mouse.screenY >= 85 && FlxG.mouse.screenY <= 105) {
-						choiceMake = 1;
-					} else if (FlxG.mouse.screenY >= 125 && FlxG.mouse.screenY <= 145) {
-						choiceMake = 2;
-					} else if (FlxG.mouse.screenY >= 165 && FlxG.mouse.screenY <= 185) {
-						choiceMake = 3;
-					} else {
-						choiceMake = 0;
-					}
-				}
-			} else {
-				choiceMake = 0;
+			choosingSound.play();
+			textIndex++;
+			if (normalDialogue) {
+				textContent.text = Texts[textIndex];
+				nameContent.text = Names[textIndex];
 			}
 		}
-	/**
-		if (textContentIndex == 2){
-				_isMakingChoice = true;
-				setChoiceVisible(true);
-				if (_choiceMake != 0 ){
-					textContentIndex = 3;
-					textContent.text = textContentContent[textContentIndex];
-					nameContent.text = _nameContent[textContentIndex];
-					setChoiceVisible(false);
-					_choiceMake = 0;
-					_isMakingChoice = false;
-				}			
-			}
-			**/
 		super.update(elapsed);
 	}
 	
@@ -162,17 +90,6 @@ class DialogueTemplate extends FlxTypedGroup<FlxSprite> {
 		forEach(function(spr:FlxSprite) {
 			spr.visible = power;
 		});
-	}
-	
-	// Set whether choices are visible
-	public function setChoiceVisible(Visible:Bool):Void{
-		choice1.visible = Visible;
-		choiceContent1.visible = Visible;
-		choice2.visible = Visible;
-		choiceContent2.visible = Visible;
-		choice3.visible = Visible;
-		choiceContent3.visible = Visible;
-
 	}
 	
 	function setNameVisible(Visible:Bool):Void{

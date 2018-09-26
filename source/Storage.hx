@@ -32,10 +32,7 @@ class Storage {
 	
 	// Stop all update actions when a UI is active
 	static public var pauseUI:Bool = false;
-	
-	// A reference to the active playstate for global access
-	static public var PS:PlayState;
-	
+		
 	//The favorability of three NPC 1-10
 	static public var npc1:Int = 5;
 	static public var npc2:Int = 5;

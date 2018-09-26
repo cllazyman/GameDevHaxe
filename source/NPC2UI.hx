@@ -15,9 +15,6 @@ class NPC2UI extends DialogueTemplate {
 	override public function new() {
 		Texts = ["","It is not flower that brings the victory.  .","The moon, the wind, the night a dancing young girl and a predator from the dark hides.","The strings can always bring me back to my hometown among the mountains.","What is this mess on this piece of paper.","Why people all like the bitter taste tree leaves?","The canary singing in a cage is never as pleasing as the eagle howling over the Fuji."];
 		Names = ["Musashi"];
-		Choices1 = [];
-		Choices2 = [];
-		Choices3 = [];
 		
 		random = new FlxRandom();
 		
