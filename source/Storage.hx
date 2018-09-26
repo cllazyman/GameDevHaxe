@@ -23,11 +23,11 @@ class Storage {
 	
 	// The list of limited items
 	static public var limitedItemNames:Array<String> = ["Sake", "Tea", "Ink", "Arranged Flowers"];
-	static public var limitedItemCounts:Array<Int> = [0, 0, 0, 0];
+	static public var limitedItemCounts:Array<Int> = [10,10, 10, 10];
 	//static public var Names:Map<String, Int> = ["Sake" => 0, "Tea" => 0, "Ink" => 0, "Arranged Flowers" => 0];
 	
 	// The list of unlimited items
-	static public var unlimitedItemNames:Array<String> = ["German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese", "Mythic Shamisen"];
+	static public var unlimitedItemNames:Array<String> = ["German Pen", "Famous Katana", "Chinese Tea Pot", "Kimono", "Japanese Fan", "Mythic Shamisen"];
 	static public var unlimitedItemCounts:Array<Int> = [0, 0, 0, 0, 0, 0];
 	
 	// Stop all update actions when a UI is active
