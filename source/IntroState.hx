@@ -17,26 +17,18 @@ class IntroState extends FlxState {
 		FlxG.sound.play(AssetPaths.night__ogg);
 		introDialogue = new IntroDialogue();
 		transition = new Transitions();
-		//_introDialogue.chooseDialogue(Storage.Day+1);
-		//add(_introDialogue);
-		//_introDialogue.toggleHUD(true);
-
-		
 		introDialogue.chooseDialogue(Storage.Day);
 		introDialogue.toggleHUD(true);
 		add(introDialogue);
-			
-
 		super.create();
 	}
 	
 	
 	override public function update(elapsed:Float):Void {
-		if (introDialogue.finishDialogue){
+		if (introDialogue.finishDialogue) {
 			FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
 				FlxG.switchState(new MorningState());
 			});
-				
 		}
 		super.update(elapsed);
 	}

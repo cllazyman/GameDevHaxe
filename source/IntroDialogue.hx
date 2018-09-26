@@ -7,17 +7,18 @@ package;
  */
 class IntroDialogue extends DialogueTemplate 
 {
-	var dialogueIndex:Int;
+	private var dialogueIndex:Int;
 	public var finishDialogue:Bool = false;
+
 	override public function new() {
 		Texts = [];
 		Names = [];
 		Choices1 = [];
 		Choices2 = [];
 		Choices3 = [];
-		finishDialogue = false;
 		super();
 	}
+
 	public function chooseDialogue(Option:Int):Void{
 		textIndex = 0;
 		dialogueIndex = Option;
@@ -75,9 +76,9 @@ class IntroDialogue extends DialogueTemplate
 	}
 	override public function update(elapsed:Float):Void 
 	{
-		switch (dialogueIndex){
-			case 1:{
-				switch(textIndex){
+		switch (dialogueIndex) {
+			case 1: {
+				switch(textIndex) {
 					case 3:
 						setNameVisible(false);
 					case 4:
