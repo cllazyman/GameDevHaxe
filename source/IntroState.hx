@@ -16,20 +16,26 @@ class IntroState extends FlxState {
 		FlxG.sound.play(AssetPaths.night__ogg);
 		_introDialogue = new IntroDialogue();
 		_transition = new Transitions();
+		_introDialogue.chooseDialogue(Storage.Day+1);
+		add(_introDialogue);
+		_introDialogue.toggleHUD(true);
+		/**
 		switch Storage.Day{
 			case 0:{
 				_introDialogue.chooseDialogue(1);
 				add(_introDialogue);
 				_introDialogue.toggleHUD(true);
 			}
+			case 1:
+			
 		}
+		**/
 		super.create();
 	}
 	
 	override public function update(elapsed:Float):Void {
-		switch Storage.Day{
-			case 0:{ //Begininng of the story
-				if (_introDialogue.active == false){
+		if (Storage.Day == 0){
+			if (_introDialogue.active == false){
 					if (_transitionAct == false){ //act transition
 						_transitionAct = true;
 						_transition.chooseTrasition(1);
@@ -44,9 +50,14 @@ class IntroState extends FlxState {
 						Storage.Day += 1;
 					}
 				}
-			}
-				
 		}
+		else{
+			FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function() {
+			FlxG.switchState(new MorningState());
+			});
+			Storage.Day += 1;
+		}
+		
 		
 		super.update(elapsed);
 	}

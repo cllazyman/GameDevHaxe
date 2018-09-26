@@ -10,6 +10,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxSort;
 
 class NightState extends FlxState {
+	
 	// Maps
 	var nightMap:FlxOgmoLoader;
 
@@ -17,7 +18,7 @@ class NightState extends FlxState {
 	var layers:FlxTypedGroup<FlxTilemap>;
 	var collisionLayers:FlxTypedGroup<FlxTilemap>;
 	var collisionMainLayer:FlxTilemap;
-	var foregroundLayer:FlxTilemap;
+	var foregroundLayer:FlxTypedGroup<FlxTilemap>;
 	
 	// Entities
 	var entities:FlxTypedGroup<FlxObject>;
@@ -34,7 +35,7 @@ class NightState extends FlxState {
 	
 	override public function create():Void {
 		// Update Storage values
-		Storage.time = false;
+		Storage.time = true;
 		
 		// Music
 		FlxG.sound.play(AssetPaths.night__ogg);
@@ -45,6 +46,7 @@ class NightState extends FlxState {
 		// Layers
 		layers = new FlxTypedGroup<FlxTilemap>();
 		collisionLayers = new FlxTypedGroup<FlxTilemap>();
+		foregroundLayer = new FlxTypedGroup<FlxTilemap>();
 		placeLayers("walls", 1);
 		placeLayers("floor", 0);
 		placeLayers("stuff1", 0);
@@ -52,6 +54,7 @@ class NightState extends FlxState {
 		placeLayers("unwalkable", 1);
 		placeLayers("unwalkableMain", 2);
 		placeLayers("Foreground1", 3);
+		placeLayers("Foreground2", 3);
 		
 		// Entities
 		entities = new FlxTypedGroup<FlxObject>();
@@ -113,7 +116,7 @@ class NightState extends FlxState {
 				collisionMainLayer = tempLayer;
 				layers.add(tempLayer);
 			case 3:
-				foregroundLayer = tempLayer;
+				foregroundLayer.add(tempLayer);
 		}
 	}
 	
