@@ -17,7 +17,7 @@ class MenuState extends FlxState {
 	
 	override public function create():Void {
 		// Play title screen music
-		FlxG.sound.play(AssetPaths.menu__ogg);
+		FlxG.sound.play(AssetPaths.menu__ogg, 1, true);
 		
 		// Background
 		background = new FlxSprite(0, 0);

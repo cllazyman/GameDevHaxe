@@ -40,7 +40,7 @@ class MorningState extends FlxState {
 		Storage.time = true;
 		
 		// Music
-		FlxG.sound.play(AssetPaths.morning__ogg);
+		FlxG.sound.play(AssetPaths.morning__ogg, 1, true);
 		
 		// Map
 		morningMap = new FlxOgmoLoader(AssetPaths.morning__oel);

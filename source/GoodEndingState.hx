@@ -17,7 +17,7 @@ class GoodEndingState extends FlxState {
 	override public function create():Void {
 		// Play credits screen music
 		//FlxG.sound.play(AssetPaths.badEnding__ogg);
-		FlxG.sound.play(AssetPaths.goodEnding__ogg);
+		FlxG.sound.play(AssetPaths.goodEnding__ogg, 1, true);
 		
 		// Background
 		background = new FlxSprite(0, 0);

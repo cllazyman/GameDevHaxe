@@ -40,7 +40,7 @@ class NightState extends FlxState {
 		Storage.time = false;
 		
 		// Music
-		FlxG.sound.play(AssetPaths.night__ogg);
+		FlxG.sound.play(AssetPaths.night__ogg, 1, true);
 		
 		// Map
 		nightMap = new FlxOgmoLoader(AssetPaths.night__oel);
