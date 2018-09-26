@@ -173,7 +173,7 @@ class NightState extends FlxState {
 			characterUI.updatePlayer(selectedPlayer.pType);
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 		} else {
-			FlxG.switchState(new MorningState());
+			FlxG.switchState(new IntroState());
 		}
 	}
 	
