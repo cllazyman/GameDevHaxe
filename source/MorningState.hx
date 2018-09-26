@@ -28,14 +28,12 @@ class MorningState extends FlxState {
 	// UI
 	var characterUI:CharacterUI;
 	var shopUI:ShopUI;
-	var index:Int = 0;
 	var npc1UI:NPC1UI;
 	var npc2UI:NPC2UI;
 	var npc3UI:NPC3UI;
 	
 	// Actions
 	var selectedPlayer:Player;
-	
 	
 	override public function create():Void {
 		// Update Storage values
@@ -178,7 +176,6 @@ class MorningState extends FlxState {
 			FlxG.camera.follow(selectedPlayer, TOPDOWN, 1);
 		} else {
 			FlxG.switchState(new NightState());
-
 		}
 	}
 	

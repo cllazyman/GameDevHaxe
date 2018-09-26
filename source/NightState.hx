@@ -10,9 +10,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxSort;
 
 class NightState extends FlxState {
-	
 	// Maps
-	
 	var nightMap:FlxOgmoLoader;
 
 	// Layers
@@ -83,6 +81,9 @@ class NightState extends FlxState {
 		add(foregroundLayer);
 		add(characterUI);
 		add(shopUI);
+		add(npc1UI);
+		add(npc2UI);
+		add(npc3UI);
 		
 		super.create();
 	}
