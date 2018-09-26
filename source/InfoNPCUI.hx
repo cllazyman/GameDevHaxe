@@ -1,5 +1,6 @@
 package;
-import flixel.math.FlxRandom;
+import flixel.FlxG;
+
 
 
 /**
@@ -8,7 +9,6 @@ import flixel.math.FlxRandom;
  */
 class InfoNPCUI extends DialogueTemplate 
 {
-	var _bought:Bool = false;
 	public var _finishTalking:Bool = false;
 	var _finishChecking:Bool = false;
 	override public function new() 
@@ -19,7 +19,7 @@ class InfoNPCUI extends DialogueTemplate
 		_textChoice1Content = [];
 		_textChoice2Content = [];
 		_textChoice3Content = [];
-		if (_bought == true){
+		if (Storage.info == true){
 			_textContent[0] = "I am sure your brother will be safe";
 		}
 		super();
@@ -27,24 +27,25 @@ class InfoNPCUI extends DialogueTemplate
 	}
 	override public function update(elapsed:Float):Void 
 	{
-		if (_textIndex >= 1){
-			if (_bought == true){
+		_text.text = _textContent[0];
+		if (FlxG.keys.anyJustReleased([SPACE,ENTER])){
+			if (Storage.info == true || _textIndex >1){
 				toggleHUD(false);
 			}
-		else{
-			if (Storage.money > 150000){
+			else if (Storage.money > 150000){
 				Storage.money -= 150000;
 				Storage.info = true;
 				_textContent[0] = "I am sure brother will be safe";
-				toggleHUD(false);
+				_textIndex += 1;
 			}
 			else{
 				_textContent[0] = "You don't have enough money.";
 				toggleHUD(false);
 			}
-		}
+		
 			
-		super.update(elapsed);
+		//super.update(elapsed);
+		}
 	}
 }
 	
